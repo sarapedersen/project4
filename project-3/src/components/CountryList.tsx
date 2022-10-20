@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { Country } from '../types'
 
+interface props {
+  countries: Country[]
+  showInfo: Country | null | undefined
+  setshowInfo: React.Dispatch<React.SetStateAction<Country | null | undefined>>
+}
 
-function CountryList(props: {countries: Country[]}) {
+
+function CountryList({countries, showInfo, setshowInfo}: props) {
    
-    const [showInfo, setshowInfo] = useState<Country | null>()
   
   return (
     <div>
@@ -18,7 +23,7 @@ function CountryList(props: {countries: Country[]}) {
         <p>{showInfo.area}</p>
       </div> :  // If showInfo is null, just show the country names in a list
       <ul>
-        {props.countries && props.countries.map((c, index) => 
+        {countries && countries.map((c, index) => 
           <li key={index} onClick={() => setshowInfo(c)}>{c.name}</li>)}
       </ul>}
     </div>
