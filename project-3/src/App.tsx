@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import CountryList from './components/CountryList';
+import PaginatedCountryList from './components/PaginatedCountryList';
 
 function App() {
   return (
     <div className="App">
-        <CountryList/>
+        <PaginatedCountryList/>
     </div>
   );
 }
