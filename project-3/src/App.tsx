@@ -5,14 +5,16 @@ import Header from './components/Header'
 
 function App() {
   return (
-    <div className="App">
-      <div className='bg-bgBlue h-screen'>
-        <Header/>
-        <PaginatedCountryList/>
+    <div className='App bg-bgBlue h-full md:bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
+      <div className='min-h-screen'>
+        <div className=''>
+          <Header/>
+          <PaginatedCountryList/>
+        </div>
       </div>
     </div>
     
-  );
+  )
 }
 
-export default App;
+export default App

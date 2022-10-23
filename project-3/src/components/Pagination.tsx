@@ -1,5 +1,6 @@
 import React from 'react'
-
+import arrow_left from '../icons/arrow_left.svg'
+import arrow_right from '../icons/arrow_right.svg'
 
 interface props {
     countriesPerPage: number
@@ -19,12 +20,20 @@ function Pagination(data: props) {
     return (
         <div>
             <nav aria-label='Pagination'>
-                <a onClick={handleBackwardClick} href='#'>
-                    {"< "}{data.currentPage}{" / "}
-                </a>
-                <a onClick={handleForwardClick} href='#'>
-                    {Math.ceil(data.totalCountries/data.countriesPerPage)}{" >"}
-                </a>
+                <div className='flex justify-center'>
+                    <div className='grid grid-cols-3 place-items-center pb-20 w-60'>
+                        <a onClick={handleBackwardClick} href='#'>
+                            <img src={arrow_left} alt='<' className="w-3 hover:cursor-pointer"/>
+                        </a>
+                        <div className='font-extralight text-lg'>
+                            {data.currentPage}{" / "}
+                            {Math.ceil(data.totalCountries/data.countriesPerPage)}
+                        </div>
+                        <a onClick={handleForwardClick} href='#'>
+                            <img src={arrow_right} alt='>' className="w-3 hover:cursor-pointer"/>
+                        </a>
+                    </div>
+                </div>
             </nav>
         </div>
     )
