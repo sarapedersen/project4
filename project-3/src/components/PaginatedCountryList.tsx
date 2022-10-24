@@ -16,7 +16,7 @@ function PaginatedCountryList() {
         languages: ["Norwegian"]
     },
     {
-        name: "Sweden",
+        name: "Afghanistan",
         flag: "https://flagcdn.com/se.svg",
         capital: "Stockholm",
         population: 10481937,
@@ -25,7 +25,7 @@ function PaginatedCountryList() {
         languages: ["Swedish"]
     },
     {
-        name: "Sweden",
+        name: "Oman",
         flag: "https://flagcdn.com/se.svg",
         capital: "Stockholm",
         population: 10481937,
@@ -182,7 +182,6 @@ function PaginatedCountryList() {
                 showInfo={showInfo}
                 setshowInfo={setshowInfo}
             />
-
             <Pagination
                 countriesPerPage={countriesPerPage}
                 totalCountries={countries ? (countries).length : 0}
