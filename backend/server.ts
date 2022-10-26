@@ -1,15 +1,18 @@
 // Importing module
 import Express from 'express'
 import { connectToDatabase } from './src/services/database.service';
-import { countriesRouter } from './src/routes/countries.router';
+import { countriesRouter, usersRouter } from './src/routes/countries.router';
 
 const app = Express(); 
+const cors = require('cors');
 const PORT:Number = 4000;
 
 // Handling GET / request
 connectToDatabase()
     .then(() => {
+        app.use(cors())
         app.use("/countries", countriesRouter); 
+        app.use("/users", usersRouter)
 
         app.listen(PORT, () => {
             console.log(`Server started at http://localhost:${PORT}`);

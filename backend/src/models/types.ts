@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 // Class implementation
 
 
-    export default interface Country {
+    export interface Country {
         name: string,
         flag: string,
         capital: string,
@@ -13,5 +13,12 @@ import { ObjectId } from "mongodb";
         continent: string, 
         area: number, 
         languages: string[], 
+        ObjectId?: ObjectId
+    }
+
+    export interface User {
+        username: string, 
+        password: string, 
+        beenTo: string[],
         ObjectId?: ObjectId
     }

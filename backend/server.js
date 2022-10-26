@@ -8,11 +8,14 @@ const express_1 = __importDefault(require("express"));
 const database_service_1 = require("./src/services/database.service");
 const countries_router_1 = require("./src/routes/countries.router");
 const app = (0, express_1.default)();
+const cors = require('cors');
 const PORT = 4000;
 // Handling GET / request
 (0, database_service_1.connectToDatabase)()
     .then(() => {
+    app.use(cors());
     app.use("/countries", countries_router_1.countriesRouter);
+    app.use("/users", countries_router_1.usersRouter);
     app.listen(PORT, () => {
         console.log(`Server started at http://localhost:${PORT}`);
     });
