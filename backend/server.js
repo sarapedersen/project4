@@ -13,6 +13,7 @@ const PORT = 4000;
 (0, database_service_1.connectToDatabase)()
     .then(() => {
     app.use("/countries", countries_router_1.countriesRouter);
+    app.use("/users", countries_router_1.usersRouter);
     app.listen(PORT, () => {
         console.log(`Server started at http://localhost:${PORT}`);
     });

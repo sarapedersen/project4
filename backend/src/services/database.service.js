@@ -42,13 +42,15 @@ exports.collections = {};
 function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         dotenv.config();
-        if (process.env.DB_CONN_STRING != undefined && process.env.COUNTRY_COLLECTION_NAME != undefined) {
+        if (process.env.DB_CONN_STRING != undefined && process.env.COUNTRY_COLLECTION_NAME != undefined && process.env.USER_COLLECTION_NAME) {
             const client = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
             yield client.connect();
             const db = client.db(process.env.DB_NAME);
             const countriesCollection = db.collection(process.env.COUNTRY_COLLECTION_NAME);
+            const usersCollection = db.collection(process.env.USER_COLLECTION_NAME);
             exports.collections.countries = countriesCollection;
-            console.log(`Successfully connected to database: ${db.databaseName} and collection: ${countriesCollection.collectionName}`);
+            exports.collections.users = usersCollection;
+            console.log(`Successfully connected to database: ${db.databaseName} and collection: ${countriesCollection.collectionName, usersCollection.collectionName}`);
         }
         else {
             console.log(`Did not connect to database`);
