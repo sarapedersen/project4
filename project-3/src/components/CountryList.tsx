@@ -16,7 +16,7 @@ interface props {
 function CountryList({countries, showInfo, setshowInfo}: props) {
   return (
     <div className='body'>
-      <div className="flex justify-center mt-20 mb-10">
+      <div className="flex justify-center mt-10 mb-10">
         {showInfo ? // If showInfo has a country then show info about the chosen country
         <div className="bg-white rounded-lg  w-72 text-gray-900 md:w-2/4">
           <div className='px-6 py-3 grid grid-cols-5  w-full border-b border-bgBlue place-items-center'>
