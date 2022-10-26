@@ -4,11 +4,6 @@ import PaginatedCountryList from './PaginatedCountryList'
 function MainPage() {
     const [filtration, setFiltration] = useState<String>("all")
 
-    // useEffect(() => {
-
-    // }, [filtration])
-
-
     return (
         <div className='grid grid-cols-1 grid-auto '>
 

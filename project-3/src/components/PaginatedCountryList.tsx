@@ -13,7 +13,7 @@ function PaginatedCountryList() {
         population: 5425270,
         continent: "Europe",
         area: 385207,
-        languages: ["Norwegian"]
+        languages: ["Norwegian","English"]
     },
     {
         name: "Afghanistan",
