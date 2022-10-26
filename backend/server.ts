@@ -4,11 +4,13 @@ import { connectToDatabase } from './src/services/database.service';
 import { countriesRouter, usersRouter } from './src/routes/countries.router';
 
 const app = Express(); 
+const cors = require('cors');
 const PORT:Number = 4000;
 
 // Handling GET / request
 connectToDatabase()
     .then(() => {
+        app.use(cors())
         app.use("/countries", countriesRouter); 
         app.use("/users", usersRouter)
 

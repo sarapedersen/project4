@@ -6,6 +6,13 @@ import MainPage from './components/MainPage'
 
 function App() {
 
+  // async function testFetch() {
+  //   console.log("howrhgowrgfo")
+  //   const response = await fetch('http://localhost:4000/countries')
+  //   console.log(response.json())
+  // }
+
+  // testFetch()
   
   
 

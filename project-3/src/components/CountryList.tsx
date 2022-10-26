@@ -25,7 +25,7 @@ function CountryList({countries, showInfo, setshowInfo}: props) {
             <img onClick={() => setshowInfo(null)} src={arrow_up} alt='/\' className="mx-3 my-2 w-6 hover:cursor-pointer"/>
           </div>
           <div className='grid grid-cols-1 place-items-center'>
-            <img src={showInfo.flag} alt="flag" className="my-6 w-40 "></img>
+            <img src={showInfo.flagSvg} alt="flag" className="my-6 w-40 "></img>
           </div>
           <div className="grid grid-rows-4 grid-col-2 mb-10 mx-6 md:mx-24"> 
             <p className="py-2 text-left font-bold col-start-1">Capital:</p>
@@ -36,7 +36,7 @@ function CountryList({countries, showInfo, setshowInfo}: props) {
             
             
               <p className="py-2 text-left font-bold col-start-1">Continent:</p>
-              <p className='py-2 text-right col-start-2'>{showInfo.continent}</p>
+              <p className='py-2 text-right col-start-2'>{showInfo.region}</p>
             
             
               <p className="py-2 text-left font-bold col-start-1">Area:</p>

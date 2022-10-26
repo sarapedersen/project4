@@ -8,6 +8,7 @@ import { Country, User } from "../models/types"
 export const countriesRouter = express.Router();
 export const usersRouter = express.Router(); 
 
+
 countriesRouter.use(express.json()); 
 usersRouter.use(express.json()); 
 
