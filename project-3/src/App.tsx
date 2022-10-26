@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import PaginatedCountryList from './components/PaginatedCountryList'
 import Header from './components/Header'
+import MainPage from './components/MainPage'
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <div className='min-h-screen'>
         <div className=''>
           <Header/>
-          <PaginatedCountryList/>
+          <MainPage/>
         </div>
       </div>
     </div>

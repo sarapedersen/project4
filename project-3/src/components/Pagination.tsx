@@ -21,7 +21,7 @@ function Pagination(data: props) {
         <div>
             <nav aria-label='Pagination'>
                 <div className='flex justify-center'>
-                    <div className='grid grid-cols-3 place-items-center pb-20 w-60'>
+                    <div className='grid grid-cols-3 place-items-center pb-10 w-60'>
                         <a onClick={handleBackwardClick} href='#'>
                             <img src={arrow_left} alt='<' className="w-3 hover:cursor-pointer"/>
                         </a>
