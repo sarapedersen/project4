@@ -62,11 +62,11 @@ exports.usersRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(500).send(error);
     }
 }));
-exports.usersRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.usersRouter.get("/:username", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _c, _d;
     const id = (_c = req === null || req === void 0 ? void 0 : req.params) === null || _c === void 0 ? void 0 : _c.id;
     try {
-        const query = { _id: new mongodb_1.ObjectId(id) };
+        const query = { username: new mongodb_1.ObjectId(id) };
         if (database_service_1.collections.users != undefined) {
             const user = (yield ((_d = database_service_1.collections.users) === null || _d === void 0 ? void 0 : _d.findOne(query)));
             if (user) {
