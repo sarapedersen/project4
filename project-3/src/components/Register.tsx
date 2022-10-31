@@ -12,37 +12,35 @@ function Register() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    let isEqual = false
-    let isCorrectlength = false
+    let isEqual = false;
+    let isCorrectlength = false;
     if (password.length <= 2 || password2.length <= 2 || username.length <= 2) {
-      setMessage2("All fields must have minimun lenght of three characters")
-      isCorrectlength = false
+      setMessage2("All fields must have minimun lenght of three characters");
+      isCorrectlength = false;
     } else {
-      setMessage2("")
-      isCorrectlength = true
+      setMessage2("");
+      isCorrectlength = true;
     }
-    console.log(username, password, password2)
+    console.log(username, password, password2);
     if (password === password2) {
-      setMessage("")
-      isEqual = true
-      
-      console.log(password, password2)
+      setMessage("");
+      isEqual = true;
+
+      console.log(password, password2);
     } else {
-      setMessage("Passwords are not equal")
-      isEqual = false
-      
+      setMessage("Passwords are not equal");
+      isEqual = false;
     }
-    console.log(isEqual, isCorrectlength)
-    regUser(isEqual, isCorrectlength)
+    console.log(isEqual, isCorrectlength);
+    regUser(isEqual, isCorrectlength);
   };
 
   const regUser = (isEqual: Boolean, isCorrectlength: Boolean) => {
-    if(isEqual === true && isCorrectlength === true){
-        console.log(2345)
-        //legg inn logikk 
+    if (isEqual === true && isCorrectlength === true) {
+      console.log(2345);
+      //legg inn logikk
     }
-  }
-  
+  };
 
   return (
     <div className='grid grid-cols-1 grid-auto place-items-center'>

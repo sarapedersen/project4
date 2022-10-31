@@ -8,18 +8,30 @@ type Person = {
 }
 
 
+// type Person = {
+//   username: string;
+//   password: string;
+// };
 
 function LogIn() {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(username,password)
-        // setPassword('') 
-        // setUsername('') 
-        // Meteor.loginWithPassword({ username }, password);
-      };
+        console.log(username, password);
+
+        if (username != username) {
+            setMessage("this username isn´t a user, register instead")
+        } else if (password != password) {
+            setMessage("wrong password")
+        } else {
+            setMessage("")
+        }
+    }
+
+  
 
   return (
     <div className='grid grid-cols-1 grid-auto place-items-center'>
@@ -51,8 +63,7 @@ function LogIn() {
             </form>
         </div>
     </div>
-  )
+  );
 }
 
-export default LogIn
-
+export default LogIn;
