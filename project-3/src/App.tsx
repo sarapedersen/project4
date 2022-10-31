@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
 import './App.css'
+import logo from './logo.svg';
 import PaginatedCountryList from './components/PaginatedCountryList'
+import CountryList from './components/CountryList';
 import Header from './components/Header'
 import MainPage from './components/MainPage'
+import Register from './components/Register';
 
 function App() {
 
