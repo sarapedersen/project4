@@ -1,11 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import LogIn from '../components/LogIn'
 
 
 function LogInPage() {
     return (
-        <div className='h-screen bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
+        <div className='h-screen md:bg-[url("./icons/background.svg")] bg-[url("./icons/background_mobile.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
             <LogIn/>
         </div>
     )

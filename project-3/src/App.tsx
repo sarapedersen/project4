@@ -29,7 +29,7 @@ function App() {
         <div className=''>
           <Routes>
             <Route path="/countries" element={<CountryPage/>}/>
-            <Route path="/login" element={<LogInPage/>}/>
+            <Route path="/" element={<LogInPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
         </div>

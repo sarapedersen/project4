@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { countrySearchType } from '../types'
+import { Link } from 'react-router-dom';
+
 
 type inputCountryProps = {
     setCountry: React.Dispatch<React.SetStateAction<string>>
@@ -30,7 +32,7 @@ function Header() {
                 <div className="">
                     <button type="button" className="inline-block absolute top-3 right-2 md:mt-6 md:mb-6 px-6 py-2.5 bg-transparent text-darkTeal md:text-white font-medium text-s leading-tight rounded 
                         hover:bg-gray-900 hover:bg-opacity-10 focus:outline-none focus:ring-0 active:bg-gray-900 active:bg-opacity-20 
-                        transition duration-150 ease-in-out">Log out</button>
+                        transition duration-150 ease-in-out"><Link to='/'>Log out</Link></button>
                 </div>
             </div>
         </div>
