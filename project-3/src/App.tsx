@@ -13,7 +13,10 @@ function App() {
       <div className='min-h-screen'>
         <div className=''>
           <Header/>
-          <MainPage/>
+          
+          <RecoilRoot>
+            <MainPage/>
+          </RecoilRoot>
         </div>
       </div>
     </div>

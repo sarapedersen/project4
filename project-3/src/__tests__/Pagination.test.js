@@ -1,21 +1,18 @@
-import { render, fireEvent, screen } from "@testing-library/react"
-import { RecoilRoot } from "recoil"
-import PaginatedCountryList from "../components/PaginatedCountryList"
+import { render, screen } from '@testing-library/react'
+import Pagination from '../components/Pagination'
 
-//test block
-test("next page", () => {
-    // render the component on virtual dom
-    render(<RecoilRoot>
-             <PaginatedCountryList />
-           </RecoilRoot>)
+const testData = {
+    countriesPerPage: 9,
+    totalCountries: 100,
+    currentPage: 1,
+    totalPages: 10
+}
 
-
-    // const countryList = screen.getByTestId("countries")
-    const rightArrow = screen.getByTestId("rightArrow")
-    const leftArrow = screen.getByTestId("leftArrow")
-
-    fireEvent.click(rightArrow)
-
-    // expect(countryList).toHaveTextContent("Argentina")
+test('check if pagination is limited to just pages with content', () => {
+  render(<Pagination data={testData}/>)
+  
+  const leftArrow = screen.getByAltText('<')
+  leftArrow.click
+  expect(screen.getByTestId('current')).toHaveTextContent('/')
 
 })
