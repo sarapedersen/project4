@@ -34,14 +34,9 @@ const mongoose_1 = require("mongoose");
 const dotenv = __importStar(require("dotenv"));
 const app = (0, express_1.default)();
 const cors = require('cors');
-const PORT = 3010;
-const userSchema = new mongoose_1.Schema({
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-    beenTo: { type: String, required: true }
-});
-const sUser = (0, mongoose_1.model)('User', userSchema);
+const PORT = 3020;
 const countrySchema = new mongoose_1.Schema({
+    string: { type: String, required: true },
     name: { type: String, required: true },
     capital: { type: String, required: true },
     region: { type: String, required: true },
@@ -52,13 +47,24 @@ const countrySchema = new mongoose_1.Schema({
     independent: { type: String, required: true }
 });
 const sCountry = (0, mongoose_1.model)('Country', countrySchema);
+const userSchema = new mongoose_1.Schema({
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    beenTo: { type: [String] }
+});
+const sUser = (0, mongoose_1.model)('User', userSchema);
 const UserType = new graphql_1.GraphQLObjectType({
     name: 'User',
     fields: () => ({
         id: { type: graphql_1.GraphQLID },
         username: { type: graphql_1.GraphQLString },
         password: { type: graphql_1.GraphQLString },
-        beenTo: { type: graphql_1.GraphQLString }
+        beenTo: {
+            type: CountryType,
+            resolve(parent, args) {
+                return sCountry.findById(parent.id);
+            }
+        }
     })
 });
 const CountryType = new graphql_1.GraphQLObjectType({
@@ -139,6 +145,7 @@ mongoose.connect(process.env.DB_CONN_STRING);
 mongoose.connection.once('open', () => {
     console.log('connected to database');
 });
+app.use(cors());
 app.use("/graphql", (0, express_graphql_1.graphqlHTTP)({
     schema,
     graphiql: true,

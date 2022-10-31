@@ -7,42 +7,18 @@ import * as dotenv from "dotenv";
 import { connectToDatabase } from './src/services/database.service';
 import { countriesRouter, usersRouter } from './src/routes/countries.router';
 import { type } from 'os';
+import { CountQueuingStrategy } from 'node:stream/web';
 
 
 const app = Express(); 
 const cors = require('cors');
-const PORT:Number = 3010;
+const PORT:Number = 3020;
 
-
-
-// HARDCODED DATA
-
-// const users = [
-//     { id: 1, username: "thea", password: "thea123", beenTo: "Sverige"},
-//     { id: 2, username: "ingeborg", password: "ingeborg123", beenTo: "Tyskland"},
-//     { id: 3, username: "sara", password: "sara123", beenTo: "Portugal"},
-// ]
 
 
 // THE GRAPHQL SCHEMA
-
-interface User {
-    username: string;
-    password: string; 
-    beenTo: string; 
-}
-
-const userSchema = new Schema({
-    username: { type: String, required: true}, 
-    password: { type: String, required: true}, 
-    beenTo: { type: String, required: true}
-})
-
-const sUser = model<User>('User', userSchema)
-
-
-
 interface Country {
+    id: string; 
     name: string;
     capital: string; 
     region: string; 
@@ -53,6 +29,7 @@ interface Country {
     independent: string; 
 }
 const countrySchema = new Schema({
+    string: {type: String, required: true},
     name: { type: String, required: true}, 
     capital: { type: String, required: true}, 
     region: { type: String, required: true},
@@ -65,7 +42,19 @@ const countrySchema = new Schema({
 
 const sCountry = model<Country>('Country', countrySchema)
 
+interface User {
+    username: string;
+    password: string; 
+    beenTo: [String]; 
+}
 
+const userSchema = new Schema({
+    username: { type: String, required: true}, 
+    password: { type: String, required: true}, 
+    beenTo: {type: [String] }
+})
+
+const sUser = model<User>('User', userSchema)
 
 const UserType = new GraphQLObjectType({
     name: 'User', 
@@ -73,7 +62,12 @@ const UserType = new GraphQLObjectType({
         id: {type: GraphQLID},
         username: {type: GraphQLString},
         password: {type: GraphQLString},
-        beenTo: {type: GraphQLString}
+        beenTo: {
+            type: CountryType,
+            resolve(parent, args) {
+                return sCountry.findById(parent.id);
+            }
+        }
     })
 
 })
@@ -169,8 +163,7 @@ mongoose.connection.once('open', () => {
     console.log('connected to database');
 });
 
-
-
+app.use(cors())
 app.use(
     "/graphql",
     graphqlHTTP({
@@ -178,6 +171,7 @@ app.use(
         graphiql: true,
     })
 )
+
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
 })
