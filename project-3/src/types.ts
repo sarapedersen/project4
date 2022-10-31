@@ -1,9 +1,15 @@
 export interface Country {
+    id: string,
     name: string,
-    flag: string,
+    flagSvg: string,
+    flagPng: string,
     capital: string,
     population: number,
-    continent: string, 
+    region: string, 
     area: number, 
     languages: string[]
+}
+
+export interface countrySearchType {
+    country: string
 }
