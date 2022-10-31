@@ -3,7 +3,10 @@ import './App.css'
 import PaginatedCountryList from './components/PaginatedCountryList'
 import Header from './components/Header'
 import MainPage from './components/MainPage'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import CountryPage from './pages/CountryPage'
+import LogInPage from './pages/LogInPage'
+import RegisterPage from './pages/RegisterPage'
 
 
 function App() {
@@ -19,11 +22,14 @@ function App() {
   
 
   return (
-    <div className='App bg-bgBlue h-full md:bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
+    <div className='App bg-bgBlue h-full '>
       <div className='min-h-screen'>
         <div className=''>
-          <Header/>
-          <MainPage/>
+          <Routes>
+            <Route path="/countries" element={<CountryPage/>}/>
+            <Route path="/login" element={<LogInPage/>}/>
+            <Route path="/register" element={<RegisterPage/>}/>
+          </Routes>
         </div>
       </div>
     </div>
