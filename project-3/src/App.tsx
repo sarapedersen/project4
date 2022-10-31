@@ -20,8 +20,10 @@ function App() {
     <div className='App bg-bgBlue h-full md:bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
       <div className='min-h-screen'>
         <div className=''>
+        <React.Suspense fallback={<p>Loading..</p>}>
           <Header/>
           <MainPage/>
+        </React.Suspense>
         </div>
       </div>
     </div>
