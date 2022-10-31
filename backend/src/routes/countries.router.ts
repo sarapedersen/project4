@@ -54,11 +54,11 @@ usersRouter.get("/", async (_req: Request, res: Response) => {
     }
 });
 
-usersRouter.get("/:id", async (req: Request, res: Response) => {
+usersRouter.get("/:username", async (req: Request, res: Response) => {
     const id = req?.params?.id; 
 
     try {
-        const query = { _id: new ObjectId(id) };
+        const query = { username: new ObjectId(id) };
         if (collections.users != undefined) {
             const user = (await collections.users?.findOne(query)) as unknown as User; 
             if (user) {
