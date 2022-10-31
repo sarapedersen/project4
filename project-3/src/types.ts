@@ -7,3 +7,7 @@ export interface Country {
     area: number, 
     languages: string[]
 }
+
+export interface countrySearchType {
+    country: string
+}
