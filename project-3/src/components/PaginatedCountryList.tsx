@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil'; 
+import React, { useEffect, useState, Suspense } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'; 
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country } from '../types'
-import { countriesState } from '../data/countryData';
+import { countriesState, searchCountryState } from '../data/countryData';
 
 function PaginatedCountryList() {
     const [currentPage, setCurrentPage] = useState(1)
     const [countriesPerPage] = useState(9)
-    const [countries, setcountries] = useRecoilState(countriesState)
-    console.log("paginated countires", countries)
-        // [{
+    // const countries = useRecoilValue(countriesState)
+    const countries = useRecoilValue(searchCountryState)
+    
     //     name: "Norway",
     //     flagSvg: "https://flagcdn.com/no.svg",
     //     flagPng: "https://flagcdn.com/no.svg", 
