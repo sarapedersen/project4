@@ -11,7 +11,7 @@ async function fetchCountries() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: '{"query":"{countries{name, capital, region, population, area, flags_svg, flags_png, independent}}"}'
+      body: '{"query":"{countries{id, name, capital, region, population, area, flags_svg, flags_png, independent}}"}'
     })
         .then((response) => response.json())
         .then((data) => defCountries = data.data.countries)
