@@ -40,12 +40,28 @@ const countrySchema = new Schema({
     independent: { type: String, required: true}
 })
 
+const CountryType = new GraphQLObjectType({
+    name: 'Country', 
+    fields: () => ({
+        id: {type: GraphQLID},
+        name: {type: GraphQLString},
+        capital: {type: GraphQLString},
+        region: {type: GraphQLString},
+        population: {type: GraphQLString},
+        area: {type: GraphQLString},
+        flags_svg: {type: GraphQLString},
+        flags_png: {type: GraphQLString},
+        independent: {type: GraphQLString}
+    })
+
+})
+
 const sCountry = model<Country>('Country', countrySchema)
 
 interface User {
     username: string;
     password: string; 
-    beenTo: [String]; 
+    beenTo: [string]; 
 }
 
 const userSchema = new Schema({
@@ -63,7 +79,7 @@ const UserType = new GraphQLObjectType({
         username: {type: GraphQLString},
         password: {type: GraphQLString},
         beenTo: {
-            type: CountryType,
+            type: new GraphQLList(CountryType),
             resolve(parent, args) {
                 return sCountry.findById(parent.id);
             }
@@ -72,21 +88,6 @@ const UserType = new GraphQLObjectType({
 
 })
 
-const CountryType = new GraphQLObjectType({
-    name: 'Country', 
-    fields: () => ({
-        id: {type: GraphQLID},
-        name: {type: GraphQLString},
-        capital: {type: GraphQLString},
-        region: {type: GraphQLString},
-        population: {type: GraphQLString},
-        area: {type: GraphQLString},
-        flags_svg: {type: GraphQLString},
-        flags_png: {type: GraphQLString},
-        independent: {type: GraphQLString}
-    })
-
-})
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType', 
@@ -116,9 +117,15 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args) {
                 return sCountry.find({});
             }
+        },
+        countriesByName: {
+            type: new GraphQLList(CountryType),
+            args: {searchInput: {type: GraphQLString}},
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i')}}
+                return sCountry.find(countryFilter);
+            }
         }
-
-
     }
 })
 
@@ -131,7 +138,7 @@ const Mutation = new GraphQLObjectType({
                 id: {type: new GraphQLNonNull(GraphQLID)},
                 username: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
-                beenTo: {type: new GraphQLNonNull(GraphQLString)}
+                beenTo: {type: new GraphQLNonNull(new GraphQLList(GraphQLString))}
             },
             resolve(parent, args){
                 let user = new sUser({

@@ -46,6 +46,20 @@ const countrySchema = new mongoose_1.Schema({
     flags_png: { type: String, required: true },
     independent: { type: String, required: true }
 });
+const CountryType = new graphql_1.GraphQLObjectType({
+    name: 'Country',
+    fields: () => ({
+        id: { type: graphql_1.GraphQLID },
+        name: { type: graphql_1.GraphQLString },
+        capital: { type: graphql_1.GraphQLString },
+        region: { type: graphql_1.GraphQLString },
+        population: { type: graphql_1.GraphQLString },
+        area: { type: graphql_1.GraphQLString },
+        flags_svg: { type: graphql_1.GraphQLString },
+        flags_png: { type: graphql_1.GraphQLString },
+        independent: { type: graphql_1.GraphQLString }
+    })
+});
 const sCountry = (0, mongoose_1.model)('Country', countrySchema);
 const userSchema = new mongoose_1.Schema({
     username: { type: String, required: true },
@@ -60,25 +74,11 @@ const UserType = new graphql_1.GraphQLObjectType({
         username: { type: graphql_1.GraphQLString },
         password: { type: graphql_1.GraphQLString },
         beenTo: {
-            type: CountryType,
+            type: new graphql_1.GraphQLList(CountryType),
             resolve(parent, args) {
                 return sCountry.findById(parent.id);
             }
         }
-    })
-});
-const CountryType = new graphql_1.GraphQLObjectType({
-    name: 'Country',
-    fields: () => ({
-        id: { type: graphql_1.GraphQLID },
-        name: { type: graphql_1.GraphQLString },
-        capital: { type: graphql_1.GraphQLString },
-        region: { type: graphql_1.GraphQLString },
-        population: { type: graphql_1.GraphQLString },
-        area: { type: graphql_1.GraphQLString },
-        flags_svg: { type: graphql_1.GraphQLString },
-        flags_png: { type: graphql_1.GraphQLString },
-        independent: { type: graphql_1.GraphQLString }
     })
 });
 const RootQuery = new graphql_1.GraphQLObjectType({
@@ -109,6 +109,14 @@ const RootQuery = new graphql_1.GraphQLObjectType({
             resolve(parent, args) {
                 return sCountry.find({});
             }
+        },
+        countriesByName: {
+            type: new graphql_1.GraphQLList(CountryType),
+            args: { searchInput: { type: graphql_1.GraphQLString } },
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
+                return sCountry.find(countryFilter);
+            }
         }
     }
 });
@@ -121,7 +129,7 @@ const Mutation = new graphql_1.GraphQLObjectType({
                 id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLID) },
                 username: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 password: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                beenTo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+                beenTo: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLString)) }
             },
             resolve(parent, args) {
                 let user = new sUser({
