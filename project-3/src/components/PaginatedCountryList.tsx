@@ -9,6 +9,7 @@ function PaginatedCountryList() {
     const [currentPage, setCurrentPage] = useState(1)
     const [countriesPerPage] = useState(9)
     const [countries, setcountries] = useRecoilState(countriesState)
+    console.log(countries[3].id)
     console.log("paginated countires", countries)
         // [{
     //     name: "Norway",
