@@ -143,6 +143,11 @@ import { Country, defaultUser, User } from '../types';
     default: defaultUser 
   })
 
+  export const beenToList = atom ({
+    key: "beenToList",
+    default: [""]
+  })
+
   export const userLogin = selector({
     key: "userLogin",
     get: async ({get}) => {

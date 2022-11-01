@@ -1,5 +1,5 @@
 export interface Country {
-    id: string,
+    id: string
     name: string,
     flags_svg: string,
     flags_png: string,
