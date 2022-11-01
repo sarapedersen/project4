@@ -8,7 +8,6 @@ import { searchCountryState } from '../data/countryData';
 function PaginatedCountryList() {
     const [currentPage, setCurrentPage] = useState(1)
     const [countriesPerPage] = useState(9)
-    // const countries = useRecoilValue(countriesState)
     const countries = useRecoilValue(searchCountryState)
     
     //     name: "Norway",

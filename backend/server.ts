@@ -30,7 +30,7 @@ interface Country {
     independent: string; 
 }
 const countrySchema = new Schema({
-    string: {type: String, required: true},
+    id: {type: String, required: true},
     name: { type: String, required: true}, 
     capital: { type: String, required: true}, 
     region: { type: String, required: true},
@@ -40,7 +40,6 @@ const countrySchema = new Schema({
     flags_png: { type: String, required: true},
     independent: { type: String, required: true}
 })
-
 const CountryType = new GraphQLObjectType({
     name: 'Country', 
     fields: () => ({
@@ -54,40 +53,32 @@ const CountryType = new GraphQLObjectType({
         flags_png: {type: GraphQLString},
         independent: {type: GraphQLString}
     })
-
 })
-
 const sCountry = model<Country>('Country', countrySchema)
 
+
 interface User {
+    id: string;
     username: string;
     password: string; 
     beenTo: [string]; 
 }
-
 const userSchema = new Schema({
     username: { type: String, required: true}, 
     password: { type: String, required: true}, 
-    beenTo: {type: [String] }
+    beenTo: {type: [String], required: true }
 })
-
-const sUser = model<User>('User', userSchema)
-
 const UserType = new GraphQLObjectType({
     name: 'User', 
     fields: () => ({
-        id: {type: GraphQLID},
         username: {type: GraphQLString},
         password: {type: GraphQLString},
         beenTo: {
-            type: new GraphQLList(CountryType),
-            resolve(parent, args) {
-                return sCountry.findById(parent.id);
-            }
+            type: new GraphQLList(GraphQLString),
         }
-    })
-
+    })  
 })
+const sUser = model<User>('User', userSchema)
 
 
 const RootQuery = new GraphQLObjectType({
@@ -98,6 +89,14 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
                 return sUser.findById(args.id);
+            }
+        },
+        userLogIn: {
+            type: UserType,
+            args: {username: {type: GraphQLString}, password: {type: GraphQLString}},
+            resolve(parent, args) {
+                const loginFilter = { username: { $regex: new RegExp(args.user, 'i')}}
+                return sUser.findOne({username: args.username, password: args.password});
             }
         },
         users: {
@@ -127,13 +126,7 @@ const RootQuery = new GraphQLObjectType({
                 return sCountry.find(countryFilter).sort({name: args.sorting});
             }
         },
-        sortCountries: {
-            type: new GraphQLList(CountryType),
-            args: {sorting: {type: GraphQLString}},
-            resolve(parent, args) {
-                return sCountry.find({}).sort({name: args.sorting});
-            }
-        }
+        
     }
 })
 
@@ -143,19 +136,35 @@ const Mutation = new GraphQLObjectType({
         addUser:{
             type: UserType, 
             args:{
-                id: {type: new GraphQLNonNull(GraphQLID)},
                 username: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
-                beenTo: {type: new GraphQLNonNull(new GraphQLList(GraphQLString))}
+                beenTo: {type: new GraphQLList(GraphQLString)}
             },
             resolve(parent, args){
                 let user = new sUser({
-                    id: args.id,
                     username: args.username,
                     password: args.password,
                     beenTo: args.beenTo
                 })
                 return user.save()
+            }
+        }, 
+        updateUser: {
+            type: UserType, 
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLID)},
+                // username: {type: new GraphQLNonNull(GraphQLString)},
+                // password: {type: new GraphQLNonNull(GraphQLString)},
+                beenTo: {type: new GraphQLList(GraphQLString)}
+            }, 
+            resolve(parent, args){
+                // let user = new sUser({
+                //     id: args.id,
+                //     username: args.username,
+                //     password: args.password,
+                //     beenTo: args.beenTo
+                // })
+                return sUser.findOneAndUpdate({"_id": args.id}, {"$set": {beenTo: args.beenTo}}, {"new": true})
             }
         }
     }
