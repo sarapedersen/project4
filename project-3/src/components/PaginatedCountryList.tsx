@@ -26,8 +26,6 @@ function PaginatedCountryList() {
     }, [currentPage]) 
 
 
-    
-    
     // Pagination inpiration from https://blog.logrocket.com/pagination-components-react-tailwind-css/
     const indexOfLastCountry = currentPage * countriesPerPage;
     const indexOfFirstPost = indexOfLastCountry - countriesPerPage;
