@@ -12,7 +12,6 @@ import { ObjectId } from "mongodb";
         population: number,
         continent: string, 
         area: number, 
-        languages: string[], 
         ObjectId?: ObjectId
     }
 

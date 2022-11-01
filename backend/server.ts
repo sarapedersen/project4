@@ -80,10 +80,7 @@ const UserType = new GraphQLObjectType({
         username: {type: GraphQLString},
         password: {type: GraphQLString},
         beenTo: {
-            type: new GraphQLList(CountryType),
-            resolve(parent, args) {
-                return sCountry.findById(parent.id);
-            }
+            type: new GraphQLList(GraphQLString),
         }
     })
 
@@ -98,6 +95,14 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
                 return sUser.findById(args.id);
+            }
+        },
+        userLogIn: {
+            type: UserType,
+            args: {username: {type: GraphQLString}, password: {type: GraphQLString}},
+            resolve(parent, args) {
+                const loginFilter = { username: { $regex: new RegExp(args.user, 'i')}}
+                return sUser.findOne({username: args.username, password: args.password});
             }
         },
         users: {
@@ -127,13 +132,7 @@ const RootQuery = new GraphQLObjectType({
                 return sCountry.find(countryFilter).sort({name: args.sorting});
             }
         },
-        sortCountries: {
-            type: new GraphQLList(CountryType),
-            args: {sorting: {type: GraphQLString}},
-            resolve(parent, args) {
-                return sCountry.find({}).sort({name: args.sorting});
-            }
-        }
+        
     }
 })
 
@@ -146,7 +145,7 @@ const Mutation = new GraphQLObjectType({
                 id: {type: new GraphQLNonNull(GraphQLID)},
                 username: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
-                beenTo: {type: new GraphQLNonNull(new GraphQLList(GraphQLString))}
+                beenTo: {type: new GraphQLNonNull(GraphQLString)}
             },
             resolve(parent, args){
                 let user = new sUser({

@@ -74,10 +74,7 @@ const UserType = new graphql_1.GraphQLObjectType({
         username: { type: graphql_1.GraphQLString },
         password: { type: graphql_1.GraphQLString },
         beenTo: {
-            type: new graphql_1.GraphQLList(CountryType),
-            resolve(parent, args) {
-                return sCountry.findById(parent.id);
-            }
+            type: new graphql_1.GraphQLList(graphql_1.GraphQLString),
         }
     })
 });
@@ -89,6 +86,14 @@ const RootQuery = new graphql_1.GraphQLObjectType({
             args: { id: { type: graphql_1.GraphQLID } },
             resolve(parent, args) {
                 return sUser.findById(args.id);
+            }
+        },
+        userLogIn: {
+            type: UserType,
+            args: { username: { type: graphql_1.GraphQLString }, password: { type: graphql_1.GraphQLString } },
+            resolve(parent, args) {
+                const loginFilter = { username: { $regex: new RegExp(args.user, 'i') } };
+                return sUser.findOne({ username: args.username, password: args.password });
             }
         },
         users: {
@@ -118,13 +123,6 @@ const RootQuery = new graphql_1.GraphQLObjectType({
                 return sCountry.find(countryFilter).sort({ name: args.sorting });
             }
         },
-        sortCountries: {
-            type: new graphql_1.GraphQLList(CountryType),
-            args: { sorting: { type: graphql_1.GraphQLString } },
-            resolve(parent, args) {
-                return sCountry.find({}).sort({ name: args.sorting });
-            }
-        }
     }
 });
 const Mutation = new graphql_1.GraphQLObjectType({
@@ -136,7 +134,7 @@ const Mutation = new graphql_1.GraphQLObjectType({
                 id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLID) },
                 username: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 password: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                beenTo: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLString)) }
+                beenTo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
             },
             resolve(parent, args) {
                 let user = new sUser({

@@ -1,12 +1,12 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { searchCountryState, searchCountries, searchState } from '../data/countryData';
-import { countrySearchType, Country } from '../types'
+import { searchCountryState, searchCountries, searchState, userState } from '../data/countryData';
 
 
 function Header() {
     const [query, setQuery] = useState("")
     const setSearchCountries = useSetRecoilState(searchState)
+
 
     return (
         <div className="head">
