@@ -7,7 +7,13 @@ export interface Country {
     population: number,
     region: string, 
     area: number, 
-    languages: string[]
+}
+
+export interface User {
+    id: string, 
+    username: string, 
+    password: string, 
+    beenTo: string[]
 }
 
 export interface countrySearchType {
