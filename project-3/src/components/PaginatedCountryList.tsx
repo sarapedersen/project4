@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country } from '../types'
-import { searchCountryState } from '../data/countryData';
+import { currentUser, searchCountryState } from '../data/countryData';
 
 interface props  {
     filtration: string
@@ -14,18 +14,8 @@ function PaginatedCountryList({filtration}: props) {
     const [countriesPerPage] = useState(9)
     const countries = useRecoilValue(searchCountryState)
     const [hasBeen, sethasBeen] =useState<Boolean>(false)
-    const [myCountries, setMyCountries] = useState<Country[]>([
-        {
-            area : 652230,
-            capital : "Kabul",
-            flags_png : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png",
-            flags_svg : "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg",
-            id : "635d24b0a125440a4dc9d484",
-            name : "Afghanistan",
-            population : 40218234,
-            region : "Asia"
-        }
-    ])
+    const [myCountries, setMyCountries] = useState<string[]>([""])
+    // console.log("paginated countires", countries)
 
     
 
@@ -52,8 +42,10 @@ function PaginatedCountryList({filtration}: props) {
                 countries={filtration === 'all' ? currentCountriesAll : currentCountriesMine}
                 showInfo={showInfo}
                 setshowInfo={setshowInfo} 
-                myCountries={myCountries}
-                setMyCountries={setMyCountries}
+                setHasBeen = {sethasBeen}
+                hasBeen = {hasBeen}
+                myCountries = {myCountries}
+                setMyCountries = {setMyCountries}
                 />
             <Pagination
                 countriesPerPage={countriesPerPage}

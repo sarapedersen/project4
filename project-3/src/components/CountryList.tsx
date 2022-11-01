@@ -1,45 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { Country } from "../types";
+import { Country, User } from "../types";
 import earth_pale from "../icons/earth_pale.svg";
 import earth from "../icons/earth.svg";
 import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { currentUser, updateUserState } from "../data/countryData";
 
 interface props {
   countries: Country[];
   showInfo: Country | null | undefined;
   setshowInfo: React.Dispatch<React.SetStateAction<Country | null | undefined>>;
-  setHasBeen: React.Dispatch<React.SetStateAction<Boolean>>;
-  hasBeen: Boolean;
-  myCountries: string[];
-  setMyCountries: React.Dispatch<React.SetStateAction<string[]>>;
 }
 let myCountri: string[] = [];
+
+
 
 function CountryList({
   countries,
   showInfo,
   setshowInfo,
-  setHasBeen,
-  hasBeen,
-  setMyCountries,
-  myCountries,
 }: props) {
+  
+
+  const current = useRecoilValue(currentUser)
+  const update = useSetRecoilState(updateUserState)
+  myCountri = [...current.beenTo]
+
+  //current.beenTo.forEach(element => myCountri.push(element))
   function handleClick(c: Country) {
     // hasBeen? setHasBeen(false) : setHasBeen(true)
+    
     const index = myCountri.indexOf(c.id);
     console.log(c);
+    console.log("mycountri", myCountri)
     console.log(myCountri.includes(c.id), "er det her")
     if (index === -1) {
       console.log(index, "c.id");
       myCountri.push(c.id);
-      setHasBeen(true);
       console.log(myCountri, "11111111111111111111111");
     } else {
       myCountri.splice(index, 1);
-      setHasBeen(false);
       console.log(myCountri, "222222222222222222222222");
     }
+    console.log("mycountri igjen etter: ", myCountri)
+    let tempList = myCountri
+    let upUser: User = {
+      username: current.username,
+      id: current.id,
+      password: current.password,
+      beenTo: tempList
+    }
+    update(upUser)
   }
   return (
     // onClick={() => handleClick(hasBeen)}
