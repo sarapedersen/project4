@@ -11,164 +11,10 @@ function PaginatedCountryList() {
     const countries = useRecoilValue(searchCountryState)
     const [hasBeen, sethasBeen] =useState<Boolean>(false)
     const [myCountries, setMyCountries] = useState<string[]>([""])
-    console.log("paginated countires", countries)
+    // console.log("paginated countires", countries)
 
 
 
-    //     name: "Norway",
-    //     flagSvg: "https://flagcdn.com/no.svg",
-    //     flagPng: "https://flagcdn.com/no.svg", 
-    //     capital: "Oslo",
-    //     population: 5425270,
-    //     region: "Europe",
-    //     area: 385207,
-    //     languages: ["Norwegian"]
-    // },
-    // {
-    //     name: "Afghanistan",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Oman",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // {
-    //     name: "Sweden",
-    //     flag: "https://flagcdn.com/se.svg",
-    //     capital: "Stockholm",
-    //     population: 10481937,
-    //     continent: "Europe",
-    //     area: 450295,
-    //     languages: ["Swedish"]
-    // },
-    // ])
     const totalPages = countries.length / countriesPerPage
 
     const [showInfo, setshowInfo] = useState<Country | null>()
@@ -179,17 +25,9 @@ function PaginatedCountryList() {
         setshowInfo(null)
     }, [currentPage]) 
 
-    // useEffect(() => {
-    //     sethasBeen(hasBeen? false : true)
-    // },[onclick]
-    // )
-
 
     
     
-    
-
-
     // Pagination inpiration from https://blog.logrocket.com/pagination-components-react-tailwind-css/
     const indexOfLastCountry = currentPage * countriesPerPage;
     const indexOfFirstPost = indexOfLastCountry - countriesPerPage;

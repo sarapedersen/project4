@@ -7,6 +7,7 @@ export interface Country {
     population: number,
     region: string, 
     area: number
+    hasBeen: Boolean
 }
 
 export interface countrySearchType {
