@@ -4,7 +4,7 @@ import MainPage from '../components/MainPage'
 
 function CountryPage() {
     return (
-        <div className='h-full md:bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
+        <div className='h-screen md:bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
             <Header/>
             <MainPage/>
         </div>
