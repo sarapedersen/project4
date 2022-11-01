@@ -62,7 +62,7 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
             <p className='py-2 text-right col-start-2'>{showInfo.capital}</p>
             
               <p className="py-2 text-left font-bold col-start-1">Population:</p>
-              <p className='py-2 text-right col-start-2'>{showInfo.population}</p>
+              <p className='py-2 text-right col-start-2'>{showInfo.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</p>
             
             
               <p className="py-2 text-left font-bold col-start-1">Continent:</p>
@@ -70,7 +70,8 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
             
             
               <p className="py-2 text-left font-bold col-start-1">Area:</p>
-              <p className='py-2 text-right col-start-2'>{showInfo.area}</p>
+
+              <p className='py-2 text-right col-start-2'>{showInfo.area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} km²</p>
             
           </div>
         </div> :  // If showInfo is null, just show the country names in a list
@@ -78,8 +79,9 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
           <ul className="text-gray-900 divide-y divide-bgBlue w-full">
             {countries && countries.map((c, index) => 
               <li key={index} className="px-6 py-3 rounded-b-lg grid grid-cols-5 place-items-center">
-                <img onClick={() => handleClick(hasBeen,c)} src={hasBeen? earth : earth_pale} alt='earth' className="mx-3 w-7"/>
-                <p onClick={() => setshowInfo(c)} className='text-lg col-span-3 hover:cursor-pointer'>{c.name}</p>
+
+                <img src={earth_pale} alt='earth' className="mx-3 w-7"/>
+                <p onClick={() => setshowInfo(c)} className='text-center text-lg col-span-3 hover:cursor-pointer'>{c.name}</p>
                 <img src={arrow_down} alt='\/' onClick={() => setshowInfo(c)} className="mx-3 my-2 w-6 hover:cursor-pointer"/>
               </li>)}
           </ul>
