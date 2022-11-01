@@ -1,15 +1,15 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import {  useRecoilValue, useSetRecoilState } from 'recoil';
-import { allUsernames, userRegisterPage } from "../data/countryData";
-import { User } from "../types"
+import { allUsernames, currentUser, userRegisterPage } from "../data/userData";
+import { defaultUser, User } from "../types"
 
 
 
 function Register() {
 	const user = useSetRecoilState(userRegisterPage);
 	const usernames = useRecoilValue(allUsernames)
-	console.log("username: ", usernames)
+	const userValue = useRecoilValue(currentUser)
   	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -58,9 +58,17 @@ function Register() {
 				id: ""
 			}
 			user(newUser)
-			navigate("/")
+			console.log(userValue)
 		}
 	}
+
+	useEffect(() => {
+		console.log("logger", userValue)
+		if (userValue.id !== "") {
+			user(defaultUser)
+            navigate("/countries")
+        } 
+	}, [userValue])
 
   	return (
 		<div className='grid grid-cols-1 grid-auto place-items-center'>

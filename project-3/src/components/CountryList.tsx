@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Country, User } from "../types";
 import earth_pale from "../icons/earth_pale.svg";
 import earth from "../icons/earth.svg";
 import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { currentUser, updateUserState } from "../data/countryData";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { currentUser, updateUserState } from "../data/userData";
 
 interface props {
   countries: Country[];
@@ -13,8 +13,6 @@ interface props {
   setshowInfo: React.Dispatch<React.SetStateAction<Country | null | undefined>>;
 }
 let myCountri: string[] = [];
-
-
 
 function CountryList({
   countries,
@@ -27,23 +25,14 @@ function CountryList({
   const update = useSetRecoilState(updateUserState)
   myCountri = [...current.beenTo]
 
-  //current.beenTo.forEach(element => myCountri.push(element))
   function handleClick(c: Country) {
-    // hasBeen? setHasBeen(false) : setHasBeen(true)
     
     const index = myCountri.indexOf(c.id);
-    console.log(c);
-    console.log("mycountri", myCountri)
-    console.log(myCountri.includes(c.id), "er det her")
     if (index === -1) {
-      console.log(index, "c.id");
       myCountri.push(c.id);
-      console.log(myCountri, "11111111111111111111111");
     } else {
       myCountri.splice(index, 1);
-      console.log(myCountri, "222222222222222222222222");
     }
-    console.log("mycountri igjen etter: ", myCountri)
     let tempList = myCountri
     let upUser: User = {
       username: current.username,
@@ -54,7 +43,6 @@ function CountryList({
     update(upUser)
   }
   return (
-    // onClick={() => handleClick(hasBeen)}
     <div className="body">
       <div className="flex justify-center mt-10 mb-10">
         {showInfo ? ( // If showInfo has a country then show info about the chosen country
@@ -113,6 +101,7 @@ function CountryList({
         ) : (
           <div className="bg-white rounded-lg  w-72 text-gray-900 md:w-2/4">
             <ul className="text-gray-900 divide-y divide-bgBlue w-full">
+              {/* Maps through all countries and displays country name, expand arrow and check box  */}
               {countries &&
                 countries.map((c, index) => (
                   <li

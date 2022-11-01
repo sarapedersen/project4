@@ -1,4 +1,3 @@
-import React from 'react'
 import arrow_left from '../icons/arrow_left.svg'
 import arrow_right from '../icons/arrow_right.svg'
 
@@ -20,6 +19,7 @@ function Pagination(data: props) {
     return (
         <div>
             <nav aria-label='Pagination'>
+                {/* Left and right arrows to paginate thorugh pages, and number of pages */}
                 <div className='flex justify-center'>
                     <div className='grid grid-cols-3 place-items-center pb-10 w-60'>
                         <a onClick={handleBackwardClick} href='#/countries'>

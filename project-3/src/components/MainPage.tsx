@@ -1,7 +1,7 @@
-import { lstat } from 'fs'
 import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
-import { sortState, currentUser} from '../data/countryData';
+import { sortState} from '../data/countryData';
+import { currentUser} from '../data/userData';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from "react-router-dom"
 
@@ -10,10 +10,8 @@ function MainPage() {
     const [filtration, setFiltration] = useState<string>("all")
     const [sort, setSort] = useRecoilState(sortState)
     const userValue = useRecoilValue(currentUser)
-    console.log(userValue)
 
     function handleClick(event: React.ChangeEvent<HTMLSelectElement>) {
-        console.log(event.target.value)
         setSort(event.target.value)
     }
 
@@ -26,7 +24,7 @@ function MainPage() {
 
 
     return (
-        <div className='grid grid-cols-1 grid-auto '>
+        <div tabIndex={0} className='grid grid-cols-1 grid-auto '>
 
             {/* Filtration */}
             <div className='justify-self-center cursor-pointer'>
