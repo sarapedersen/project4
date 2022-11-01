@@ -3,33 +3,9 @@ import { atom, selector } from "recoil";
 import { Country } from '../types';
 
 
-async function fetchAllCountries() {
+    export async function searchCountries(searchInput: string, sortInput: string) {
     let defCountries: Country[] = []
-    console.log("howrhgowrgfo")
-    await fetch('http://localhost:3020/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: '{"query":"{countries{id, name, capital, region, population, area, flags_svg, flags_png, independent}}"}'
-    })
-        .then((response) => response.json())
-        .then((data) => defCountries = data.data.countries)
-    console.log(defCountries)
-    return defCountries
-  }
-  
-  export const countriesState = atom({
-    key: "countriesState",
-    default: fetchAllCountries()
-  });
-
-
-  export async function searchCountries(searchInput: string) {
-    let defCountries: Country[] = []
-    let noe = `query {countriesByName(searchInput: "${searchInput}") {id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
-
-    console.log("howrhgowrgfo")
+    let noe = `query {countriesByName(searchInput: "${searchInput}", sorting: "${sortInput}"){id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
       headers: {
@@ -47,15 +23,20 @@ async function fetchAllCountries() {
     key: "searchState",
     default: ""
   });
+
+  export const sortState = atom({
+    key: "sortState",
+    default: "asc"
+  });
   
   export const searchCountryState = selector({
     key: "searchCountryState",
     get: async ({get}) => {
       const filter = get(searchState)
-      const list = get(countriesState)
+      const sort = get(sortState)
       if (filter !== "") {
-        return await searchCountries(filter)
+        return await searchCountries(filter, sort)
       } 
-      return await list
+      return await searchCountries("", sort)
     }
   });

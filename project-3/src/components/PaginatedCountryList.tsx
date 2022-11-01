@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country } from '../types'
-import { countriesState, searchCountryState } from '../data/countryData';
+import { searchCountryState } from '../data/countryData';
 
 function PaginatedCountryList() {
     const [currentPage, setCurrentPage] = useState(1)

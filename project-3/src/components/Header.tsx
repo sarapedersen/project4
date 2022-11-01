@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { countriesState, searchCountryState, searchCountries, searchState } from '../data/countryData';
+import { searchCountryState, searchCountries, searchState } from '../data/countryData';
 import { countrySearchType, Country } from '../types'
 
 

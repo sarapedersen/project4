@@ -112,10 +112,17 @@ const RootQuery = new graphql_1.GraphQLObjectType({
         },
         countriesByName: {
             type: new graphql_1.GraphQLList(CountryType),
-            args: { searchInput: { type: graphql_1.GraphQLString } },
+            args: { searchInput: { type: graphql_1.GraphQLString }, sorting: { type: graphql_1.GraphQLString } },
             resolve(parent, args) {
                 const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
-                return sCountry.find(countryFilter);
+                return sCountry.find(countryFilter).sort({ name: args.sorting });
+            }
+        },
+        sortCountries: {
+            type: new graphql_1.GraphQLList(CountryType),
+            args: { sorting: { type: graphql_1.GraphQLString } },
+            resolve(parent, args) {
+                return sCountry.find({}).sort({ name: args.sorting });
             }
         }
     }
