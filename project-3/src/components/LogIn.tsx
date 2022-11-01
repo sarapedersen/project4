@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { createContext, useContext, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { searchCountryState, usersBeenTo, userState } from '../data/countryData'
+import { User } from '../types'
 
 
 
@@ -11,24 +14,31 @@ type Person = {
 }
 
 function LogIn() {
+    const navigate = useNavigate(); 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
-    const [correctUser, setCorrectUser] = useState<Boolean>(false)
+    const setUserState = useSetRecoilState(userState)
+    const userCredentials = useRecoilValue(usersBeenTo)
 
-    const submit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log(username, password)
-
-        if (username != "Thea") {
-            setMessage("Username does not exist. Check spelling and try again.")
-        } else if (password != "password1212") {
-            setMessage("Wrong password. Check spelling and try again.")
-        } else {
-            setMessage("")
-            setCorrectUser(true)
-        } 
+    const submit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        const inputCredentials: User = {
+            username: username, 
+            password: password, 
+            id: "",
+            beenTo: []
+        }
+        setUserState(inputCredentials)     
     }
+
+
+    useEffect(() => {
+        if (userCredentials !== null) {
+            console.log("inni if funksjonen", userCredentials)
+            navigate("/")
+        }
+    }, [userCredentials])
 
     
     return (
@@ -54,7 +64,7 @@ function LogIn() {
                             onChange={e => setPassword(e.target.value)}/>
                         </div>
                         <p className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
-                        {correctUser ? <Link to="/"><button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button></Link> : <button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button>}
+                        <button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button>
                     </div>
                     <div>
                         <p className='text-center mt-8'>Not a member? <Link to='/register' className='text-darkTeal hover:underline'>Register now</Link></p>
