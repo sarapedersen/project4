@@ -17,15 +17,6 @@ interface props {
 }
 let myCountri: string[] = [];
 
-// function contain(countries : string[], country : Country){
-//   if(countries.includes(country.id)){
-//     console.log("returnerer true")
-//     return true
-//   } else{
-//     console.log("returnerer false")
-//     return false
-//   }
-// }
 
 function CountryList({
   countries,
@@ -36,7 +27,9 @@ function CountryList({
   setMyCountries,
   myCountries,
 }: props) {
+
   function handleClick(c: Country) {
+    
     // hasBeen? setHasBeen(false) : setHasBeen(true)
     const index = myCountri.indexOf(c.id);
     console.log(c);
@@ -50,9 +43,10 @@ function CountryList({
       setHasBeen(false);
       console.log(myCountri, "222222222222222222222222");
     }
-    return index;
-  }
-    return (
+
+
+
+    } return (
       // onClick={() => handleClick(hasBeen)}
       <div className="body">
         <div className="flex justify-center mt-10 mb-10">
