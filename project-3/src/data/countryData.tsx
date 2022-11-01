@@ -40,7 +40,7 @@ import { Country, defaultUser, User } from '../types';
     })
         .then((response) => response.json())
         .then((data) => user = data.data.userLogIn)
-    console.log("user from fetch", user)
+    console.log("findUser", user)
     return user
   }
 
@@ -49,7 +49,7 @@ import { Country, defaultUser, User } from '../types';
 
   export async function updateUser(id: string, beenTo: string[]) {
     let user: User = defaultUser; 
-    let noe = `mutation{updateUser(id: "${id}", beenTo:${beenTo}){beenTo}}`
+    let noe = `mutation{updateUser(id: "${id}", beenTo:[${beenTo}]){id, username, password, beenTo}}`
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
       headers: {
@@ -59,7 +59,7 @@ import { Country, defaultUser, User } from '../types';
     })
         .then((response) => response.json())
         .then((data) => user = data.data.updateUser)
-    console.log("user from fetch", user)
+    console.log("updateUser", user)
     return user
   }
 
@@ -68,7 +68,7 @@ import { Country, defaultUser, User } from '../types';
   
   export async function addUser(username: string, password: string, beenTo: string[]) {
     let user: User = defaultUser; 
-    let noe = `mutation{addUser(username:"${username}", password:"${password}" beenTo: ${beenTo}){username, beenTo, password}}`
+    let noe = `mutation{addUser(username:"${username}", password:"${password}" beenTo: [${beenTo}]){username, beenTo, password}}`
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
       headers: {
@@ -78,7 +78,7 @@ import { Country, defaultUser, User } from '../types';
     })
         .then((response) => response.json())
         .then((data) => user = data.data.addUser)
-    console.log("user from fetch", user)
+    console.log("addUser", user)
     return user
   }
   
@@ -96,7 +96,7 @@ import { Country, defaultUser, User } from '../types';
     })
         .then((response) => response.json())
         .then((data) => user = data.data.users)
-    console.log("user from fetch", user)
+    console.log("getAllUsername", user)
     return user
   }
 
@@ -138,17 +138,40 @@ import { Country, defaultUser, User } from '../types';
 
   // RECOIL - USERS (Login)
 
-  export const userState = atom ({
-    key: "userState",
+  export const userLoginPage = atom ({
+    key: "userLoginPage",
     default: defaultUser 
   })
 
-  export const userLogin = selector({
+  export const userRegisterPage = atom ({
+    key: "userRegisterPage",
+    default: defaultUser 
+  })
+
+  export const updateUserState = atom({
+    key: "updateUserState", 
+    default: defaultUser 
+  })
+
+  export const currentUser = selector({
     key: "userLogin",
     get: async ({get}) => {
-      const loginCredentials: User = get(userState)
-      const user = await findUser(loginCredentials.username, loginCredentials.password)
-      return user
+      const update: User = get(updateUserState)
+      if (update.id !== "") {
+        const user = await updateUser(update.id, update.beenTo)
+        return user
+      }
+      const loginPage: User = get(userLoginPage)
+      const registerPage: User = get(userRegisterPage)
+      console.log("loginPage", loginPage)
+      if (loginPage.username !== "") {
+        const user = await findUser(loginPage.username, loginPage.password)
+        return user
+      } else if (registerPage.username !== ""){
+        const user = await addUser(registerPage.username, registerPage.password, [])
+        return user
+      }
+      return defaultUser
     }
   });
 
@@ -157,8 +180,8 @@ import { Country, defaultUser, User } from '../types';
   export const updateBeenTo = selector({ // NOT TESTED KOMPIS
     key: "updateBeenTo",
     get: async ({get}) => {
-      const currentUser: User = get(userState)
-      const answere = await updateUser(currentUser.id, currentUser.beenTo)
+      const current: User = get(currentUser)
+      const answere = await updateUser(current.id, current.beenTo)
       if (answere === null) {
         return false
       }

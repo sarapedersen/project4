@@ -1,12 +1,14 @@
 import { lstat } from 'fs'
 import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
-import { sortState} from '../data/countryData';
-import { useRecoilState } from 'recoil';
+import { sortState, currentUser} from '../data/countryData';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 function MainPage() {
     const [filtration, setFiltration] = useState<String>("all")
     const [sort, setSort] = useRecoilState(sortState)
+    const userValue = useRecoilValue(currentUser)
+    console.log(userValue)
 
     function handleClick(event: React.ChangeEvent<HTMLSelectElement>) {
         console.log(event.target.value)
@@ -46,3 +48,5 @@ function MainPage() {
 
 
 export default MainPage
+
+
