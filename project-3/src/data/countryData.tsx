@@ -65,7 +65,27 @@ import { Country, defaultUser, User } from '../types';
   }
 
 
-  // Make new user 
+  // Make new user
+  
+  
+  // Fetch all usernames
+
+  export async function getAllUsername() {
+    let user: User = defaultUser; 
+    let noe = `query{users{username}}`
+    await fetch('http://localhost:3020/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: noe})
+    })
+        .then((response) => response.json())
+        .then((data) => user = data.data.users)
+    console.log("user from fetch", user)
+    return user
+  }
+
 
 
 
@@ -94,6 +114,13 @@ import { Country, defaultUser, User } from '../types';
     }
   });
 
+
+  // RECOIL - USERS (username)
+
+  export const allUsernames = atom ({
+    key: "allUsernames", 
+    default: getAllUsername()
+  })
 
   // RECOIL - USERS (Login)
 
