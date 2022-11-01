@@ -15,17 +15,33 @@ interface props {
   myCountries: string[]
   setMyCountries:React.Dispatch<React.SetStateAction<string[]>>
 }
-
+const myCountri: string[] = []
 
 
 function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, setMyCountries, myCountries}: props) {
   function handleClick(hasBeen :Boolean, c : Country ){
     hasBeen? setHasBeen(false) : setHasBeen(true)
+    const index = myCountri.indexOf(c.name)
+    console.log(index, "hhhhhdhdhhhdhdhhdhdhdhdhdhdhdhdhd")
+    if (index === -1) {
+      myCountri.push(c.name)
+      console.log(myCountri, "11111111111111111111111111")
+    } else {
+      console.log("index", index)
+      myCountri.slice(index, 1)
+      myCountri.slice(index, 1)
+      console.log(myCountri, "222222222222222222222222222222222")
+    }
+      // setMyCountries(myCountries => [...myCountries,c.name])
+    // }
+    
+    
+    
+
     console.log("heeeiiiiiieieieieieieiieieieieieieieiieieieie", c.name, c.id)
-    setMyCountries(myCountries => [...myCountries,c.id])
+    // console.log(myCountries.includes(c.id), "dettttttettetetetetetetettetetetettet")
     
-    
-    console.log(myCountries)
+    console.log(myCountri, "12345678901234567890123456789")
   }
   return (
     // onClick={() => handleClick(hasBeen)}
@@ -55,9 +71,6 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
             
               <p className="py-2 text-left font-bold col-start-1">Area:</p>
               <p className='py-2 text-right col-start-2'>{showInfo.area}</p>
-
-              <p className="py-2 text-left font-bold col-start-1">Main languages:</p>
-              <p className="py-2 text-right col-start-2">{showInfo.languages.map(lan => <p>{lan}</p>)}</p>
             
           </div>
         </div> :  // If showInfo is null, just show the country names in a list

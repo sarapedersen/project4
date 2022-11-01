@@ -10,7 +10,7 @@ function PaginatedCountryList() {
     const [countriesPerPage] = useState(9)
     const countries = useRecoilValue(searchCountryState)
     const [hasBeen, sethasBeen] =useState<Boolean>(false)
-    const [myCountries, setMyCountries] = useState<string[]>([])
+    const [myCountries, setMyCountries] = useState<string[]>([""])
     console.log("paginated countires", countries)
 
 

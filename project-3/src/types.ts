@@ -6,8 +6,7 @@ export interface Country {
     capital: string,
     population: number,
     region: string, 
-    area: number, 
-    languages: string[]
+    area: number
 }
 
 export interface countrySearchType {
