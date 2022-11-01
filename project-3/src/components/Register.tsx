@@ -58,7 +58,7 @@ function Register() {
 				id: ""
 			}
 			user(newUser)
-			navigate("/login")
+			navigate("/")
 		}
 	}
 
