@@ -26,3 +26,14 @@ export const defaultUser: User = {
     password: "",
     beenTo: []
   }
+
+export const defaultCountry: Country = {
+    id: "",
+    name: "",
+    flags_svg: "",
+    flags_png: "",
+    capital: "",
+    population: 0,
+    region: "",
+    area: 0
+  }

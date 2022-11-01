@@ -1,9 +1,9 @@
-import React, { useEffect, useState, Suspense, SetStateAction } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'; 
+import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'; 
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country } from '../types'
-import { countriesBeenTo, currentUser, searchCountryState } from '../data/countryData';
+import { countriesBeenTo, searchCountryState } from '../data/countryData';
 
 interface props  {
     filtration: string
@@ -13,17 +13,9 @@ function PaginatedCountryList({filtration}: props) {
     const [currentPage, setCurrentPage] = useState(1)
     const [countriesPerPage] = useState(9)
     const countries = useRecoilValue(searchCountryState)
-    const [hasBeen, sethasBeen] =useState<Boolean>(false)
-    const usersCountries = useRecoilValue(countriesBeenTo)
-    const [myCountries, setMyCountries] = useState<string[]>([""])
-    // console.log("paginated countires", countries)
-
-    
-
+    const usersCountries = useRecoilValue(countriesBeenTo)    
     const totalPages = countries.length / countriesPerPage
-
     const [showInfo, setshowInfo] = useState<Country | null>()
-    // const [showMyCountries, setMyCountries] = useState<Country[]>()
 
     // removes country info on page change
     useEffect(() => {
