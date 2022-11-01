@@ -19,7 +19,6 @@ const PORT:Number = 3020;
 
 // THE GRAPHQL SCHEMA
 interface Country {
-    id: string; 
     name: string;
     capital: string; 
     region: string; 
@@ -30,7 +29,6 @@ interface Country {
     independent: string; 
 }
 const countrySchema = new Schema({
-    id: {type: String, required: true},
     name: { type: String, required: true}, 
     capital: { type: String, required: true}, 
     region: { type: String, required: true},
@@ -58,7 +56,6 @@ const sCountry = model<Country>('Country', countrySchema)
 
 
 interface User {
-    id: string;
     username: string;
     password: string; 
     beenTo: [string]; 
@@ -71,6 +68,7 @@ const userSchema = new Schema({
 const UserType = new GraphQLObjectType({
     name: 'User', 
     fields: () => ({
+        id: {type: GraphQLID},
         username: {type: GraphQLString},
         password: {type: GraphQLString},
         beenTo: {

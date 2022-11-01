@@ -27,9 +27,9 @@ import { Country, defaultUser, User } from '../types';
 
   // Fetch user based on correct username and password
 
-  export async function findUser(username: string, password: string) {
+  export async function findUser(username: string, password: string) { // Mangler ID som trengs
     let user: User = defaultUser; 
-    let noe = `query{userLogIn(username: "${username}", password: "${password}") {username, password, beenTo}}
+    let noe = `query{userLogIn(username: "${username}", password: "${password}") {id, username, password, beenTo}}
     `
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
@@ -49,8 +49,7 @@ import { Country, defaultUser, User } from '../types';
 
   export async function updateUser(id: string, beenTo: string[]) {
     let user: User = defaultUser; 
-    let noe = `mutation{updateUser(id: "${id}", beenTo:${beenTo}){beenTo}}
-    `
+    let noe = `mutation{updateUser(id: "${id}", beenTo:${beenTo}){beenTo}}`
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
       headers: {
@@ -67,6 +66,21 @@ import { Country, defaultUser, User } from '../types';
 
   // Make new user
   
+  export async function addUser(username: string, password: string, beenTo: string[]) {
+    let user: User = defaultUser; 
+    let noe = `mutation{addUser(username:"${username}", password:"${password}" beenTo: ${beenTo}){username, beenTo, password}}`
+    await fetch('http://localhost:3020/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: noe})
+    })
+        .then((response) => response.json())
+        .then((data) => user = data.data.addUser)
+    console.log("user from fetch", user)
+    return user
+  }
   
   // Fetch all usernames
 
