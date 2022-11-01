@@ -1,9 +1,13 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
+import {  useSetRecoilState } from 'recoil';
+import { userRegisterPage } from "../data/countryData";
+import { User } from "../types"
 
 
 
 function Register() {
+	const user = useSetRecoilState(userRegisterPage);
   	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -47,6 +51,13 @@ function Register() {
 	const regUser = (isEqual: Boolean, isCorrectlength: Boolean, isFree: Boolean) => {
 		if (isEqual === true && isCorrectlength === true && isFree === true) {
 			takenNames.push(username)
+			let newUser: User =  {
+				username: username,
+				password: password,
+				beenTo: [],
+				id: ""
+			}
+			user(newUser)
 			navigate("/login")
 		}
 	}
