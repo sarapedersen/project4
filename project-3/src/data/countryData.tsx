@@ -48,8 +48,13 @@ import { Country, defaultUser, User } from '../types';
   // Update beenTo on the user with the corresponding Id
 
   export async function updateUser(id: string, beenTo: string[]) {
+    console.log("Printer beenTo: ", beenTo, "id: ", id)
     let user: User = defaultUser; 
-    let noe = `mutation{updateUser(id: "${id}", beenTo:[${beenTo}]){id, username, password, beenTo}}`
+    let testBeenTo: string = ""
+    beenTo.forEach((element) => testBeenTo =`${testBeenTo}, "${element}"`)
+    console.log("testbeento: ", testBeenTo)
+    let noe = `mutation{updateUser(id: "${id}", beenTo:[${testBeenTo}]){id, username, password, beenTo}}`
+    console.log("noe stringified: ", JSON.stringify({query: noe}) )
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
       headers: {
@@ -177,14 +182,14 @@ import { Country, defaultUser, User } from '../types';
 
 // RECOIL - USERS (beenTo)
 
-  export const updateBeenTo = selector({ // NOT TESTED KOMPIS
-    key: "updateBeenTo",
-    get: async ({get}) => {
-      const current: User = get(currentUser)
-      const answere = await updateUser(current.id, current.beenTo)
-      if (answere === null) {
-        return false
-      }
-      return true
-    }
-  });
+  // export const updateBeenTo = selector({ // NOT TESTED KOMPIS
+  //   key: "updateBeenTo",
+  //   get: async ({get}) => {
+  //     const current: User = get(currentUser)
+  //     const answere = await updateUser(current.id, current.beenTo)
+  //     if (answere === null) {
+  //       return false
+  //     }
+  //     return true
+  //   }
+  // });
