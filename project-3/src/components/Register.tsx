@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react"
-import { useForm, SubmitHandler } from "react-hook-form"
+import React, { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from "recoil"
-import { usersBeenTo, userState } from "../data/countryData"
+
 
 
 function Register() {
