@@ -13,7 +13,8 @@ module.exports = {
       'gray-100': '#f3f4f6',
       'gray-200': '#e5e7eb',
       'gray-400': '#94a3b8',
-      'gray-900': '#111827'
+      'gray-900': '#111827',
+      'red': '#FF0000'
     }
   },
   plugins: [],

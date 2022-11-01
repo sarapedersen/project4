@@ -1,26 +1,25 @@
 import React, { useEffect } from 'react'
 import './App.css'
-import logo from './logo.svg';
-import PaginatedCountryList from './components/PaginatedCountryList'
-import CountryList from './components/CountryList';
-import Header from './components/Header'
-import MainPage from './components/MainPage'
-import { RecoilRoot } from 'recoil'
-import Register from './components/Register';
+import { Route, Routes } from 'react-router-dom'
+import CountryPage from './pages/CountryPage'
+import LogInPage from './pages/LogInPage'
+import RegisterPage from './pages/RegisterPage'
+
 
 function App() {
 
 
   return (
-    <div className='App bg-bgBlue h-full md:bg-[url("./icons/background.svg")] bg-no-repeat bg-cover bg-center bg-fixed'>
+    <div className='App bg-bgBlue h-full '>
       <div className='min-h-screen'>
-        <div>
-        <RecoilRoot>
+        <div className=''>
           <React.Suspense fallback={<p>Loading..</p>}>
-            <Header/>
-            <MainPage/>
+            <Routes>
+              <Route path="/" element={<CountryPage/>}/>
+              <Route path="/login" element={<LogInPage/>}/>
+              <Route path="/register" element={<RegisterPage/>}/>
+            </Routes>
           </React.Suspense>
-        </RecoilRoot>
         </div>
       </div>
     </div>
