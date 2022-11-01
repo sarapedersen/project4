@@ -50,7 +50,7 @@ function CountryList({countries, showInfo, setshowInfo}: props) {
               <li key={index} className="px-6 py-3 rounded-b-lg grid grid-cols-5 place-items-center">
                 <img src={earth_pale} alt='earth' className="mx-3 w-7"/>
                 <p onClick={() => setshowInfo(c)} className='text-center text-lg col-span-3 hover:cursor-pointer'>{c.name}</p>
-                <img src={arrow_down} alt='\/' onClick={() => setshowInfo(c)} className="mx-3 my-2 w-6 hover:cursor-pointer"/>
+                <img id="arrow" src={arrow_down} alt='\/' onClick={() => setshowInfo(c)} className="mx-3 my-2 w-6 hover:cursor-pointer"/>
               </li>)}
           </ul>
         </div>}

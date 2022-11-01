@@ -53,7 +53,7 @@ function LogIn() {
                             placeholder='Password' 
                             onChange={e => setPassword(e.target.value)}/>
                         </div>
-                        <p className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
+                        <p role="error" id="errorMessage" className='text-red px-4 mt-2 w-72 md:w-96'> {message}</p>
                         {correctUser ? <Link to="/"><button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button></Link> : <button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button>}
                     </div>
                     <div>
