@@ -1,1 +1,1 @@
-Here shall pages be
+Pages for the project. One for login, one for registration of new user, and the main page. 

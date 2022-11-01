@@ -19,15 +19,15 @@ interface props {
 }
 let myCountri: string[] = []
 
-function contain(countries : string[], country : Country){
-  if(countries.includes(country.id)){
-    console.log("returnerer true")
-    return true
-  } else{
-    console.log("returnerer false")
-    return false
-  }
-}
+// function contain(countries : string[], country : Country){
+//   if(countries.includes(country.id)){
+//     console.log("returnerer true")
+//     return true
+//   } else{
+//     console.log("returnerer false")
+//     return false
+//   }
+// }
 
 
 
@@ -49,6 +49,9 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
 
   
   }
+
+function CountryList({countries, showInfo, setshowInfo}: props) {
+
   return (
     // onClick={() => handleClick(hasBeen)}
     <div className='body'>
@@ -61,7 +64,7 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
             <img onClick={() => setshowInfo(null)} src={arrow_up} alt='/\' className="mx-3 my-2 w-6 hover:cursor-pointer"/>
           </div>
           <div className='grid grid-cols-1 place-items-center'>
-            <img src={showInfo.flagSvg} alt="flag" className="my-6 w-40 "></img>
+            <img src={showInfo.flags_svg} alt="flag" className="my-6 w-40"></img>
           </div>
           <div className="grid grid-rows-4 grid-col-2 mb-10 mx-6 md:mx-24"> 
             <p className="py-2 text-left font-bold col-start-1">Capital:</p>
@@ -85,7 +88,7 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
           <ul className="text-gray-900 divide-y divide-bgBlue w-full">
             {countries && countries.map((c, index) => 
               <li key={index} className="px-6 py-3 rounded-b-lg grid grid-cols-5 place-items-center">
-                <img onClick={() => handleClick(c)} src={contain(myCountri,c)? earth : earth_pale} alt='earth' className="mx-3 w-7 hover:cursor-pointer"/>
+                <img onClick={() => handleClick(c)} src={myCountri.includes(c.id)? earth : earth_pale} alt='earth' className="mx-3 w-7 hover:cursor-pointer"/>
                 <p onClick={() => setshowInfo(c)} className='text-center text-lg col-span-3 hover:cursor-pointer'>{c.name}</p>
                 <img src={arrow_down} alt='\/' onClick={() => setshowInfo(c)} className="mx-3 my-2 w-6 hover:cursor-pointer"/>
               </li>)}
@@ -95,5 +98,5 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
     </div>
   )
 }
-
+}
 export default CountryList
