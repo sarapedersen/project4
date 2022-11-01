@@ -4,43 +4,44 @@ import { Link } from 'react-router-dom'
 
 
 function Register() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [password2, setPassword2] = useState("")
-  const [message, setMessage] = useState("")
-  const [message2, setMessage2] = useState("")
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
+	const [password2, setPassword2] = useState("")
+	const [message, setMessage] = useState("")
+	const [message2, setMessage2] = useState("")
+	
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    let isEqual = false;
-    let isCorrectlength = false;
-    if (password.length <= 2 || password2.length <= 2 || username.length <= 2) {
-      setMessage2("All fields must have minimun lenght of three characters");
-      isCorrectlength = false;
-    } else {
-      setMessage2("");
-      isCorrectlength = true;
-    }
-    console.log(username, password, password2);
-    if (password === password2) {
-      setMessage("");
-      isEqual = true;
+	const submit = (e: React.FormEvent) => {
+		e.preventDefault()
+		let isEqual = false
+		let isCorrectlength = false
+		if (password.length <= 2 || password2.length <= 2 || username.length <= 2) {
+		setMessage2("All fields must have minimun lenght of three characters")
+		isCorrectlength = false
+		} else {
+		setMessage2("")
+		isCorrectlength = true
+		}
+		console.log(username, password, password2)
+		if (password === password2) {
+		setMessage("")
+		isEqual = true
 
-      console.log(password, password2);
-    } else {
-      setMessage("Passwords are not equal");
-      isEqual = false;
-    }
-    console.log(isEqual, isCorrectlength);
-    regUser(isEqual, isCorrectlength);
-  };
+		console.log(password, password2)
+		} else {
+		setMessage("Passwords are not equal")
+		isEqual = false
+		}
+		console.log(isEqual, isCorrectlength)
+		regUser(isEqual, isCorrectlength)
+	}
 
-  const regUser = (isEqual: Boolean, isCorrectlength: Boolean) => {
-    if (isEqual === true && isCorrectlength === true) {
-      console.log(2345);
-      //legg inn logikk
-    }
-  };
+	const regUser = (isEqual: Boolean, isCorrectlength: Boolean) => {
+		if (isEqual === true && isCorrectlength === true) {
+		console.log(2345);
+		//legg inn logikk
+		}
+	}
 
   return (
     <div className='grid grid-cols-1 grid-auto place-items-center'>
@@ -83,7 +84,7 @@ function Register() {
             <button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8' onClick={submit}>Register</button>
           </div>
           <div>
-            <p className='text-center mt-8'>Already a member? <Link to='/' className='text-darkTeal hover:underline'>Log in</Link></p>
+            <p className='text-center mt-8'>Already a member? <Link to='/login' className='text-darkTeal hover:underline'>Log in</Link></p>
           </div>
         </form>
       </div>
