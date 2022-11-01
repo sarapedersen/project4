@@ -9,14 +9,12 @@ function PaginatedCountryList() {
     const [currentPage, setCurrentPage] = useState(1)
     const [countriesPerPage] = useState(9)
     const countries = useRecoilValue(searchCountryState)
-    // const [countries, setcountries] = useRecoilState(countriesState)
-    
     const [hasBeen, sethasBeen] =useState<Boolean>(false)
+    const [myCountries, setMyCountries] = useState<string[]>([])
     console.log("paginated countires", countries)
-        // [{
-    // const countries = useRecoilValue(countriesState)
-    
-    
+
+
+
     //     name: "Norway",
     //     flagSvg: "https://flagcdn.com/no.svg",
     //     flagPng: "https://flagcdn.com/no.svg", 
@@ -174,17 +172,17 @@ function PaginatedCountryList() {
     const totalPages = countries.length / countriesPerPage
 
     const [showInfo, setshowInfo] = useState<Country | null>()
-    const [showMyCountries, setMyCountries] = useState<Country[]>()
+    // const [showMyCountries, setMyCountries] = useState<Country[]>()
 
     // removes country info on page change
     useEffect(() => {
         setshowInfo(null)
     }, [currentPage]) 
 
-    useEffect(() => {
-        sethasBeen(hasBeen? false : true)
-    },[onclick]
-    )
+    // useEffect(() => {
+    //     sethasBeen(hasBeen? false : true)
+    // },[onclick]
+    // )
 
 
     
@@ -205,6 +203,8 @@ function PaginatedCountryList() {
                 setshowInfo={setshowInfo} 
                 setHasBeen = {sethasBeen}
                 hasBeen = {hasBeen}
+                myCountries = {myCountries}
+                setMyCountries = {setMyCountries}
                 />
             <Pagination
                 countriesPerPage={countriesPerPage}

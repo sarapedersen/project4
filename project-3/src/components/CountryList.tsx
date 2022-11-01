@@ -12,22 +12,29 @@ interface props {
   setshowInfo: React.Dispatch<React.SetStateAction<Country | null | undefined>>
   setHasBeen: React.Dispatch<React.SetStateAction<Boolean>>
   hasBeen: Boolean
+  myCountries: string[]
+  setMyCountries:React.Dispatch<React.SetStateAction<string[]>>
 }
 
 
 
-function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen}: props) {
-  function handleClick(hasBeen :Boolean ){
+function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, setMyCountries, myCountries}: props) {
+  function handleClick(hasBeen :Boolean, c : Country ){
     hasBeen? setHasBeen(false) : setHasBeen(true)
+    console.log("heeeiiiiiieieieieieieiieieieieieieieiieieieie", c.name, c.id)
+    setMyCountries(myCountries => [...myCountries,c.id])
     
+    
+    console.log(myCountries)
   }
   return (
+    // onClick={() => handleClick(hasBeen)}
     <div className='body'>
       <div className="flex justify-center mt-10 mb-10">
         {showInfo ? // If showInfo has a country then show info about the chosen country
         <div className="bg-white rounded-lg  w-72 text-gray-900 md:w-2/4">
           <div className='px-6 py-3 grid grid-cols-5  w-full border-b border-bgBlue place-items-center'>
-            <img onClick={() => handleClick(hasBeen)} src={hasBeen? earth : earth_pale} alt='earth' className="mx-3 w-7"/>
+            <img  src={hasBeen? earth : earth_pale} alt='earth' className="mx-3 w-7"/>
             <p onClick={() => setshowInfo(null)} className="text-lg col-span-3 hover:cursor-pointer">{showInfo?.name}</p>
             <img onClick={() => setshowInfo(null)} src={arrow_up} alt='/\' className="mx-3 my-2 w-6 hover:cursor-pointer"/>
           </div>
@@ -55,7 +62,7 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen}: pr
           <ul className="text-gray-900 divide-y divide-bgBlue w-full">
             {countries && countries.map((c, index) => 
               <li key={index} className="px-6 py-3 rounded-b-lg grid grid-cols-5 place-items-center">
-                <img onClick={() => handleClick(hasBeen)} src={hasBeen? earth : earth_pale} alt='earth' className="mx-3 w-7"/>
+                <img onClick={() => handleClick(hasBeen,c)} src={hasBeen? earth : earth_pale} alt='earth' className="mx-3 w-7"/>
                 <p onClick={() => setshowInfo(c)} className='text-lg col-span-3 hover:cursor-pointer'>{c.name}</p>
                 <img src={arrow_down} alt='\/' onClick={() => setshowInfo(c)} className="mx-3 my-2 w-6 hover:cursor-pointer"/>
               </li>)}
