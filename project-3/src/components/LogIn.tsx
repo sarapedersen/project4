@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { createContext, useContext, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { searchCountryState, usersBeenTo, userState } from '../data/countryData'
+import { searchCountryState, userLogin, userState } from '../data/countryData'
 import { User } from '../types'
 
 
@@ -19,7 +19,7 @@ function LogIn() {
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const setUserState = useSetRecoilState(userState)
-    const userCredentials = useRecoilValue(usersBeenTo)
+    const userCredentials = useRecoilValue(userLogin)
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
