@@ -1,9 +1,15 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
+import {  useRecoilValue, useSetRecoilState } from 'recoil';
+import { allUsernames, userRegisterPage } from "../data/countryData";
+import { User } from "../types"
 
 
 
 function Register() {
+	const user = useSetRecoilState(userRegisterPage);
+	const usernames = useRecoilValue(allUsernames)
+	console.log("username: ", usernames)
   	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -11,7 +17,6 @@ function Register() {
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
-	let takenNames = ["sara", "Sara", "Ingeborg"]
 	
 
 	const submit = (e: React.FormEvent) => {
@@ -28,7 +33,7 @@ function Register() {
 		setMessage2("")
 		isCorrectlength = true
 		}
-		if (takenNames.includes(username)) {
+		if (usernames.includes(username)) {
 			setMessage3("Username is already taken. Select another name.")
 		} else {
 			setMessage3("")
@@ -46,8 +51,14 @@ function Register() {
 
 	const regUser = (isEqual: Boolean, isCorrectlength: Boolean, isFree: Boolean) => {
 		if (isEqual === true && isCorrectlength === true && isFree === true) {
-			takenNames.push(username)
-			navigate("/login")
+			let newUser: User =  {
+				username: username,
+				password: password,
+				beenTo: [],
+				id: ""
+			}
+			user(newUser)
+			navigate("/")
 		}
 	}
 
@@ -93,7 +104,7 @@ function Register() {
 				<button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8' onClick={submit}>Register</button>
 			</div>
 			<div>
-				<p className='text-center mt-8'>Already a member? <Link to='/login' className='text-darkTeal hover:underline'>Log in</Link></p>
+				<p className='text-center mt-8'>Already a member? <Link to='/' className='text-darkTeal hover:underline'>Log in</Link></p>
 			</div>
 			</form>
 		</div>

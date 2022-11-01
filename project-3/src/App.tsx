@@ -8,30 +8,18 @@ import RegisterPage from './pages/RegisterPage'
 
 function App() {
 
-  // async function testFetch() {
-  //   console.log("howrhgowrgfo")
-  //   const response = await fetch('http://localhost:4000/countries')
-  //   console.log(response.json())
-  // }
-
-  // testFetch()
-  
-  
-
   return (
-    <div className='App bg-bgBlue h-full '>
-      <div className='min-h-screen'>
-        <div className=''>
-          <React.Suspense fallback={<p>Loading..</p>}>
-            <Routes>
-              <Route path="/" element={<CountryPage/>}/>
-              <Route path="/login" element={<LogInPage/>}/>
-              <Route path="/register" element={<RegisterPage/>}/>
-            </Routes>
-          </React.Suspense>
+      <div className='App bg-bgBlue h-full '>
+        <div className='min-h-screen'>
+            <React.Suspense fallback={<p>Loading..</p>}>
+              <Routes>
+                <Route path="/" element={<LogInPage/>}/>
+                <Route path="/countries" element={<CountryPage/>}/>
+                <Route path="/register" element={<RegisterPage/>}/>
+              </Routes>
+            </React.Suspense>
         </div>
       </div>
-    </div>
   )
 }
 

@@ -1,17 +1,29 @@
 import { lstat } from 'fs'
 import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
-import { sortState} from '../data/countryData';
-import { useRecoilState } from 'recoil';
+import { sortState, currentUser} from '../data/countryData';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useNavigate } from "react-router-dom"
 
 function MainPage() {
-    const [filtration, setFiltration] = useState<String>("all")
+    const navigate = useNavigate()
+    const [filtration, setFiltration] = useState<string>("all")
     const [sort, setSort] = useRecoilState(sortState)
+    const userValue = useRecoilValue(currentUser)
+    console.log(userValue)
 
     function handleClick(event: React.ChangeEvent<HTMLSelectElement>) {
         console.log(event.target.value)
         setSort(event.target.value)
     }
+
+    useEffect(() => {
+        if (userValue.id === "") {
+            console.log(userValue)
+            navigate("/")
+        }
+    })
+
 
     return (
         <div className='grid grid-cols-1 grid-auto '>
@@ -28,13 +40,13 @@ function MainPage() {
                 </div>
             </div>
 
-            <PaginatedCountryList />
+            <PaginatedCountryList filtration={filtration}/>
 
             {/* Sorting */}
             <div className='flex space-x-6 justify-self-center pb-16'>
                 <p className='font-bold'>Sort by:</p>
                 <form>
-                    <select className='rounded-md px-2' onChange={handleClick}>
+                    <select id="sortbtn" className='rounded-md px-2' onChange={handleClick}>
                         <option value="asc">A-Z</option>
                         <option value="desc">Z-A</option>
                     </select>
@@ -46,3 +58,5 @@ function MainPage() {
 
 
 export default MainPage
+
+

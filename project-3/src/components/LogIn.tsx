@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom'
 import { createContext, useContext, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { searchCountryState, userLogin, userState } from '../data/countryData'
+import { searchCountryState, currentUser, userLoginPage } from '../data/countryData'
 import { User } from '../types'
-
-
 
 type Person = {
     username: string
@@ -18,8 +16,8 @@ function LogIn() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
-    const setUserState = useSetRecoilState(userState)
-    const userCredentials = useRecoilValue(userLogin)
+    const setUserState = useSetRecoilState(userLoginPage)
+    const userCredentials = useRecoilValue(currentUser)
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -36,9 +34,9 @@ function LogIn() {
     }
 
     useEffect(() => {
-        if (userCredentials !== null) {
+        if (userCredentials.id !== "") {
             console.log("inni if funksjonen", userCredentials)
-            navigate("/")
+            navigate("/countries")
         } 
     }, [userCredentials])
 
@@ -65,7 +63,7 @@ function LogIn() {
                             placeholder='Password' 
                             onChange={e => setPassword(e.target.value)}/>
                         </div>
-                        <p className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
+                        <p role="error" className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
                         <button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button>
                     </div>
                     <div>
