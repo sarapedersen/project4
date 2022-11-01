@@ -5,15 +5,29 @@ import Pagination from './Pagination'
 import { Country } from '../types'
 import { searchCountryState } from '../data/countryData';
 
-function PaginatedCountryList() {
+interface props  {
+    filtration: string
+}
+
+function PaginatedCountryList({filtration}: props) {
     const [currentPage, setCurrentPage] = useState(1)
     const [countriesPerPage] = useState(9)
     const countries = useRecoilValue(searchCountryState)
     const [hasBeen, sethasBeen] =useState<Boolean>(false)
-    const [myCountries, setMyCountries] = useState<string[]>([""])
-    // console.log("paginated countires", countries)
+    const [myCountries, setMyCountries] = useState<Country[]>([
+        {
+            area : 652230,
+            capital : "Kabul",
+            flags_png : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png",
+            flags_svg : "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg",
+            id : "635d24b0a125440a4dc9d484",
+            name : "Afghanistan",
+            population : 40218234,
+            region : "Asia"
+        }
+    ])
 
-
+    
 
     const totalPages = countries.length / countriesPerPage
 
@@ -29,18 +43,17 @@ function PaginatedCountryList() {
     // Pagination inpiration from https://blog.logrocket.com/pagination-components-react-tailwind-css/
     const indexOfLastCountry = currentPage * countriesPerPage;
     const indexOfFirstPost = indexOfLastCountry - countriesPerPage;
-    const currentCountries = countries.slice(indexOfFirstPost, indexOfLastCountry);
+    const currentCountriesAll = countries.slice(indexOfFirstPost, indexOfLastCountry);
+    const currentCountriesMine = myCountries.slice(indexOfFirstPost, indexOfLastCountry);
 
     return (
         <div>
             <CountryList
-                countries={currentCountries}
+                countries={filtration === 'all' ? currentCountriesAll : currentCountriesMine}
                 showInfo={showInfo}
                 setshowInfo={setshowInfo} 
-                setHasBeen = {sethasBeen}
-                hasBeen = {hasBeen}
-                myCountries = {myCountries}
-                setMyCountries = {setMyCountries}
+                myCountries={myCountries}
+                setMyCountries={setMyCountries}
                 />
             <Pagination
                 countriesPerPage={countriesPerPage}

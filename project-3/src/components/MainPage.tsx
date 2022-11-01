@@ -5,7 +5,7 @@ import { sortState, currentUser} from '../data/countryData';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 function MainPage() {
-    const [filtration, setFiltration] = useState<String>("all")
+    const [filtration, setFiltration] = useState<string>("all")
     const [sort, setSort] = useRecoilState(sortState)
     const userValue = useRecoilValue(currentUser)
     console.log(userValue)
@@ -31,7 +31,7 @@ function MainPage() {
                 </div>
             </div>
 
-            <PaginatedCountryList />
+            <PaginatedCountryList filtration={filtration}/>
 
             {/* Sorting */}
             <div className='flex space-x-6 justify-self-center pb-16'>
