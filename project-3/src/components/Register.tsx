@@ -1,13 +1,15 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import {  useSetRecoilState } from 'recoil';
-import { userRegisterPage } from "../data/countryData";
+import {  useRecoilValue, useSetRecoilState } from 'recoil';
+import { allUsernames, userRegisterPage } from "../data/countryData";
 import { User } from "../types"
 
 
 
 function Register() {
 	const user = useSetRecoilState(userRegisterPage);
+	const usernames = useRecoilValue(allUsernames)
+	console.log("username: ", usernames)
   	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -15,7 +17,6 @@ function Register() {
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
-	let takenNames = ["sara", "Sara", "Ingeborg"]
 	
 
 	const submit = (e: React.FormEvent) => {
@@ -32,7 +33,7 @@ function Register() {
 		setMessage2("")
 		isCorrectlength = true
 		}
-		if (takenNames.includes(username)) {
+		if (usernames.includes(username)) {
 			setMessage3("Username is already taken. Select another name.")
 		} else {
 			setMessage3("")
@@ -50,7 +51,6 @@ function Register() {
 
 	const regUser = (isEqual: Boolean, isCorrectlength: Boolean, isFree: Boolean) => {
 		if (isEqual === true && isCorrectlength === true && isFree === true) {
-			takenNames.push(username)
 			let newUser: User =  {
 				username: username,
 				password: password,

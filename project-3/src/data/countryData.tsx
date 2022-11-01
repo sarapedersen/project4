@@ -85,7 +85,7 @@ import { Country, defaultUser, User } from '../types';
   // Fetch all usernames
 
   export async function getAllUsername() {
-    let user: User = defaultUser; 
+    let list: string[] = []; 
     let noe = `query{users{username}}`
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
@@ -95,9 +95,9 @@ import { Country, defaultUser, User } from '../types';
       body: JSON.stringify({query: noe})
     })
         .then((response) => response.json())
-        .then((data) => user = data.data.users)
-    console.log("getAllUsername", user)
-    return user
+        .then((data) => list = data.data.users)
+    console.log("getAllUsername", list)
+    return list
   }
 
 
