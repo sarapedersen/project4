@@ -4,7 +4,6 @@ import earth_pale from "../icons/earth_pale.svg";
 import earth from "../icons/earth.svg";
 import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
-import MainPage from "./MainPage";
 
 interface props {
   countries: Country[];
@@ -30,8 +29,9 @@ function CountryList({
     // hasBeen? setHasBeen(false) : setHasBeen(true)
     const index = myCountri.indexOf(c.id);
     console.log(c);
+    console.log(myCountri.includes(c.id), "er det her")
     if (index === -1) {
-      console.log(c.id, "c.id");
+      console.log(index, "c.id");
       myCountri.push(c.id);
       setHasBeen(true);
       console.log(myCountri, "11111111111111111111111");
