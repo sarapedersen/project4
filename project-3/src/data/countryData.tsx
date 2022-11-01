@@ -24,9 +24,12 @@ import { Country, defaultUser, User } from '../types';
     return defCountries
   }
 
+
+  // Fetch user based on correct username and password
+
   export async function findUser(username: string, password: string) {
     let user: User = defaultUser; 
-    let noe = `query{userLogIn(username: "${username}", password: "${password}") {id, username, password, beenTo}}
+    let noe = `query{userLogIn(username: "${username}", password: "${password}") {username, password, beenTo}}
     `
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
@@ -40,6 +43,31 @@ import { Country, defaultUser, User } from '../types';
     console.log("user from fetch", user)
     return user
   }
+
+
+  // Update beenTo on the user with the corresponding Id
+
+  export async function updateUser(id: string, beenTo: string[]) {
+    let user: User = defaultUser; 
+    let noe = `mutation{updateUser(id: "${id}", beenTo:${beenTo}){beenTo}}
+    `
+    await fetch('http://localhost:3020/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: noe})
+    })
+        .then((response) => response.json())
+        .then((data) => user = data.data.updateUser)
+    console.log("user from fetch", user)
+    return user
+  }
+
+
+  // Make new user 
+
+
 
 
 // RECOIL - COUNTRIES
@@ -67,21 +95,32 @@ import { Country, defaultUser, User } from '../types';
   });
 
 
-  // RECOIL - USERS
-
+  // RECOIL - USERS (Login)
 
   export const userState = atom ({
     key: "userState",
     default: defaultUser 
   })
 
-  export const usersBeenTo = selector({
-    key: "usersBeenTo",
+  export const userLogin = selector({
+    key: "userLogin",
     get: async ({get}) => {
       const loginCredentials: User = get(userState)
       const user = await findUser(loginCredentials.username, loginCredentials.password)
       return user
-      
     }
   });
 
+// RECOIL - USERS (beenTo)
+
+  export const updateBeenTo = selector({ // NOT TESTED KOMPIS
+    key: "updateBeenTo",
+    get: async ({get}) => {
+      const currentUser: User = get(userState)
+      const answere = await updateUser(currentUser.id, currentUser.beenTo)
+      if (answere === null) {
+        return false
+      }
+      return true
+    }
+  });

@@ -30,7 +30,7 @@ interface Country {
     independent: string; 
 }
 const countrySchema = new Schema({
-    string: {type: String, required: true},
+    id: {type: String, required: true},
     name: { type: String, required: true}, 
     capital: { type: String, required: true}, 
     region: { type: String, required: true},
@@ -40,7 +40,6 @@ const countrySchema = new Schema({
     flags_png: { type: String, required: true},
     independent: { type: String, required: true}
 })
-
 const CountryType = new GraphQLObjectType({
     name: 'Country', 
     fields: () => ({
@@ -54,37 +53,32 @@ const CountryType = new GraphQLObjectType({
         flags_png: {type: GraphQLString},
         independent: {type: GraphQLString}
     })
-
 })
-
 const sCountry = model<Country>('Country', countrySchema)
 
+
 interface User {
+    id: string;
     username: string;
     password: string; 
     beenTo: [string]; 
 }
-
 const userSchema = new Schema({
     username: { type: String, required: true}, 
     password: { type: String, required: true}, 
-    beenTo: {type: [String] }
+    beenTo: {type: [String], required: true }
 })
-
-const sUser = model<User>('User', userSchema)
-
 const UserType = new GraphQLObjectType({
     name: 'User', 
     fields: () => ({
-        id: {type: GraphQLID},
         username: {type: GraphQLString},
         password: {type: GraphQLString},
         beenTo: {
             type: new GraphQLList(GraphQLString),
         }
-    })
-
+    })  
 })
+const sUser = model<User>('User', userSchema)
 
 
 const RootQuery = new GraphQLObjectType({
@@ -142,19 +136,35 @@ const Mutation = new GraphQLObjectType({
         addUser:{
             type: UserType, 
             args:{
-                id: {type: new GraphQLNonNull(GraphQLID)},
                 username: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
-                beenTo: {type: new GraphQLNonNull(GraphQLString)}
+                beenTo: {type: new GraphQLList(GraphQLString)}
             },
             resolve(parent, args){
                 let user = new sUser({
-                    id: args.id,
                     username: args.username,
                     password: args.password,
                     beenTo: args.beenTo
                 })
                 return user.save()
+            }
+        }, 
+        updateUser: {
+            type: UserType, 
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLID)},
+                // username: {type: new GraphQLNonNull(GraphQLString)},
+                // password: {type: new GraphQLNonNull(GraphQLString)},
+                beenTo: {type: new GraphQLList(GraphQLString)}
+            }, 
+            resolve(parent, args){
+                // let user = new sUser({
+                //     id: args.id,
+                //     username: args.username,
+                //     password: args.password,
+                //     beenTo: args.beenTo
+                // })
+                return sUser.findOneAndUpdate({"_id": args.id}, {"$set": {beenTo: args.beenTo}}, {"new": true})
             }
         }
     }
