@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
 import { sortState, currentUser} from '../data/countryData';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useNavigate } from "react-router-dom"
 
 function MainPage() {
-    const [filtration, setFiltration] = useState<String>("all")
+    const navigate = useNavigate()
+    const [filtration, setFiltration] = useState<string>("all")
     const [sort, setSort] = useRecoilState(sortState)
     const userValue = useRecoilValue(currentUser)
     console.log(userValue)
@@ -14,6 +16,13 @@ function MainPage() {
         console.log(event.target.value)
         setSort(event.target.value)
     }
+
+    useEffect(() => {
+        if (userValue.id === "") {
+            console.log(userValue)
+            navigate("/")
+        }
+    })
 
 
     return (
@@ -31,7 +40,7 @@ function MainPage() {
                 </div>
             </div>
 
-            <PaginatedCountryList />
+            <PaginatedCountryList filtration={filtration}/>
 
             {/* Sorting */}
             <div className='flex space-x-6 justify-self-center pb-16'>

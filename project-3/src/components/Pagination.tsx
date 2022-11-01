@@ -22,14 +22,14 @@ function Pagination(data: props) {
             <nav aria-label='Pagination'>
                 <div className='flex justify-center'>
                     <div className='grid grid-cols-3 place-items-center pb-10 w-60'>
-                        <a onClick={handleBackwardClick} href='#'>
+                        <a onClick={handleBackwardClick} href='#/countries'>
                             <img id="leftArrow" src={arrow_left} alt='<' className="w-3 hover:cursor-pointer"/>
                         </a>
                         <div className='font-extralight text-lg'>
                             {data.currentPage}{" / "}
                             {Math.ceil(data.totalCountries/data.countriesPerPage)}
                         </div>
-                        <a onClick={handleForwardClick} href='#'>
+                        <a onClick={handleForwardClick} href='#/countries'>
                             <img id="rightArrow" src={arrow_right} alt='>' className="w-3 hover:cursor-pointer"/>
                         </a>
                     </div>

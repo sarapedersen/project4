@@ -24,6 +24,34 @@ import { Country, defaultUser, User } from '../types';
     return defCountries
   }
 
+  const defaultCountry: Country = {
+    id: "",
+    name: "",
+    flags_svg: "",
+    flags_png: "",
+    capital: "",
+    population: 0,
+    region: "",
+    area: 0
+  }
+
+  export async function findCountryById(id: string) {
+    let defCountries: Country = defaultCountry
+    console.log("ID inside find country by id: ", id)
+    let noe = `query {country(id: "${id}"){id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
+    await fetch('http://localhost:3020/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: noe})
+    })
+        .then((response) => response.json())
+        .then((data) => defCountries = data.data.country)
+    console.log("fromdb get: ", defCountries)
+    return defCountries
+  }
+
 
   // Fetch user based on correct username and password
 
@@ -132,6 +160,26 @@ import { Country, defaultUser, User } from '../types';
       return await searchCountries("", sort)
     }
   });
+
+  export const countriesBeenTo = selector({
+    key: "countriesBeenTo",
+    get: async ({get}) => {
+      const user: User = get(currentUser)
+      console.log("user in countriesbeenTo: ", user, " beenTo: ", user.beenTo)
+      let countries: Country[] = []
+      console.log(user.beenTo.length)
+      if (user.beenTo.length !== 0) {
+        console.log("Heisann innefra if i countries been to")
+        for (let i = 0; i < user.beenTo.length; i++) {
+          console.log("Inne i for loopen", i)
+          let newCountry = await findCountryById(user.beenTo[i])
+          countries.push(newCountry)
+        }
+      }
+      console.log("countries in countryData: ", countries)
+      return countries
+    }
+  })
 
 
   // RECOIL - USERS (username)
