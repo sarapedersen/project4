@@ -1,13 +1,17 @@
+import { lstat } from 'fs'
 import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
+import { sortState} from '../data/countryData';
+import { useRecoilState } from 'recoil';
 
 function MainPage() {
     const [filtration, setFiltration] = useState<String>("all")
+    const [sort, setSort] = useRecoilState(sortState)
 
-    // useEffect(() => {
-
-    // }, [filtration])
-
+    function handleClick(event: React.ChangeEvent<HTMLSelectElement>) {
+        console.log(event.target.value)
+        setSort(event.target.value)
+    }
 
     return (
         <div className='grid grid-cols-1 grid-auto '>
@@ -30,9 +34,9 @@ function MainPage() {
             <div className='flex space-x-6 justify-self-center pb-16'>
                 <p className='font-bold'>Sort by:</p>
                 <form>
-                    <select className='rounded-md px-2'>
-                        <option value="A-Z">A-Z</option>
-                        <option value="Z-A">Z-A</option>
+                    <select className='rounded-md px-2' onChange={handleClick}>
+                        <option value="asc">A-Z</option>
+                        <option value="desc">Z-A</option>
                     </select>
                 </form>
             </div>

@@ -55,6 +55,9 @@ function CountryList({countries, showInfo, setshowInfo, setHasBeen, hasBeen, set
             
               <p className="py-2 text-left font-bold col-start-1">Area:</p>
               <p className='py-2 text-right col-start-2'>{showInfo.area}</p>
+
+              <p className="py-2 text-left font-bold col-start-1">Main languages:</p>
+              <p className="py-2 text-right col-start-2">{showInfo.languages.map(lan => <p>{lan}</p>)}</p>
             
           </div>
         </div> :  // If showInfo is null, just show the country names in a list
