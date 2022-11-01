@@ -6,8 +6,6 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { searchCountryState, currentUser, userLoginPage } from '../data/countryData'
 import { User } from '../types'
 
-
-
 type Person = {
     username: string
     password: string
@@ -38,7 +36,7 @@ function LogIn() {
     useEffect(() => {
         if (userCredentials.id !== "") {
             console.log("inni if funksjonen", userCredentials)
-            navigate("/")
+            navigate("/countries")
         } 
     }, [userCredentials])
 
