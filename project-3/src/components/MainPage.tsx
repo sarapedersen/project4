@@ -15,6 +15,7 @@ function MainPage() {
         setSort(event.target.value)
     }
 
+
     return (
         <div className='grid grid-cols-1 grid-auto '>
 
@@ -36,7 +37,7 @@ function MainPage() {
             <div className='flex space-x-6 justify-self-center pb-16'>
                 <p className='font-bold'>Sort by:</p>
                 <form>
-                    <select className='rounded-md px-2' onChange={handleClick}>
+                    <select id="sortbtn" className='rounded-md px-2' onChange={handleClick}>
                         <option value="asc">A-Z</option>
                         <option value="desc">Z-A</option>
                     </select>
