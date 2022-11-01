@@ -104,7 +104,7 @@ function Register() {
 				<button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8' onClick={submit}>Register</button>
 			</div>
 			<div>
-				<p className='text-center mt-8'>Already a member? <Link to='/login' className='text-darkTeal hover:underline'>Log in</Link></p>
+				<p className='text-center mt-8'>Already a member? <Link to='/' className='text-darkTeal hover:underline'>Log in</Link></p>
 			</div>
 			</form>
 		</div>
