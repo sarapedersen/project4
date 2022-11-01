@@ -3,25 +3,40 @@ import { atom, selector } from "recoil";
 import { Country } from '../types';
 
 
-async function fetchCountries() {
+    export async function searchCountries(searchInput: string, sortInput: string) {
     let defCountries: Country[] = []
-    console.log("howrhgowrgfo")
+    let noe = `query {countriesByName(searchInput: "${searchInput}", sorting: "${sortInput}"){id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
     await fetch('http://localhost:3020/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: '{"query":"{countries{id, name, capital, region, population, area, flags_svg, flags_png, independent}}"}'
+      body: JSON.stringify({query: noe})
     })
         .then((response) => response.json())
-        .then((data) => defCountries = data.data.countries)
+        .then((data) => defCountries = data.data.countriesByName)
     console.log(defCountries)
     return defCountries
   }
 
-  
-  export const countriesState = atom({
-    key: "countriesState",
-    default: fetchCountries()
+  export const searchState = atom({
+    key: "searchState",
+    default: ""
+  });
+
+  export const sortState = atom({
+    key: "sortState",
+    default: "asc"
   });
   
+  export const searchCountryState = selector({
+    key: "searchCountryState",
+    get: async ({get}) => {
+      const filter = get(searchState)
+      const sort = get(sortState)
+      if (filter !== "") {
+        return await searchCountries(filter, sort)
+      } 
+      return await searchCountries("", sort)
+    }
+  });

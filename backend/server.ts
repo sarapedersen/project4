@@ -1,6 +1,6 @@
 // Importing module
 import Express from 'express'
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull ,GraphQLID, GraphQLList, GraphQLSchema, buildSchema } from "graphql"
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull ,GraphQLID, GraphQLList, GraphQLSchema, buildSchema, GraphQLInt } from "graphql"
 import { graphqlHTTP } from "express-graphql"
 import { Schema, model, connect} from 'mongoose'; 
 import * as dotenv from "dotenv"; 
@@ -8,6 +8,7 @@ import { connectToDatabase } from './src/services/database.service';
 import { countriesRouter, usersRouter } from './src/routes/countries.router';
 import { type } from 'os';
 import { CountQueuingStrategy } from 'node:stream/web';
+import { toNamespacedPath } from 'path';
 
 
 const app = Express(); 
@@ -120,10 +121,17 @@ const RootQuery = new GraphQLObjectType({
         },
         countriesByName: {
             type: new GraphQLList(CountryType),
-            args: {searchInput: {type: GraphQLString}},
+            args: {searchInput: {type: GraphQLString}, sorting: {type: GraphQLString}},
             resolve(parent, args) {
                 const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i')}}
-                return sCountry.find(countryFilter);
+                return sCountry.find(countryFilter).sort({name: args.sorting});
+            }
+        },
+        sortCountries: {
+            type: new GraphQLList(CountryType),
+            args: {sorting: {type: GraphQLString}},
+            resolve(parent, args) {
+                return sCountry.find({}).sort({name: args.sorting});
             }
         }
     }

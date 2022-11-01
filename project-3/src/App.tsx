@@ -22,11 +22,13 @@ function App() {
     <div className='App bg-bgBlue h-full '>
       <div className='min-h-screen'>
         <div className=''>
+          <React.Suspense fallback={<p>Loading..</p>}>
             <Routes>
               <Route path="/" element={<CountryPage/>}/>
               <Route path="/login" element={<LogInPage/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
             </Routes>
+          </React.Suspense>
         </div>
       </div>
     </div>
