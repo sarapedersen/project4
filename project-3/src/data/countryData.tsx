@@ -1,6 +1,6 @@
 import { type } from "@testing-library/user-event/dist/type";
 import { atom, selector } from "recoil";
-import { Country, User } from '../types';
+import { Country, defaultUser, User } from '../types';
 
 
 
@@ -20,12 +20,12 @@ import { Country, User } from '../types';
     })
         .then((response) => response.json())
         .then((data) => defCountries = data.data.countriesByName)
-    console.log(defCountries)
+    console.log("fromdb get: ", defCountries)
     return defCountries
   }
 
   export async function findUser(username: string, password: string) {
-    let defCountries: Country[] = []
+    let user: User = defaultUser; 
     let noe = `query{userLogIn(username: "${username}", password: "${password}") {id, username, password, beenTo}}
     `
     await fetch('http://localhost:3020/graphql', {
@@ -36,9 +36,9 @@ import { Country, User } from '../types';
       body: JSON.stringify({query: noe})
     })
         .then((response) => response.json())
-        .then((data) => defCountries = data.data.countriesByName)
-    console.log(defCountries)
-    return defCountries
+        .then((data) => user = data.data.userLogIn)
+    console.log("user from fetch", user)
+    return user
   }
 
 
@@ -69,27 +69,19 @@ import { Country, User } from '../types';
 
   // RECOIL - USERS
 
-  const defaultUser: User = {
-    id: "",
-    username: "",
-    password: "",
-    beenTo: []
-  }
 
   export const userState = atom ({
     key: "userState",
-    default: defaultUser; 
+    default: defaultUser 
   })
 
   export const usersBeenTo = selector({
     key: "usersBeenTo",
     get: async ({get}) => {
-      const user = get(userState)
-      const isCorrect = get(findUser(user.))
-      if (isCorrect !== "") {
-        return isCorrect
-      } 
-      return []
+      const loginCredentials: User = get(userState)
+      const user = await findUser(loginCredentials.username, loginCredentials.password)
+      return user
+      
     }
   });
 

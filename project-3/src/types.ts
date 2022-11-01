@@ -19,3 +19,10 @@ export interface User {
 export interface countrySearchType {
     country: string
 }
+
+export const defaultUser: User = {
+    id: "",
+    username: "",
+    password: "",
+    beenTo: []
+  }
