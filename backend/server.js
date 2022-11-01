@@ -36,7 +36,6 @@ const app = (0, express_1.default)();
 const cors = require('cors');
 const PORT = 3020;
 const countrySchema = new mongoose_1.Schema({
-    id: { type: String, required: true },
     name: { type: String, required: true },
     capital: { type: String, required: true },
     region: { type: String, required: true },
@@ -69,6 +68,7 @@ const userSchema = new mongoose_1.Schema({
 const UserType = new graphql_1.GraphQLObjectType({
     name: 'User',
     fields: () => ({
+        id: { type: graphql_1.GraphQLID },
         username: { type: graphql_1.GraphQLString },
         password: { type: graphql_1.GraphQLString },
         beenTo: {
