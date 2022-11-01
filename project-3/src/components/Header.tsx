@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { searchCountryState, searchCountries, searchState, userState } from '../data/countryData';
-import { Link } from 'react-router-dom'
 
 
 function Header() {

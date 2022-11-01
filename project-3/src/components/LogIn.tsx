@@ -14,7 +14,7 @@ type Person = {
 }
 
 function LogIn() {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
@@ -29,15 +29,17 @@ function LogIn() {
             id: "",
             beenTo: []
         }
-        setUserState(inputCredentials)     
+        setUserState(inputCredentials) 
+        if (username != null) {
+            setMessage("Wrong username or password. Check spelling and try again.")  
+        }    
     }
-
 
     useEffect(() => {
         if (userCredentials !== null) {
             console.log("inni if funksjonen", userCredentials)
             navigate("/")
-        }
+        } 
     }, [userCredentials])
 
     
