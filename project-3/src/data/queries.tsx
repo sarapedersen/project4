@@ -4,7 +4,7 @@ import { Country, defaultCountry, defaultUser, User } from "../types"
 
 // Fetch countries based on search and sort variables
 
-const link = "it2810-08.idi.ntnu.no"; 
+const link = "it2810-08.idi.ntnu.no:3020"; 
 
 export async function searchCountries(searchInput: string, sortInput: string) {
     let defCountries: Country[] = []
