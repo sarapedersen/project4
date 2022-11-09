@@ -6,7 +6,7 @@ import { schema } from './src/schema';
 
 const app = Express(); 
 const cors = require('cors');
-const PORT:Number = 3020;
+const PORT:Number = 4000;
 
 
 dotenv.config()

@@ -33,7 +33,7 @@ const dotenv = __importStar(require("dotenv"));
 const schema_1 = require("./src/schema");
 const app = (0, express_1.default)();
 const cors = require('cors');
-const PORT = 3020;
+const PORT = 4000;
 dotenv.config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_CONN_STRING);
