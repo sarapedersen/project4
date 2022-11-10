@@ -76,7 +76,7 @@ function CountryList({
             </div>
             <div className="grid grid-rows-4 grid-col-2 mb-10 mx-6 md:mx-24">
               <p className="py-2 text-left font-bold col-start-1">Capital:</p>
-              <p className="py-2 text-right col-start-2">{showInfo.capital}</p>
+              <p className="py-2 text-right col-start-2">{showInfo.capital === null ? "no data" : showInfo.capital}</p>
 
               <p className="py-2 text-left font-bold col-start-1">
                 Population:
@@ -93,8 +93,7 @@ function CountryList({
               <p className="py-2 text-left font-bold col-start-1">Area:</p>
 
               <p className="py-2 text-right col-start-2">
-                {showInfo.area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
-                km²
+                {showInfo.area === null ? "no data" : showInfo.area?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " km²"}
               </p>
             </div>
           </div> // If showInfo is null, just show the country names in a list
