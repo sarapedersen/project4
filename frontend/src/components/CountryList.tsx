@@ -71,7 +71,7 @@ function CountryList({
               <img
                 src={showInfo.flags_svg}
                 alt="flag"
-                className="my-6 w-40"
+                className="my-6 w-40 shadow-lg"
               ></img>
             </div>
             <div className="grid grid-rows-4 grid-col-2 mb-10 mx-6 md:mx-24">
