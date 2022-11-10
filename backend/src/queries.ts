@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull ,GraphQLID, GraphQLList} from "graphql" 
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull ,GraphQLID, GraphQLList, GraphQLInt, GraphQLBoolean} from "graphql" 
 import { UserType, CountryType } from './types';
 import { sUser, sCountry } from "./schema";
 
@@ -33,21 +33,48 @@ export const RootQuery = new GraphQLObjectType({
                 return sCountry.findById(args.id);
             }
         },
-        countries: {
+        allCountries: {
             type: new GraphQLList(CountryType),
             resolve(parent, args) {
-                return sCountry.find({});
+                return sCountry.find({}).limit(50).skip(45);
             }
         },
         countriesByName: {
             type: new GraphQLList(CountryType),
-            args: {searchInput: {type: GraphQLString}, sorting: {type: GraphQLString}},
+            args: {searchInput: {type: GraphQLString}, sorting: {type: GraphQLString}, from: {type: GraphQLInt}, numItems: {type: GraphQLInt}},
             resolve(parent, args) {
                 const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i')}}
-                return sCountry.find(countryFilter).sort({name: args.sorting});
+                return sCountry.find(countryFilter).sort({name: args.sorting}).skip(args.from).limit(args.numItems);
             }
         },
-        
+        numCountriesByName: {
+            type: GraphQLInt,
+            args: {searchInput: {type: GraphQLString}},
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i')}}
+                return sCountry.find(countryFilter).countDocuments();
+            }
+        },
+        numCountries: {
+            type: GraphQLInt,
+            resolve(parent, args) {
+                return sCountry.find().countDocuments({});
+            }
+        },
+        specificCountries: {
+            type: new GraphQLList(CountryType),
+            args: {from: {type: GraphQLInt}, numItems: {type: GraphQLInt}, sorting: {type: GraphQLString}},
+            resolve(parent, args) {
+                return sCountry.find({}).sort({name: args.sorting}).skip(args.from).limit(args.numItems);
+            }
+        },
+        countriesFromList: {
+            type: new GraphQLList(CountryType),
+            args: {list: {type: new GraphQLList(GraphQLString)}, sorting: {type: GraphQLString}, from: {type: GraphQLInt}, numItems: {type: GraphQLInt}},
+            resolve(parent, args) {
+                return sCountry.find({_id: args.list}).sort({name: args.sorting}).skip(args.from).limit(args.numItems);
+            }
+        }
     }
 })
 

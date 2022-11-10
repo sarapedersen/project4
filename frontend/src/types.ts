@@ -37,3 +37,5 @@ export const defaultCountry: Country = {
     region: "",
     area: 0
   }
+
+export const maxElementsOnPage: number = 9

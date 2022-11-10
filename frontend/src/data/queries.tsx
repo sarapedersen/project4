@@ -1,14 +1,14 @@
-import { Country, defaultCountry, defaultUser, User } from "../types"
+import { Country, defaultCountry, defaultUser, User, maxElementsOnPage } from "../types"
 
 //QUERY TO FETCH DATA
 
 // Fetch countries based on search and sort variables
 
-const link = "it2810-08.idi.ntnu.no:3020"; 
+const link = "localhost:4000"; 
 
-export async function searchCountries(searchInput: string, sortInput: string) {
+export async function searchCountries(searchInput: string, sortInput: string, from: number) {
     let defCountries: Country[] = []
-    let noe = `query {countriesByName(searchInput: "${searchInput}", sorting: "${sortInput}"){id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
+    let noe = `query {countriesByName(searchInput: "${searchInput}", sorting: "${sortInput}", from: ${from}, numItems: ${maxElementsOnPage}){id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
     await fetch(`http://${link}/graphql`, {
       method: 'POST',
       headers: {
@@ -18,6 +18,52 @@ export async function searchCountries(searchInput: string, sortInput: string) {
     })
         .then((response) => response.json())
         .then((data) => defCountries = data.data.countriesByName)
+    return defCountries
+  }
+
+
+  export async function numOfSearchCountries(searchInput: string) {
+    let numberOfCountries = 0
+    let noe = `query {numCountriesByName(searchInput: "${searchInput}")}`
+    await fetch(`http://${link}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: noe})
+    })
+        .then((response) => response.json())
+        .then((data) => numberOfCountries = data.data.numCountriesByName)
+    return numberOfCountries
+  }
+
+  export async function numCountries() {
+    let numberOfCountries: number = 0
+    let noe = `query {numCountries}`
+    await fetch(`http://${link}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: noe})
+    })
+        .then((response) => response.json())
+        .then((data) => numberOfCountries = data.data.numCountries)
+    return numberOfCountries
+  }
+
+  export async function specificCountries(from: number, sorting: string) {
+    let defCountries: Country[] = []
+    let graphqlQuery = `query {specificCountries(from: ${from}, numItems: ${maxElementsOnPage}, sorting: "${sorting}"){id, name, capital, region, population, area, flags_svg, flags_png, independent}}`
+    await fetch(`http://${link}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: graphqlQuery})
+    })
+        .then((response) => response.json())
+        .then((data) => defCountries = data.data.specificCountries)
     return defCountries
   }
 

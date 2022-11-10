@@ -1,6 +1,6 @@
-import { atom, selector } from "recoil";
-import { Country, User } from '../types';
-import { searchCountries, findCountryById} from "./queries";
+import { atom, selector, useSetRecoilState } from "recoil";
+import { Country, User, maxElementsOnPage } from '../types';
+import { searchCountries, findCountryById, numCountries, numOfSearchCountries} from "./queries";
 import { currentUser } from "./userData";
 
 
@@ -12,10 +12,23 @@ import { currentUser } from "./userData";
     default: ""
   });
 
+  export const currentPageState = atom({
+    key: "currentPageState", 
+    default: 1
+  })
+
   export const sortState = atom({
     key: "sortState",
     default: "asc"
   });
+
+  export const numOfCountriesState = selector({
+    key: "maxPageState", 
+    get: async ({get}) => {
+      const filter = get(searchState)
+      return await numOfSearchCountries(filter)
+    }
+  })
   
   export const searchCountryState = selector({
     key: "searchCountryState",
