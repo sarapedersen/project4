@@ -43,7 +43,7 @@ import { currentUser } from "./userData";
       if (typeof numCountries === typeof 1) {
         return Math.ceil(numCountries/maxElementsOnPage)
       }
-      return 1      
+      return 0      
     }
   })
   

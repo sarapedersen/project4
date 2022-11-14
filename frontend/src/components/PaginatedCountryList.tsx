@@ -16,8 +16,10 @@ function PaginatedCountryList({filtration}: props) {
     const countries = useRecoilValue(searchCountryState)
     const usersCountries = useRecoilValue(countriesBeenTo)
     console.log("user countries in paginated country list: ", usersCountries)
-    const setSearchCountries = useSetRecoilState(searchState)    
+    const [searchCountries, setSearchCountries] = useRecoilState(searchState)    
     const [showInfo, setshowInfo] = useState<Country | null>()
+
+    console.log(searchCountries)
 
     // removes country info on page change
     useEffect(() => {
