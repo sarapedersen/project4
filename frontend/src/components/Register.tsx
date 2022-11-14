@@ -66,7 +66,7 @@ function Register() {
 			user(defaultUser)
             navigate("/countries")
         } 
-	}, [userValue])
+	}, [userValue, user, navigate])
 
   	return (
 		<div className='grid grid-cols-1 grid-auto place-items-center'>

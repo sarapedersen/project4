@@ -41,6 +41,7 @@ function LogIn() {
 			[event.target.name]: event.target.value,
 		}))
     }
+
     const [darkmode, setDarkmode] = useRecoilState(darkMode)
     const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
@@ -55,13 +56,13 @@ function LogIn() {
             beenTo: []
         }
         setUserState(inputCredentials) 
-        if (username != null) {
+        if (inputCredentials != null) {
             setMessage("Wrong username or password. Check spelling and try again.")  
-        }    
+        }
     }
 
     useEffect(() => {
-        if (userCredentials === null) return
+        if (userCredentials === null) return  
         if (userCredentials.id !== "") {
             navigate("/countries")
         } 
@@ -90,7 +91,7 @@ function LogIn() {
                             onChange={handleChange}
                             value={users.password}/>
                         </div>
-                        <p role="error" className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
+                        <p className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
                         <button type="submit" className={darkmode ? 'bg-[#07111F] hover:bg-[#0e1216]' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`}>Sign in</button>
                     </div>
                     <div>

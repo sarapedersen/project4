@@ -28,7 +28,7 @@ function PaginatedCountryList({filtration}: props) {
     useEffect(() => {
         setCurrentPage(1)
         setSearchCountries("")
-    }, [filtration])
+    }, [filtration, setSearchCountries])
 
 
 
