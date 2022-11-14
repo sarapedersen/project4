@@ -58,12 +58,10 @@ function Register() {
 				id: ""
 			}
 			user(newUser)
-			console.log(userValue)
 		}
 	}
 
 	useEffect(() => {
-		console.log("logger", userValue)
 		if (userValue.id !== "") {
 			user(defaultUser)
             navigate("/countries")
@@ -102,7 +100,7 @@ function Register() {
 					name="password"
 					className='form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal bg-white mt-4 
 					rounded-lg transition ease-in-out focus:bg-white focus:outline-none'
-					placeholder="Password"
+					placeholder="Repeat password"
 					onChange={(e) => setPassword2(e.target.value)}
 				/>
 				</div>

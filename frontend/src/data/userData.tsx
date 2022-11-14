@@ -4,6 +4,14 @@ import { getAllUsername, updateUser, findUser, addUser } from "./queries"
 import { recoilPersist } from 'recoil-persist'
 
 
+
+// RECOIL - DARK MODE
+
+export const darkMode = atom ({
+  key: "darkmode",
+  default: false
+})
+
 // RECOIL - USERS (username)
 
 export const allUsernames = atom ({

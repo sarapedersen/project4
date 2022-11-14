@@ -11,10 +11,11 @@ interface props {
 }
 
 
-function Pagination(data: props) {
+function Pagination({countriesPerPage, totalCountries, paginateForward, paginateBack, currentPage, totalPages}: props) {
 
-    const handleForwardClick = () => data.currentPage<=data.totalPages ? data.paginateBack(data.currentPage + 1) : data.paginateBack(data.currentPage)
-    const handleBackwardClick = () => data.currentPage>=2 ? data.paginateBack(data.currentPage - 1) : data.paginateBack(data.currentPage)
+    const handleForwardClick = () => currentPage<=totalPages ? paginateBack(currentPage + 1) : paginateBack(currentPage)
+    const handleBackwardClick = () => currentPage>=2 ? paginateBack(currentPage - 1) : paginateBack(currentPage)
+    console.log(totalCountries)
 
     return (
         <div>
@@ -26,8 +27,8 @@ function Pagination(data: props) {
                             <img id="leftArrow" src={arrow_left} alt='<' className="w-3 hover:cursor-pointer"/>
                         </a>
                         <div className='font-extralight text-lg'>
-                            {data.currentPage}{" / "}
-                            {Math.ceil(data.totalCountries/data.countriesPerPage)}
+                            {currentPage}{" / "}
+                            {Math.ceil(totalPages)}
                         </div>
                         <a onClick={handleForwardClick} href='#/countries'>
                             <img id="rightArrow" src={arrow_right} alt='>' className="w-3 hover:cursor-pointer"/>
