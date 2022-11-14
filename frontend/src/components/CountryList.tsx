@@ -129,6 +129,8 @@ function CountryList({
                   </li>
                 ))}
             </ul>
+            {/* Show message if no countries matches search or filter */}
+            {countries.length<1 && <p className="text-center">No results</p>}
           </div>
         )}
       </div>
