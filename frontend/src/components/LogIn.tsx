@@ -5,6 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { currentUser, userLoginPage } from '../data/userData'
 import { User } from '../types'
 
+
 function LogIn() {
     const navigate = useNavigate()
     const [username, setUsername] = useState("")
@@ -12,6 +13,34 @@ function LogIn() {
     const [message, setMessage] = useState("")
     const setUserState = useSetRecoilState(userLoginPage)
     const userCredentials = useRecoilValue(currentUser)
+    const [users, setUser] = useState<User>(getUser)
+
+    function getUser() {
+        const storedUser = sessionStorage.getItem('user')
+        if(!storedUser) return {
+            id: "",
+            username: "", 
+            password: "", 
+            beenTo: []
+        }
+        return JSON.parse(storedUser)
+    }
+
+    useEffect(() => {
+        sessionStorage.setItem('user', JSON.stringify(users))
+        setUsername(users.username)
+        setPassword(users.password)
+    }, [users])
+
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        setUsername(event.target.value)
+        setPassword(event.target.value)
+		setUser((previousValues) => ({
+			...previousValues,
+			[event.target.name]: event.target.value,
+		}))
+    }
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -32,7 +61,7 @@ function LogIn() {
         if (userCredentials.id !== "") {
             navigate("/countries")
         } 
-    }, [userCredentials])
+    }, [userCredentials, navigate])
 
     
     return (
@@ -47,7 +76,8 @@ function LogIn() {
                             className='form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal bg-white mt-12 md:mt-8 
                             rounded-lg transition ease-in-out focus:bg-white focus:outline-none'
                             placeholder='Username' 
-                            onChange={e => setUsername(e.target.value)}/>
+                            onChange={handleChange}
+                            value={users.username}/>
                         </div>
                         <div className='field'>
                             <input type="password" 
@@ -55,7 +85,8 @@ function LogIn() {
                             className='form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal bg-white mt-4 
                             rounded-lg transition ease-in-out focus:bg-white focus:outline-none'
                             placeholder='Password' 
-                            onChange={e => setPassword(e.target.value)}/>
+                            onChange={handleChange}
+                            value={users.password}/>
                         </div>
                         <p role="error" className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
                         <button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'>Sign in</button>
