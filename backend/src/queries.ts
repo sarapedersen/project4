@@ -70,9 +70,18 @@ export const RootQuery = new GraphQLObjectType({
         },
         countriesFromList: {
             type: new GraphQLList(CountryType),
-            args: {list: {type: new GraphQLList(GraphQLString)}, sorting: {type: GraphQLString}, from: {type: GraphQLInt}, numItems: {type: GraphQLInt}},
+            args: {searchInput: {type: GraphQLString}, list: {type: new GraphQLList(GraphQLString)}, sorting: {type: GraphQLString}, from: {type: GraphQLInt}, numItems: {type: GraphQLInt}},
             resolve(parent, args) {
-                return sCountry.find({_id: args.list}).sort({name: args.sorting}).skip(args.from).limit(args.numItems);
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i')}}
+                return sCountry.find({_id: args.list}).find(countryFilter).sort({name: args.sorting}).skip(args.from).limit(args.numItems);
+            }
+        }, 
+        numCountriesFromListByName: {
+            type: GraphQLInt,
+            args: {searchInput: {type: GraphQLString}, list: {type: new GraphQLList(GraphQLString)}, sorting: {type: GraphQLString}, from: {type: GraphQLInt}, numItems: {type: GraphQLInt}},
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i')}}
+                return sCountry.find({_id: args.list}).find(countryFilter).countDocuments();
             }
         }
     }

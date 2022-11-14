@@ -13,7 +13,7 @@ interface props {
 
 function Pagination({countriesPerPage, totalCountries, paginateForward, paginateBack, currentPage, totalPages}: props) {
 
-    const handleForwardClick = () => currentPage<=totalPages ? paginateBack(currentPage + 1) : paginateBack(currentPage)
+    const handleForwardClick = () => currentPage<=totalPages-1 ? paginateBack(currentPage + 1) : paginateBack(currentPage)
     const handleBackwardClick = () => currentPage>=2 ? paginateBack(currentPage - 1) : paginateBack(currentPage)
     console.log(totalCountries)
 

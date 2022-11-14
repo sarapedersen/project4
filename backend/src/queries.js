@@ -72,9 +72,18 @@ exports.RootQuery = new graphql_1.GraphQLObjectType({
         },
         countriesFromList: {
             type: new graphql_1.GraphQLList(types_1.CountryType),
-            args: { list: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) }, sorting: { type: graphql_1.GraphQLString }, from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt } },
+            args: { searchInput: { type: graphql_1.GraphQLString }, list: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) }, sorting: { type: graphql_1.GraphQLString }, from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt } },
             resolve(parent, args) {
-                return schema_1.sCountry.find({ _id: args.list }).sort({ name: args.sorting }).skip(args.from).limit(args.numItems);
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
+                return schema_1.sCountry.find({ _id: args.list }).find(countryFilter).sort({ name: args.sorting }).skip(args.from).limit(args.numItems);
+            }
+        },
+        numCountriesFromListByName: {
+            type: graphql_1.GraphQLInt,
+            args: { searchInput: { type: graphql_1.GraphQLString }, list: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) }, sorting: { type: graphql_1.GraphQLString }, from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt } },
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
+                return schema_1.sCountry.find({ _id: args.list }).find(countryFilter).countDocuments();
             }
         }
     }
