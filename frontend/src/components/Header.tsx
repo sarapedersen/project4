@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {  useRecoilState, useSetRecoilState } from 'recoil';
 import { searchState } from '../data/countryData';
-import { userLoginPage, userRegisterPage, updateUserState } from '../data/userData';
+import { userLoginPage, userRegisterPage, updateUserState, darkMode } from '../data/userData';
 import { defaultUser } from '../types';
-
+import darkModeImg from '../icons/darkmode.svg';
+import lightModeImg from '../icons/lightmode.svg';
 
 function Header() {
     const [query, setQuery] = useState("")
@@ -13,6 +14,7 @@ function Header() {
     const loginUser = useSetRecoilState(userLoginPage);
     const registerUser = useSetRecoilState(userRegisterPage);
     const updateUser = useSetRecoilState(updateUserState);
+    const [darkmode, setDarkmode] = useRecoilState(darkMode);
 
     useEffect(() => {
         setQuery(searchCountries)
@@ -30,6 +32,7 @@ function Header() {
     return (
         <div className="head">
             <div className='md:bg-properTeal flex justify-center'>
+                <img alt="darkmode button" src={darkmode ? darkModeImg : lightModeImg} width="100px" onClick={() => setDarkmode(!darkmode)}/>
                 <form onSubmit={() => setSearchCountries(query)}>
                     {/* search bar */}
                     <div className="mb-3 md:max-w-none">
