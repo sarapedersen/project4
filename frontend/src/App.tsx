@@ -9,7 +9,7 @@ import RegisterPage from './pages/RegisterPage'
 function App() {
 
   return (
-      <div className='App bg-bgBlue h-full '>
+      <div className='App bg-bgBlack h-full '>
         <div className='min-h-screen'>
             <React.Suspense fallback={<p>Loading..</p>}>
               <Routes>

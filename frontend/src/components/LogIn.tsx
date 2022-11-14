@@ -60,11 +60,11 @@ function LogIn() {
                             placeholder='Password' 
                             onChange={e => setPassword(e.target.value)}/>
                         </div>
-                        <p role="error" className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
+                        <p role="error" className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} </p>
                         <button type="submit" className={darkmode ? 'bg-[#07111F] hover:bg-[#0e1216]' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`}>Sign in</button>
                     </div>
                     <div>
-                        <p className='text-center mt-8'>Not a member? <Link  to='/register' className={darkmode ? 'text-[#A3A3A3] hover:underline' : 'text-darkTeal hover:underline'}><span tabIndex={0}>Register now</span></Link></p>
+                        <p className='text-center mt-8'>Not a member? <Link  to='/register' className={darkmode ? 'text-purple hover:underline' : 'text-darkTeal hover:underline'}><span tabIndex={0}>Register now</span></Link></p>
                     </div>
                 </form>
             </div>

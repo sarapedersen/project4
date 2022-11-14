@@ -4,8 +4,8 @@ import earth_pale from "../icons/earth_pale.svg";
 import earth from "../icons/earth.svg";
 import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { currentUser, updateUserState } from "../data/userData";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { currentUser, darkMode, updateUserState } from "../data/userData";
 
 interface props {
   countries: Country[];
@@ -24,6 +24,7 @@ function CountryList({
   const current = useRecoilValue(currentUser)
   const update = useSetRecoilState(updateUserState)
   myCountri = [...current.beenTo]
+  const [darkmode, setDarkmode] = useRecoilState(darkMode);
 
   function handleClick(c: Country) {
     
@@ -46,8 +47,8 @@ function CountryList({
     <div className="body">
       <div className="flex justify-center mt-10 mb-10">
         {showInfo ? ( // If showInfo has a country then show info about the chosen country
-          <div className="bg-white rounded-lg  w-72 text-gray-900 md:w-2/4">
-            <div className="px-6 py-3 grid grid-cols-5  w-full border-b border-bgBlue place-items-center">
+          <div className={darkmode ? "bg-grey rounded-lg  w-72 text-white md:w-2/4":"bg-white rounded-lg  w-72 text-gray-900 md:w-2/4"}>
+            <div className={darkmode ? "px-6 py-3 grid grid-cols-5  w-full border-b border-[#27272F] place-items-center":"px-6 py-3 grid grid-cols-5  w-full border-b border-bgBlue place-items-center"} >
               <img
                 onClick={() => handleClick(showInfo)}
                 src={myCountri.includes(showInfo.id) ? earth : earth_pale}
@@ -98,8 +99,8 @@ function CountryList({
             </div>
           </div> // If showInfo is null, just show the country names in a list
         ) : (
-          <div className="bg-white rounded-lg  w-72 text-gray-900 md:w-2/4">
-            <ul className="text-gray-900 divide-y divide-bgBlue w-full">
+          <div className={darkmode ? "bg-grey rounded-lg  w-72 text-white md:w-2/4":"bg-white rounded-lg  w-72 text-gray-900 md:w-2/4"}>
+            <ul className={darkmode ? "text-white divide-y divide-[#27272F] w-full": "text-gray-900 divide-y divide-bgBlue w-full"}>
               {/* Maps through all countries and displays country name, expand arrow and check box  */}
               {countries &&
                 countries.map((c, index) => (

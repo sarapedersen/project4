@@ -45,8 +45,8 @@ function MainPage() {
                 <p className='font-bold'>Sort by:</p>
                 <form>
                     <select id="sortbtn" className='rounded-md px-2' onChange={handleClick}>
-                        <option value="asc">A-Z</option>
-                        <option value="desc">Z-A</option>
+                        <option value="asc">A-Å</option>
+                        <option value="desc">Å-A</option>
                     </select>
                 </form>
             </div>
