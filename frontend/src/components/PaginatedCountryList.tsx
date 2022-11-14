@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country, maxElementsOnPage } from '../types'
-import { countriesBeenTo, currentPageState, maxPageState, searchCountryState } from '../data/countryData'
+import { countriesBeenTo, currentPageState, maxPageState, searchCountryState, searchState } from '../data/countryData'
 
 interface props  {
     filtration: boolean
@@ -15,7 +15,8 @@ function PaginatedCountryList({filtration}: props) {
 
     const countries = useRecoilValue(searchCountryState)
     const usersCountries = useRecoilValue(countriesBeenTo)
-    console.log("user countries in paginated country list: ", usersCountries)    
+    console.log("user countries in paginated country list: ", usersCountries)
+    const setSearchCountries = useSetRecoilState(searchState)    
     const [showInfo, setshowInfo] = useState<Country | null>()
 
     // removes country info on page change
@@ -26,7 +27,10 @@ function PaginatedCountryList({filtration}: props) {
     // resets to first page when switching between all countries and my countries
     useEffect(() => {
         setCurrentPage(1)
+        setSearchCountries("")
     }, [filtration])
+
+
 
 
     // Pagination inpiration from https://blog.logrocket.com/pagination-components-react-tailwind-css/

@@ -58,12 +58,10 @@ function Register() {
 				id: ""
 			}
 			user(newUser)
-			console.log(userValue)
 		}
 	}
 
 	useEffect(() => {
-		console.log("logger", userValue)
 		if (userValue.id !== "") {
 			user(defaultUser)
             navigate("/countries")

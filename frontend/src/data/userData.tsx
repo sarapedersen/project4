@@ -2,6 +2,14 @@ import { atom, selector } from "recoil";
 import { defaultUser, User } from "../types";
 import { getAllUsername, updateUser, findUser, addUser } from "./queries";
 
+
+// RECOIL - DARK MODE
+
+export const darkMode = atom ({
+  key: "darkmode",
+  default: false
+})
+
 // RECOIL - USERS (username)
 
 
