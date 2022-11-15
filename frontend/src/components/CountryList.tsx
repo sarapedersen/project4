@@ -23,7 +23,11 @@ function CountryList({
 
   const current = useRecoilValue(currentUser)
   const update = useSetRecoilState(updateUserState)
-  myCountri = [...current.beenTo]
+  if (current === undefined) {
+    myCountri = []
+  } else {
+    myCountri = [...current.beenTo]
+  }
 
   function handleClick(c: Country) {
     
@@ -34,13 +38,15 @@ function CountryList({
       myCountri.splice(index, 1);
     }
     let tempList = myCountri
-    let upUser: User = {
-      username: current.username,
-      id: current.id,
-      password: current.password,
-      beenTo: tempList
+    if (current !== undefined) {
+      let upUser: User = {
+        username: current.username,
+        id: current.id,
+        password: current.password,
+        beenTo: tempList
+      }
+      update(upUser)
     }
-    update(upUser)
   }
   return (
     <div className="body">

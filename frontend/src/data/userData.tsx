@@ -49,7 +49,10 @@ export const currentUser = selector({
     const loginPage: User = get(userLoginPage)
     const registerPage: User = get(userRegisterPage)
     if (loginPage.username !== "") {
-      const user = await findUser(loginPage.username, loginPage.password)
+      const user: User | undefined = await findUser(loginPage.username, loginPage.password)
+      if (user === null) {
+        return undefined
+      }
       return user
     } else if (registerPage.username !== ""){
       const user = await addUser(registerPage.username, registerPage.password, [])

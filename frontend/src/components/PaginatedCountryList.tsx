@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country, maxElementsOnPage } from '../types'
@@ -14,23 +14,25 @@ function PaginatedCountryList({filtration}: props) {
     const maxPage = useRecoilValue(maxPageState)
 
     const countries = useRecoilValue(searchCountryState)
+    // const countries = useRecoilRefresher_UNSTABLE(searchCountryState)
     const usersCountries = useRecoilValue(countriesBeenTo)
-    console.log("user countries in paginated country list: ", usersCountries)
     const [searchCountries, setSearchCountries] = useRecoilState(searchState)    
     const [showInfo, setshowInfo] = useState<Country | null>()
-
-    console.log(searchCountries)
 
     // removes country info on page change
     useEffect(() => {
         setshowInfo(null)
-    }, [currentPage, filtration])
+    }, [currentPage, filtration, searchCountries])
     
     // resets to first page when switching between all countries and my countries
     useEffect(() => {
         setCurrentPage(1)
         setSearchCountries("")
     }, [filtration, setSearchCountries])
+
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [searchCountries])
 
 
 

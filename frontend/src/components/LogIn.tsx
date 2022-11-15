@@ -14,6 +14,7 @@ function LogIn() {
     const setUserState = useSetRecoilState(userLoginPage)
     const userCredentials = useRecoilValue(currentUser)
     const [users, setUser] = useState<User>(getUser)
+    console.log("usercredentials: ", userCredentials)
 
     function getUser() {
         const storedUser = sessionStorage.getItem('user')
@@ -56,13 +57,21 @@ function LogIn() {
             beenTo: []
         }
         setUserState(inputCredentials) 
+<<<<<<< HEAD
         if (inputCredentials != null) {
+=======
+        if (userCredentials != null) {
+>>>>>>> 2d99ace9d0c245fe36ea16d493776ddf7e4ea14c
             setMessage("Wrong username or password. Check spelling and try again.")  
         }
     }
 
     useEffect(() => {
+<<<<<<< HEAD
         if (userCredentials === null) return  
+=======
+        if (userCredentials === null || userCredentials === undefined) return
+>>>>>>> 2d99ace9d0c245fe36ea16d493776ddf7e4ea14c
         if (userCredentials.id !== "") {
             navigate("/countries")
         } 
@@ -70,8 +79,10 @@ function LogIn() {
 
     
     return (
+
         <div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' : 'grid grid-cols-1 grid-auto place-items-center'}>
             <div className='pt-24'> 
+            <React.Suspense fallback="Loading...">
                 <form onSubmit={submit}>
                     <h1 className='text-center mb-10 md:mb-16 text-3xl md:text-4xl font-bold '>Log in</h1>
                     <div className='form'>
@@ -98,6 +109,7 @@ function LogIn() {
                         <p className='text-center mt-8'>Not a member? <Link  to='/register' className={darkmode ? 'text-[#A3A3A3] hover:underline' : 'text-darkTeal hover:underline'}><span tabIndex={0}>Register now</span></Link></p>
                     </div>
                 </form>
+            </React.Suspense>
             </div>
         </div>
     )
