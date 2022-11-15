@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
 import { myCountriesState, sortState} from '../data/countryData';
 import { currentUser} from '../data/userData';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { useNavigate } from "react-router-dom"
 
 function MainPage() {
@@ -16,7 +16,7 @@ function MainPage() {
     }
 
     useEffect(() => {
-        if (userValue.id === "") {
+        if (userValue === undefined) {
             console.log(userValue)
             navigate("/")
         }
