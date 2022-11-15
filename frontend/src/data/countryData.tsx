@@ -35,6 +35,7 @@ import { currentUser } from "./userData";
       const myCountries = get(myCountriesState)
       const user = get(currentUser)
       if (myCountries) {
+        if (user === undefined) return 0
         numCountries = await numOfMyCountriesBySearch(filter, user.beenTo)
         console.log("num my countries: ", numCountries)
       } else {
@@ -54,11 +55,14 @@ import { currentUser } from "./userData";
       const maxPage = get(maxPageState)
       const sort = get(sortState)
       const currentPage = get(currentPageState)
-      console.log("searchCountryState different variables - filter: ", filter, "maxPage: ", maxPage, "sort: ", sort, "currentPage: ", currentPage)
-      if (currentPage > maxPage) {
-        return await searchCountries(filter, sort, maxPage*maxElementsOnPage)
-      } 
-      return await searchCountries(filter, sort, (currentPage-1)*maxElementsOnPage)
+      const countryState = get(myCountriesState)
+      if (!countryState) {
+        if (currentPage > maxPage) {
+          return await searchCountries(filter, sort, maxPage*maxElementsOnPage)
+        } 
+        return await searchCountries(filter, sort, (currentPage-1)*maxElementsOnPage)
+      }
+      return []
     }
   });
 
@@ -66,12 +70,13 @@ import { currentUser } from "./userData";
     key: "countriesBeenTo",
     get: async ({get}) => {
       const filter = get(searchState)
-      const user: User = get(currentUser)
+      const user: User | undefined = get(currentUser)
       const maxPage = get(maxPageState)
       const sort = get(sortState)
       const currentPage = get(currentPageState)
-      console.log("Countries been to different variables - filter: ", filter, "maxPage: ", maxPage, "sort: ", sort, "currentPage: ", currentPage, "user: ", user)
-      if (user.beenTo.length !== 0) {
+      const countryState = get(myCountriesState)
+      if (user === undefined) return []
+      if (user.beenTo.length !== 0 && countryState) {
         if (currentPage > maxPage) {
           return await myCountries(filter, user.beenTo, maxPage*maxElementsOnPage, sort)
         } 

@@ -15,7 +15,6 @@ function Pagination({countriesPerPage, totalCountries, paginateForward, paginate
 
     const handleForwardClick = () => currentPage<=totalPages-1 ? paginateBack(currentPage + 1) : paginateBack(currentPage)
     const handleBackwardClick = () => currentPage>=2 ? paginateBack(currentPage - 1) : paginateBack(currentPage)
-    console.log(totalCountries)
 
     return (
         <div>
