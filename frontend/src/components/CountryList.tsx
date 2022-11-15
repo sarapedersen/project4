@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Country, User } from "../types";
 import earth_pale from "../icons/earth_pale.svg";
 import earth from "../icons/earth.svg";
+import dark_earth_unchecked from "../icons/dark_earth_unchecked.svg";
+import dark_earth_checked from "../icons/dark_earth_checked.svg";
 import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
+import arrow_down_white from "../icons/arrow_down_white.svg";
+import arrow_up_white from "../icons/arrow_up_white.svg";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { currentUser, darkMode, updateUserState } from "../data/userData";
 
@@ -19,12 +23,12 @@ function CountryList({
   showInfo,
   setshowInfo,
 }: props) {
-  
 
   const current = useRecoilValue(currentUser)
   const update = useSetRecoilState(updateUserState)
   myCountri = [...current.beenTo]
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
+
 
   function handleClick(c: Country) {
     
@@ -51,7 +55,7 @@ function CountryList({
             <div className={darkmode ? "px-6 py-3 grid grid-cols-5  w-full border-b border-[#27272F] place-items-center":"px-6 py-3 grid grid-cols-5  w-full border-b border-bgBlue place-items-center"} >
               <img
                 onClick={() => handleClick(showInfo)}
-                src={myCountri.includes(showInfo.id) ? earth : earth_pale}
+                src={myCountri.includes(showInfo.id) ? (darkmode ? dark_earth_checked : earth) : (darkmode ? dark_earth_unchecked : earth_pale)}
                 alt="earth"
                 className="mx-3 w-7 hover:cursor-pointer"
               />
@@ -63,7 +67,7 @@ function CountryList({
               </p>
               <img
                 onClick={() => setshowInfo(null)}
-                src={arrow_up}
+                src={darkmode ? arrow_up_white : arrow_up}
                 alt="/\"
                 className="mx-3 my-2 w-6 hover:cursor-pointer"
               />
@@ -110,7 +114,7 @@ function CountryList({
                   >
                     <img
                       onClick={() => handleClick(c)}
-                      src={myCountri.includes(c.id) ? earth : earth_pale}
+                      src={myCountri.includes(c.id) ? (darkmode ? dark_earth_checked : earth) : (darkmode ? dark_earth_unchecked : earth_pale)}
                       alt="earth"
                       className="mx-3 w-7 hover:cursor-pointer"
                     />
@@ -122,7 +126,7 @@ function CountryList({
                     </p>
                     <img
                       id="arrow"
-                      src={arrow_down}
+                      src={darkmode ? arrow_down_white : arrow_down}
                       alt="\/"
                       onClick={() => setshowInfo(c)}
                       className="mx-3 my-2 w-6 hover:cursor-pointer"
