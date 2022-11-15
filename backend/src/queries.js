@@ -35,20 +35,57 @@ exports.RootQuery = new graphql_1.GraphQLObjectType({
                 return schema_1.sCountry.findById(args.id);
             }
         },
-        countries: {
+        allCountries: {
             type: new graphql_1.GraphQLList(types_1.CountryType),
             resolve(parent, args) {
-                return schema_1.sCountry.find({});
+                return schema_1.sCountry.find({}).limit(50).skip(45);
             }
         },
         countriesByName: {
             type: new graphql_1.GraphQLList(types_1.CountryType),
-            args: { searchInput: { type: graphql_1.GraphQLString }, sorting: { type: graphql_1.GraphQLString } },
+            args: { searchInput: { type: graphql_1.GraphQLString }, sorting: { type: graphql_1.GraphQLString }, from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt } },
             resolve(parent, args) {
                 const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
-                return schema_1.sCountry.find(countryFilter).sort({ name: args.sorting });
+                return schema_1.sCountry.find(countryFilter).sort({ name: args.sorting }).skip(args.from).limit(args.numItems);
             }
         },
+        numCountriesByName: {
+            type: graphql_1.GraphQLInt,
+            args: { searchInput: { type: graphql_1.GraphQLString } },
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
+                return schema_1.sCountry.find(countryFilter).countDocuments();
+            }
+        },
+        numCountries: {
+            type: graphql_1.GraphQLInt,
+            resolve(parent, args) {
+                return schema_1.sCountry.find().countDocuments({});
+            }
+        },
+        specificCountries: {
+            type: new graphql_1.GraphQLList(types_1.CountryType),
+            args: { from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt }, sorting: { type: graphql_1.GraphQLString } },
+            resolve(parent, args) {
+                return schema_1.sCountry.find({}).sort({ name: args.sorting }).skip(args.from).limit(args.numItems);
+            }
+        },
+        countriesFromList: {
+            type: new graphql_1.GraphQLList(types_1.CountryType),
+            args: { searchInput: { type: graphql_1.GraphQLString }, list: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) }, sorting: { type: graphql_1.GraphQLString }, from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt } },
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
+                return schema_1.sCountry.find({ _id: args.list }).find(countryFilter).sort({ name: args.sorting }).skip(args.from).limit(args.numItems);
+            }
+        },
+        numCountriesFromListByName: {
+            type: graphql_1.GraphQLInt,
+            args: { searchInput: { type: graphql_1.GraphQLString }, list: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) }, sorting: { type: graphql_1.GraphQLString }, from: { type: graphql_1.GraphQLInt }, numItems: { type: graphql_1.GraphQLInt } },
+            resolve(parent, args) {
+                const countryFilter = { name: { $regex: new RegExp(args.searchInput, 'i') } };
+                return schema_1.sCountry.find({ _id: args.list }).find(countryFilter).countDocuments();
+            }
+        }
     }
 });
 exports.Mutation = new graphql_1.GraphQLObjectType({
