@@ -57,21 +57,13 @@ function LogIn() {
             beenTo: []
         }
         setUserState(inputCredentials) 
-<<<<<<< HEAD
-        if (inputCredentials != null) {
-=======
         if (userCredentials != null) {
->>>>>>> 2d99ace9d0c245fe36ea16d493776ddf7e4ea14c
             setMessage("Wrong username or password. Check spelling and try again.")  
         }
     }
 
     useEffect(() => {
-<<<<<<< HEAD
-        if (userCredentials === null) return  
-=======
         if (userCredentials === null || userCredentials === undefined) return
->>>>>>> 2d99ace9d0c245fe36ea16d493776ddf7e4ea14c
         if (userCredentials.id !== "") {
             navigate("/countries")
         } 
