@@ -37,7 +37,6 @@ import { currentUser } from "./userData";
       if (myCountries) {
         if (user === undefined) return 0
         numCountries = await numOfMyCountriesBySearch(filter, user.beenTo)
-        console.log("num my countries: ", numCountries)
       } else {
         numCountries = await numOfSearchCountries(filter)
       }

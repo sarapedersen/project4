@@ -124,7 +124,6 @@ export async function findUser(username: string, password: string) {
     })
         .then((response) => response.json())
         .then((data) => user = data.data.userLogIn)
-    console.log("findUser: ", user)
     return user
 }
 
