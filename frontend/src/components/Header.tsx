@@ -32,7 +32,7 @@ function Header() {
         registerUser(defaultUser)
         updateUser(defaultUser)
     }
-    // flex justify-center
+    
     return (
         <div className="head">
             <div className={darkmode ? "md:bg-[#07111F] " : "md:bg-properTeal flex justify-center"}>

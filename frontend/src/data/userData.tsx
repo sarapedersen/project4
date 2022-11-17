@@ -7,9 +7,12 @@ import { recoilPersist } from 'recoil-persist'
 
 // RECOIL - DARK MODE
 
+const { persistAtom } = recoilPersist()
+
 export const darkMode = atom ({
   key: "darkmode",
-  default: false
+  default: false,
+  effects_UNSTABLE: [persistAtom]
 })
 
 // RECOIL - USERS (username)
@@ -20,7 +23,6 @@ export const allUsernames = atom ({
 })
 
 // RECOIL - USERS (Login)
-const { persistAtom } = recoilPersist()
 
 export const userLoginPage = atom ({
   key: "userLoginPage",
