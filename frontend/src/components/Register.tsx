@@ -66,7 +66,7 @@ function Register() {
 	}
 
 	useEffect(() => {
-		if (userValue.id !== "") {
+		if (userValue !== undefined) {
 			user(defaultUser)
             navigate("/countries")
         } 

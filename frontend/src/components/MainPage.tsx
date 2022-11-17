@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
-import { sortState} from '../data/countryData';
+import { myCountriesState, sortState} from '../data/countryData';
 import { currentUser} from '../data/userData';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { useNavigate } from "react-router-dom"
 import { darkMode } from "../data/userData";
 
 function MainPage() {
     const navigate = useNavigate()
-    const [filtration, setFiltration] = useState<string>("all")
+    const [myCountries, setMyCountries] = useRecoilState(myCountriesState)
     const [sort, setSort] = useRecoilState(sortState)
     const userValue = useRecoilValue(currentUser)
     const [darkmode, setDarkmode] = useRecoilState(darkMode);
@@ -19,7 +19,7 @@ function MainPage() {
     }
 
     useEffect(() => {
-        if (userValue.id === "") {
+        if (userValue === undefined) {
             console.log(userValue)
             navigate("/")
         }
@@ -32,16 +32,16 @@ function MainPage() {
             {/* Filtration */}
             <div className='justify-self-center cursor-pointer'>
                 <div className='flex flex-row mt-10 space-x-10 justify-center'>
-                    <p onClick={() => setFiltration("all")} className={filtration === "all" ? (darkmode ? 'text-white ' : 'text-darkTeal font-bold') : (darkmode ? 'text-purple' : 'text-gray-400 font-bold')}>All countries</p>
-                    <p onClick={() => setFiltration("travelled")} className={filtration === "travelled" ? (darkmode ? 'text-white' : 'text-darkTeal font-bold') : (darkmode ? 'text-purple' : 'text-gray-400 font-bold')}>My countries</p>
+                    <p onClick={() => setMyCountries(false)} className={myCountries === false ? (darkmode ? 'text-white ' : 'text-darkTeal font-bold') : (darkmode ? 'text-purple' : 'text-gray-400 font-bold')}>All countries</p>
+                    <p onClick={() => setMyCountries(true)} className={myCountries === true ? (darkmode ? 'text-white' : 'text-darkTeal font-bold') : (darkmode ? 'text-purple' : 'text-gray-400 font-bold')}>My countries</p>
                 </div>
                 <div className='flex flex-row'>
-                    <hr className={filtration === "all" ? (darkmode ? 'bg-white'+`${lineStyle }` : 'bg-darkTeal'+`${lineStyle }`) : (darkmode ? 'bg-bgBlack'+`${lineStyle }` : 'bg-bgBlue'+`${lineStyle }`)} />
-                    <hr className={filtration === "travelled" ? (darkmode ? 'bg-white'+`${lineStyle }` : 'bg-darkTeal'+`${lineStyle }`) : (darkmode ? 'bg-bgBlack'+`${lineStyle }` : 'bg-bgBlue'+`${lineStyle }`)}/>
+                    <hr className={myCountries === false ? (darkmode ? 'bg-white'+`${lineStyle }` : 'bg-darkTeal'+`${lineStyle }`) : (darkmode ? 'bg-bgBlack'+`${lineStyle }` : 'bg-bgBlue'+`${lineStyle }`)} />
+                    <hr className={myCountries === true ? (darkmode ? 'bg-white'+`${lineStyle }` : 'bg-darkTeal'+`${lineStyle }`) : (darkmode ? 'bg-bgBlack'+`${lineStyle }` : 'bg-bgBlue'+`${lineStyle }`)}/>
                 </div>
             </div>
 
-            <PaginatedCountryList filtration={filtration}/>
+            <PaginatedCountryList filtration={myCountries}/>
 
             {/* Sorting */}
             <div className='flex space-x-6 justify-self-center pb-16'>

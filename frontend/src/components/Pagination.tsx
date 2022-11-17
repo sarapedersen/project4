@@ -17,7 +17,7 @@ interface props {
 
 function Pagination({countriesPerPage, totalCountries, paginateForward, paginateBack, currentPage, totalPages}: props) {
 
-    const handleForwardClick = () => currentPage<=totalPages ? paginateBack(currentPage + 1) : paginateBack(currentPage)
+    const handleForwardClick = () => currentPage<=totalPages-1 ? paginateBack(currentPage + 1) : paginateBack(currentPage)
     const handleBackwardClick = () => currentPage>=2 ? paginateBack(currentPage - 1) : paginateBack(currentPage)
     const [darkmode, setDarkmode] = useRecoilState(darkMode);
 
@@ -25,7 +25,7 @@ function Pagination({countriesPerPage, totalCountries, paginateForward, paginate
         <div>
             <nav aria-label='Pagination'>
                 {/* Left and right arrows to paginate thorugh pages, and number of pages */}
-                <div className='flex justify-center'>
+                <div className={totalPages === 0 ? 'flex justify-center invisible' : 'flex justify-center'}>
                     <div className='grid grid-cols-3 place-items-center pb-10 w-60'>
                         <a onClick={handleBackwardClick} href='#/countries'>
                             <img id="leftArrow" src={darkmode ? arrow_left_white : arrow_left} alt='arrow left' className="w-3 hover:cursor-pointer"/>
