@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
 import { myCountriesState, sortState} from '../data/countryData';
 import { currentUser} from '../data/userData';
-import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { useNavigate } from "react-router-dom"
 import { darkMode } from "../data/userData";
+import { defaultUser } from '../types';
 
 function MainPage() {
     const navigate = useNavigate()
-    const [myCountries, setMyCountries] = useRecoilState(myCountriesState)
-    const [sort, setSort] = useRecoilState(sortState)
-    const userValue = useRecoilValue(currentUser)
-    const [darkmode, setDarkmode] = useRecoilState(darkMode);
+    const [tempMyCountries, setMyCountries] = useRecoilStateLoadable(myCountriesState)
+    const setSort = useSetRecoilState(sortState)
+    const tempUserValue = useRecoilValueLoadable(currentUser)
+    const darkmode = useRecoilValue(darkMode);
     const lineStyle = ' w-32 border-0 h-0.5'
+
+    const userValue = tempUserValue.state === 'hasValue' ? tempUserValue.contents : defaultUser
+    const myCountries = tempMyCountries.state === 'hasValue' ? tempMyCountries.contents : false
+    
+
    
     function handleClick(event: React.ChangeEvent<HTMLSelectElement>) {
         setSort(event.target.value)
