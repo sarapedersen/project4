@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import {  useRecoilValue, useSetRecoilState } from 'recoil';
-import { allUsernames, currentUser, userRegisterPage } from "../data/userData";
+import {  useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { allUsernames, currentUser, darkMode, userRegisterPage } from "../data/userData";
 import { defaultUser, User } from "../types"
 
 
@@ -17,6 +17,10 @@ function Register() {
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
+	const [darkmode, setDarkmode] = useRecoilState(darkMode)
+	const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
+    const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
+   
 	
 
 	const submit = (e: React.FormEvent) => {
@@ -69,7 +73,7 @@ function Register() {
 	}, [userValue, user, navigate])
 
   	return (
-		<div className='grid grid-cols-1 grid-auto place-items-center'>
+		<div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' :  'grid grid-cols-1 grid-auto place-items-center'}>
 		<div className="pt-24">
 			<form>
 			<h1 className='text-center mb-10 md:mb-16 text-3xl md:text-4xl font-bold'>Register</h1>
@@ -78,8 +82,7 @@ function Register() {
 				<input
 					type="text"
 					name="username"
-					className='form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal bg-white mt-12 md:mt-8 
-							rounded-lg transition ease-in-out focus:bg-white focus:outline-none'
+					className={ darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
 					placeholder="Username"
 					onChange={(e) => setUsername(e.target.value)}
 				/>
@@ -88,8 +91,7 @@ function Register() {
 				<input
 					type="password"
 					name="password"
-					className='form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal bg-white mt-4 
-					rounded-lg transition ease-in-out focus:bg-white focus:outline-none'
+					className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
 					placeholder="Password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>
@@ -98,19 +100,16 @@ function Register() {
 				<input
 					type="password"
 					name="password"
-					className='form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal bg-white mt-4 
-					rounded-lg transition ease-in-out focus:bg-white focus:outline-none'
+					className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
 					placeholder="Repeat password"
 					onChange={(e) => setPassword2(e.target.value)}
 				/>
 				</div>
-				<p className="text-red px-4 mt-2 w-72 md:w-96"> {message} </p>
-				<p className="text-red px-4 mt-2 w-72 md:w-96"> {message2} </p>
-				<p className="text-red px-4 mt-2 w-72 md:w-96"> {message3} </p>
-				<button type="submit" className='bg-properTeal hover:bg-darkTeal text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8' onClick={submit}>Register</button>
-			</div>
+				<p className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} {message2} {message3}</p>
+				<button type="submit" className={darkmode ? 'bg-[#07111F] hover:bg-[#0e1216]' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`} onClick={submit}>Register</button>
+				</div>
 			<div>
-				<p className='text-center mt-8'>Already a member? <Link to='/' className='text-darkTeal hover:underline'>Log in</Link></p>
+				<p className='text-center mt-8'>Already a member? <Link to='/' className={darkmode ? 'text-purple hover:underline' : 'text-darkTeal hover:underline'}>Log in</Link></p>
 			</div>
 			</form>
 		</div>

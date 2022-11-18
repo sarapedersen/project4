@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil'
 import { currentUser, darkMode, userLoginPage } from '../data/userData'
-import { User } from '../types'
+import { defaultUser, User } from '../types'
 
 
 function LogIn() {
@@ -12,9 +12,10 @@ function LogIn() {
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const setUserState = useSetRecoilState(userLoginPage)
-    const userCredentials = useRecoilValue(currentUser)
+    const tempUserCredentials = useRecoilValueLoadable(currentUser)
     const [users, setUser] = useState<User>(getUser)
-    console.log("usercredentials: ", userCredentials)
+    const userCredentials = tempUserCredentials.state === 'hasValue' ? tempUserCredentials.contents : defaultUser
+
 
     function getUser() {
         const storedUser = sessionStorage.getItem('user')
@@ -72,7 +73,6 @@ function LogIn() {
 
     
     return (
-
         <div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' : 'grid grid-cols-1 grid-auto place-items-center'}>
             <div className='pt-24'> 
             <React.Suspense fallback="Loading...">
@@ -95,11 +95,11 @@ function LogIn() {
                             onChange={handleChange}
                             value={users.password}/>
                         </div>
-                        <p className='text-red px-4 mt-2 w-72 md:w-96'> {message} </p>
+                        <p role="error" className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} </p>
                         <button type="submit" className={darkmode ? 'bg-[#07111F] hover:bg-[#0e1216]' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`}>Sign in</button>
                     </div>
                     <div>
-                        <p className='text-center mt-8'>Not a member? <Link  to='/register' className={darkmode ? 'text-[#A3A3A3] hover:underline' : 'text-darkTeal hover:underline'}><span tabIndex={0}>Register now</span></Link></p>
+                        <p className='text-center mt-8'>Not a member? <Link  to='/register' className={darkmode ? 'text-purple hover:underline' : 'text-darkTeal hover:underline'}><span tabIndex={0}>Register now</span></Link></p>
                     </div>
                 </form>
             </React.Suspense>

@@ -14,7 +14,12 @@ module.exports = {
       'gray-200': '#e5e7eb',
       'gray-400': '#94a3b8',
       'gray-900': '#111827',
-      'red': '#FF0000'
+      'red': '#FF0000',
+      'purple': '#AF9ADB',
+      'yellow':  '#FAFF00',
+      'bgBlack': '#27272F',
+      'grey': '#444444'
+
     }
   },
   plugins: [],

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil'
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country, maxElementsOnPage } from '../types'
@@ -11,13 +11,19 @@ interface props  {
 
 function PaginatedCountryList({filtration}: props) {
     const [currentPage, setCurrentPage] = useRecoilState(currentPageState)
-    const maxPage = useRecoilValue(maxPageState)
-
-    const countries = useRecoilValue(searchCountryState)
+    const tempMaxPage = useRecoilValueLoadable(maxPageState)
+    const tempCountries = useRecoilValueLoadable(searchCountryState)
     // const countries = useRecoilRefresher_UNSTABLE(searchCountryState)
-    const usersCountries = useRecoilValue(countriesBeenTo)
-    const [searchCountries, setSearchCountries] = useRecoilState(searchState)    
+    const tempUsersCountries = useRecoilValueLoadable(countriesBeenTo)
+    const [searchCountries, setSearchCountries] = useRecoilStateLoadable(searchState)    
     const [showInfo, setshowInfo] = useState<Country | null>()
+
+    const maxPage = tempMaxPage.state === 'hasValue' ? tempMaxPage.contents : 1
+    const countries = tempCountries.state === 'hasValue' ? tempCountries.contents : []
+    const usersCountries = tempUsersCountries.state === 'hasValue' ? tempUsersCountries.contents : []
+
+
+
 
     // removes country info on page change
     useEffect(() => {
