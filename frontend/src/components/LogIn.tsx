@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil'
 import { currentUser, darkMode, userLoginPage } from '../data/userData'
-import { User } from '../types'
+import { defaultUser, User } from '../types'
 
 
 function LogIn() {
@@ -12,8 +12,10 @@ function LogIn() {
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const setUserState = useSetRecoilState(userLoginPage)
-    const userCredentials = useRecoilValue(currentUser)
+    const tempUserCredentials = useRecoilValueLoadable(currentUser)
     const [users, setUser] = useState<User>(getUser)
+    const userCredentials = tempUserCredentials.state === 'hasValue' ? tempUserCredentials.contents : defaultUser
+
 
     function getUser() {
         const storedUser = sessionStorage.getItem('user')
@@ -69,7 +71,6 @@ function LogIn() {
 
     
     return (
-
         <div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' : 'grid grid-cols-1 grid-auto place-items-center'}>
             <div className='pt-24'> 
             <React.Suspense fallback="Loading...">

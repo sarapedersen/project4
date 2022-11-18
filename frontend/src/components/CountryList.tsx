@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Country, User } from "../types";
+import { Country, defaultUser, User } from "../types";
 import earth_pale from "../icons/earth_pale.svg";
 import earth from "../icons/earth.svg";
 import dark_earth_unchecked from "../icons/dark_earth_unchecked.svg";
@@ -8,7 +8,7 @@ import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
 import arrow_down_white from "../icons/arrow_down_white.svg";
 import arrow_up_white from "../icons/arrow_up_white.svg";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { currentUser, darkMode, updateUserState } from "../data/userData";
 
 interface props {
@@ -24,9 +24,12 @@ function CountryList({
   setshowInfo,
 }: props) {
 
-  const current = useRecoilValue(currentUser)
+  const tempCurrent = useRecoilValueLoadable(currentUser)
   const update = useSetRecoilState(updateUserState)
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
+  
+  const current = tempCurrent.state === 'hasValue' ? tempCurrent.contents : defaultUser
+
 
   if (current === undefined) {
     myCountri = []
