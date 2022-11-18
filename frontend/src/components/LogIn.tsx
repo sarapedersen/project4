@@ -41,6 +41,7 @@ function LogIn() {
 			...previousValues,
 			[event.target.name]: event.target.value,
 		}))
+        setMessage("")
     }
 
     const [darkmode, setDarkmode] = useRecoilState(darkMode)
