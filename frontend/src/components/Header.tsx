@@ -49,7 +49,7 @@ function Header() {
                         onChange={(event) => handleChange(event)}
                         />
                         {/* Search button */}
-                        <button onClick={() => setSearchCountries(query)} className={darkmode ?  "bg-[#2d2b49] " + `${btnStyle}` : "bg-darkTeal "+ `${btnStyle}`} type='button'>Search</button>
+                        <button onClick={() => setSearchCountries(query)} className={darkmode ?  "bg-[#2d2b49] bg-opacity-50 hover:bg-opacity-100" + `${btnStyle}` : "bg-darkTeal bg-opacity-50 hover:bg-opacity-100"+ `${btnStyle}`} type='button'>Search</button>
                     </div>
                 </form>
                 <div>      

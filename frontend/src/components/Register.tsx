@@ -70,7 +70,7 @@ function Register() {
 			user(defaultUser)
             navigate("/countries")
         } 
-	}, [userValue])
+	}, [userValue, user, navigate])
 
   	return (
 		<div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' :  'grid grid-cols-1 grid-auto place-items-center'}>
