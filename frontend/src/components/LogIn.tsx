@@ -59,22 +59,33 @@ function LogIn() {
             beenTo: []
         }
         setUserState(inputCredentials) 
-        if (userCredentials != null) {
-            setMessage("Wrong username or password. Check spelling and try again.")  
-        }
+
+        // console.log(tempUserCredentials.state)
+        // if (tempUserCredentials.state === "loading") {
+        //     console.log("jeg tester noe greier")
+        // }
     }
 
     useEffect(() => {
-        if (userCredentials === null || userCredentials === undefined) return
+        if (userCredentials === undefined) {
+            setMessage("Wrong username or password. Check spelling and try again.")
+            console.log(userCredentials)
+            return
+        } 
+        // else if (userCredentials === null) {
+        //     console.log("heisann, vi fikk en null")
+        //     return
+        // }  
         if (userCredentials.id !== "") {
+            setMessage("")
             navigate("/countries")
         } 
-    }, [userCredentials, navigate])
+    }, [userCredentials])
 
     
     return (
         <div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' : 'grid grid-cols-1 grid-auto place-items-center'}>
-            <div className='pt-24'> 
+            <div className='pt-10'> 
             <React.Suspense fallback="Loading...">
                 <form onSubmit={submit}>
                     <h1 className='text-center mb-10 md:mb-16 text-3xl md:text-4xl font-bold '>Log in</h1>

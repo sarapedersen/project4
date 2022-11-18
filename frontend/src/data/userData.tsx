@@ -60,7 +60,7 @@ export const currentUser = selector({
       const user = await addUser(registerPage.username, registerPage.password, [])
       return user
     }
-    return defaultUser
+    return undefined
   }
 });
   
