@@ -1,32 +1,38 @@
-import { atom, selector, useSetRecoilState } from "recoil";
-import { Country, User, maxElementsOnPage } from '../types';
-import { searchCountries, findCountryById, numCountries, numOfSearchCountries, numOfMyCountriesBySearch, myCountries} from "./queries";
+import { atom, selector } from "recoil";
+import { User, maxElementsOnPage } from '../types';
+import { searchCountries, numOfSearchCountries, numOfMyCountriesBySearch, myCountries} from "./queries";
 import { currentUser } from "./userData";
 
 
 
 // RECOIL - COUNTRIES
 
+  // handles the search field
   export const searchState = atom({
     key: "searchState",
     default: ""
   });
 
+  // handles which page the user views
   export const currentPageState = atom({
     key: "currentPageState", 
     default: 1
   })
 
+  // handles which sorting the user has picked
   export const sortState = atom({
     key: "sortState",
     default: "asc"
   });
 
+  // handles which list of countries the user sees (filtering), either all countries or the countries they have visited (my countries)
   export const myCountriesState = atom({
     key: "myCountriesState", 
     default: false
   })
 
+  // gets the max number of countries that can be shown which is limited by both the filter and the search field from the backend
+  // returns the calculated max pages the pagination can show based in the number of countries. 
   export const maxPageState = selector({
     key: "maxPageState", 
     get: async ({get}) => {
@@ -47,6 +53,7 @@ import { currentUser } from "./userData";
     }
   })
   
+  // gets the list of "all countries" that fulfills the requirements the user sets (by search and sorting)
   export const searchCountryState = selector({
     key: "searchCountryState",
     get: async ({get}) => {
@@ -65,6 +72,7 @@ import { currentUser } from "./userData";
     }
   });
 
+  // gets the list of "my countries" that fulfills the requirements the user sets (by search and sorting)
   export const countriesBeenTo = selector({
     key: "countriesBeenTo",
     get: async ({get}) => {

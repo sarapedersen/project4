@@ -17,7 +17,7 @@ function Register() {
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
-	const [darkmode, setDarkmode] = useRecoilState(darkMode)
+	const darkmode = useRecoilValue(darkMode)
 	const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
    
@@ -26,7 +26,7 @@ function Register() {
 	const submit = (e: React.FormEvent) => {
 		e.preventDefault()
 
-		// Validation of fields
+		// Validation of registration fields
 		let isEqual = false
 		let isCorrectlength = false
 		let isFree = false

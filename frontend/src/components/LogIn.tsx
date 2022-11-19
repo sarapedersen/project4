@@ -14,9 +14,11 @@ function LogIn() {
     const setUserState = useSetRecoilState(userLoginPage)
     const tempUserCredentials = useRecoilValueLoadable(currentUser)
     const [users, setUser] = useState<User>(getUser)
-    const userCredentials = tempUserCredentials.state === 'hasValue' ? tempUserCredentials.contents : defaultUser
-
-
+    const userCredentials = tempUserCredentials.state === 'hasValue' ? tempUserCredentials.contents : undefined
+    const darkmode = useRecoilValue(darkMode)
+    const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
+    const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
+    
     function getUser() {
         const storedUser = sessionStorage.getItem('user')
         if(!storedUser) return {
@@ -28,6 +30,7 @@ function LogIn() {
         return JSON.parse(storedUser)
     }
 
+    // session storage off username and password
     useEffect(() => {
         sessionStorage.setItem('user', JSON.stringify(users))
         setUsername(users.username)
@@ -35,6 +38,7 @@ function LogIn() {
     }, [users])
 
 
+    // removes the error message when the user begins to write in the input fields
     function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         setUsername(event.target.value)
         setPassword(event.target.value)
@@ -45,11 +49,9 @@ function LogIn() {
         setMessage("")
     }
 
-    const [darkmode, setDarkmode] = useRecoilState(darkMode)
-    const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
-    const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
    
-
+    
+    // collects the login information, sends to backend for validation
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         const inputCredentials: User = {
@@ -58,29 +60,21 @@ function LogIn() {
             id: "",
             beenTo: []
         }
-        setUserState(inputCredentials) 
-
-        // console.log(tempUserCredentials.state)
-        // if (tempUserCredentials.state === "loading") {
-        //     console.log("jeg tester noe greier")
-        // }
+        setUserState(inputCredentials)
+        
     }
 
+    // Handles login based on query to backend
     useEffect(() => {
         if (userCredentials === undefined) {
-            setMessage("Wrong username or password. Check spelling and try again.")
-            console.log(userCredentials)
             return
-        } 
-        // else if (userCredentials === null) {
-        //     console.log("heisann, vi fikk en null")
-        //     return
-        // }  
-        if (userCredentials.id !== "") {
+        } else if (userCredentials.id !== "") {
             setMessage("")
             navigate("/countries")
-        } 
-    }, [userCredentials])
+        } else {
+            setMessage("Wrong username or password. Check spelling and try again.") 
+        }
+    }, [navigate, userCredentials])
 
     
     return (
