@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from "recoil"
+import { atom, atomFamily, selector, selectorFamily } from "recoil"
 import { defaultUser, User } from "../types"
 import { checkUsername, updateUser, findUser, addUser } from "./queries"
 import { recoilPersist } from 'recoil-persist'
@@ -19,15 +19,16 @@ export const darkMode = atom ({
 /* RECOIL - USERS (username) */
 
 // handles all the usernames in the database
-export const checkName = atom ({
+export const checkName = atom({
   key: "checkName", 
   default: ""
 })
 
-export const usernamesExists = selectorFamily({
+
+export const usernamesExists = selector({
   key: "usernamesExists", 
-  get: (name: string) => async () => {
-    console.log("tester")
+  get: async ({get}) => {
+    const name: string = get(checkName)
     return await checkUsername(name)
   }
 })

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import {  useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
-import { usernamesExists, currentUser, darkMode, userRegisterPage, checkName } from "../data/userData";
+import { checkUsername } from "../data/queries";
+import { currentUser, darkMode, userRegisterPage, checkName } from "../data/userData";
 import { defaultUser, User } from "../types"
 
 
@@ -17,8 +18,8 @@ function Register() {
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
-	const [test, setTest] = useState("")
-	const usernameExist = useRecoilValue(usernamesExists(username))
+	const setName = useSetRecoilState(checkName)
+	// const usernameExist = useRecoilValue(usernamesExists)
 	const darkmode = useRecoilValue(darkMode)
 	const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
@@ -28,19 +29,18 @@ function Register() {
 	// 	const noe = useRecoilValue(usernamesExists(kanskje))
 	// 	return noe
 	// }
-   
-	function checkName() {
-		setTest(username)
-		return usernameExist
-	}
+
 	
 
-	const submit = (e: React.FormEvent) => {
-		let noe = checkName(); 
+	const submit = async (e: React.FormEvent) => {
+
+		let checkName = await checkUsername(username)
+		console.log(checkName)
+		
+		
 
 		e.preventDefault()
-		setTest(username)
-		console.log("usernames: ", usernameExist, "exists: ", noe)
+
 
 		/* Validation of registration fields */
 		let isEqual = false
@@ -53,14 +53,13 @@ function Register() {
 		setMessage2("")
 		isCorrectlength = true
 		}
-		if (usernameExist === true) {
+		if (checkName === true) {
 			console.log("does this work?")
 			setMessage3("Username is already taken. Select another name.")
 		} else {
 			setMessage3("")
 			isFree = true
 		}
-		console.log(usernameExist)
 		if (password === password2) {
 		setMessage("")
 		isEqual = true
