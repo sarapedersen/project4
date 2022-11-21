@@ -3,6 +3,7 @@ module.exports = {
   content: ["./src/**/*.{html,js,ts,tsx}"],
   theme: {
     extend: {},
+    // own defined colors to use in the code
     colors: {
       'darkTeal': '#006D76',
       'properTeal': '#1DBECC',

@@ -93,6 +93,7 @@ function Register() {
 		<div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' :  'grid grid-cols-1 grid-auto place-items-center'}>
 		<div className="pt-10">
 			<form>
+				{/* fields for register */}
 			<h1 className='text-center mb-10 md:mb-16 text-3xl md:text-4xl font-bold'>Register</h1>
 			<div className="form">
 				<div className="field">
@@ -122,10 +123,13 @@ function Register() {
 					onChange={(e) => setPassword2(e.target.value)}
 				/>
 				</div>
+				{/* error message, if anything is wrong */}
 				<p className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} {message2} {message3}</p>
+				{/* register button */}
 				<button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`} onClick={submit}>Register</button>
 				</div>
 			<div>
+				{/* link to log in page */}
 				<p className='text-center mt-8'>Already a member? <Link to='/' className={darkmode ? 'text-purple hover:underline' : 'text-darkTeal hover:underline'}>Log in</Link></p>
 			</div>
 			</form>

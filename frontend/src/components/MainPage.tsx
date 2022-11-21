@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueL
 import { useNavigate } from "react-router-dom"
 import { darkMode } from "../data/userData";
 import { defaultUser } from '../types';
+import { hkdfSync } from 'crypto';
 
 function MainPage() {
     const navigate = useNavigate()
@@ -19,7 +20,7 @@ function MainPage() {
     const myCountries = tempMyCountries.state === 'hasValue' ? tempMyCountries.contents : false
     
 
-   
+    // change sorting
     function handleClick(event: React.ChangeEvent<HTMLSelectElement>) {
         setSort(event.target.value)
     }

@@ -20,6 +20,7 @@ function Header() {
     const logoutStyleDark = "inline-block absolute top-3 right-2 md:mt-6 md:mb-6 px-6 py-2.5 md:text-white font-medium text-s leading-tight rounded focus:outline-none focus:ring-0 bg-[#4F4B81] bg-opacity-0 hover:bg-opacity-50 active:bg-[#4F4B81] active:bg-opacity-50 transition duration-150 ease-in-out"
     const logoutStyleLight = "inline-block absolute top-3 right-2 md:mt-6 md:mb-6 px-6 py-2.5 md:text-white font-medium text-s leading-tight rounded bg-darkTeal bg-opacity-0 hover:bg-opacity-20 focus:outline-none focus:ring-0 active:bg-darkTeal active:bg-opacity-20 transition duration-150 ease-in-out"
 
+    
     useEffect(() => {
         setQuery(searchCountries)
     }, [searchCountries])
