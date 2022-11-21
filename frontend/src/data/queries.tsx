@@ -166,10 +166,10 @@ export async function findUser(username: string, password: string) {
   }
   
   // Fetch all usernames
-  export async function getAllUsername() {
-    let list: string[] = []; 
+  export async function checkUsername(username: string) {
+    let check = false; 
     console.log("getAllUsername Connect To Backend")
-    let noe = `query{users{username}}`
+    let noe = `query{usernameExist(username: "${username}")}`
     await fetch(`http://${link}/graphql`, {
       method: 'POST',
       headers: {
@@ -178,6 +178,7 @@ export async function findUser(username: string, password: string) {
       body: JSON.stringify({query: noe})
     })
         .then((response) => response.json())
-        .then((data) => list = data.data.users)
-    return list
+        .then((data) => check = data.data.usernameExist)
+    console.log("usernameExist: ", check)
+    return check
   }

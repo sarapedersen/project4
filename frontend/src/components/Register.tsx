@@ -1,30 +1,46 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import {  useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { allUsernames, currentUser, darkMode, userRegisterPage } from "../data/userData";
+import {  useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import { usernamesExists, currentUser, darkMode, userRegisterPage, checkName } from "../data/userData";
 import { defaultUser, User } from "../types"
 
 
 
 function Register() {
 	const user = useSetRecoilState(userRegisterPage);
-	const usernames = useRecoilValue(allUsernames)
+	// const sendToCheckName = useSetRecoilState(checkName)
 	const userValue = useRecoilValue(currentUser)
-  	const navigate = useNavigate()
+	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [password2, setPassword2] = useState("")
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
+	const [test, setTest] = useState("")
+	const usernameExist = useRecoilValue(usernamesExists(username))
 	const darkmode = useRecoilValue(darkMode)
 	const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
+	
+	// function usernameExist(name: string) {
+	// 	let kanskje: string = name
+	// 	const noe = useRecoilValue(usernamesExists(kanskje))
+	// 	return noe
+	// }
    
+	function checkName() {
+		setTest(username)
+		return usernameExist
+	}
 	
 
 	const submit = (e: React.FormEvent) => {
+		let noe = checkName(); 
+
 		e.preventDefault()
+		setTest(username)
+		console.log("usernames: ", usernameExist, "exists: ", noe)
 
 		// Validation of registration fields
 		let isEqual = false
@@ -37,12 +53,14 @@ function Register() {
 		setMessage2("")
 		isCorrectlength = true
 		}
-		if (usernames.includes(username)) {
+		if (usernameExist === true) {
+			console.log("does this work?")
 			setMessage3("Username is already taken. Select another name.")
 		} else {
 			setMessage3("")
 			isFree = true
 		}
+		console.log(usernameExist)
 		if (password === password2) {
 		setMessage("")
 		isEqual = true
@@ -50,7 +68,7 @@ function Register() {
 		setMessage("Passwords do not match.")
 		isEqual = false
 		}
-		regUser(isEqual, isCorrectlength, isFree)
+		//regUser(isEqual, isCorrectlength, isFree)
 	}
 
 	const regUser = (isEqual: Boolean, isCorrectlength: Boolean, isFree: Boolean) => {

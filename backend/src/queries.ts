@@ -12,6 +12,16 @@ export const RootQuery = new GraphQLObjectType({
                 return sUser.findById(args.id);
             }
         },
+        usernameExist: {
+            type: GraphQLBoolean,
+            args: {username: {type: GraphQLString}},
+            resolve(parent, args) {
+                return sUser.exists({username: args.username}).then(exists => {if (exists) {return true} else {return false}})
+                // console.log(test)
+                // if (test === null) {return false}
+                // else {return true}
+            }
+        },
         userLogIn: {
             type: UserType,
             args: {username: {type: GraphQLString}, password: {type: GraphQLString}},
