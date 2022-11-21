@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilStateLoadable, useRecoilValueLoadable, } from 'recoil'
 import CountryList from './CountryList'
 import Pagination from './Pagination'
 import { Country, maxElementsOnPage } from '../types'
@@ -43,8 +43,7 @@ function PaginatedCountryList({filtration}: props) {
 
 
     // Pagination inpiration from https://blog.logrocket.com/pagination-components-react-tailwind-css/
-    const indexOfLastCountry = currentPage * maxElementsOnPage
-    const indexOfFirstPost = indexOfLastCountry - maxElementsOnPage
+ 
     const currentCountriesAll = countries
     const currentCountriesMine = usersCountries
 

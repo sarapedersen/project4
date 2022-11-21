@@ -1,6 +1,6 @@
-import { atom, atomFamily, selector, selectorFamily } from "recoil"
+import { atom, selector, } from "recoil"
 import { defaultUser, User } from "../types"
-import { checkUsername, updateUser, findUser, addUser } from "./queries"
+import { updateUser, addUser } from "./queries"
 import { recoilPersist } from 'recoil-persist'
 
 
@@ -14,23 +14,6 @@ export const darkMode = atom ({
   key: "darkmode",
   default: false,
   effects_UNSTABLE: [persistAtom]
-})
-
-/* RECOIL - USERS (username) */
-
-// handles all the usernames in the database
-export const checkName = atom({
-  key: "checkName", 
-  default: ""
-})
-
-
-export const usernamesExists = selector({
-  key: "usernamesExists", 
-  get: async ({get}) => {
-    const name: string = get(checkName)
-    return await checkUsername(name)
-  }
 })
 
 /* RECOIL - USERS (Login) */
@@ -70,11 +53,7 @@ export const currentUser = selector({
       const user = await addUser(registerPage.username, registerPage.password, [])
       return user
     } else if (loginPage.username !== "") {
-      const user: User | undefined = await findUser(loginPage.username, loginPage.password)
-      if (user === null) {
-        return defaultUser
-      }
-      return user
+      return loginPage
     }
     return undefined
   }

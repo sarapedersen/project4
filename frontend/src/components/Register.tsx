@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import {  useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { checkUsername } from "../data/queries";
-import { currentUser, darkMode, userRegisterPage, checkName } from "../data/userData";
+import { currentUser, darkMode, userRegisterPage, } from "../data/userData";
 import { defaultUser, User } from "../types"
 
 
 
 function Register() {
 	const user = useSetRecoilState(userRegisterPage);
-	// const sendToCheckName = useSetRecoilState(checkName)
 	const userValue = useRecoilValue(currentUser)
 	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
@@ -18,31 +17,17 @@ function Register() {
 	const [message, setMessage] = useState("")
 	const [message2, setMessage2] = useState("")
 	const [message3, setMessage3] = useState("")
-	const setName = useSetRecoilState(checkName)
-	// const usernameExist = useRecoilValue(usernamesExists)
 	const darkmode = useRecoilValue(darkMode)
 	const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
 	
-	// function usernameExist(name: string) {
-	// 	let kanskje: string = name
-	// 	const noe = useRecoilValue(usernamesExists(kanskje))
-	// 	return noe
-	// }
 
-	
 
 	const submit = async (e: React.FormEvent) => {
-
-		let checkName = await checkUsername(username)
-		console.log(checkName)
-		
-		
-
 		e.preventDefault()
-
-
+		
 		/* Validation of registration fields */
+		let checkName = await checkUsername(username)
 		let isEqual = false
 		let isCorrectlength = false
 		let isFree = false
@@ -54,7 +39,6 @@ function Register() {
 		isCorrectlength = true
 		}
 		if (checkName === true) {
-			console.log("does this work?")
 			setMessage3("Username is already taken. Select another name.")
 		} else {
 			setMessage3("")
@@ -67,7 +51,7 @@ function Register() {
 		setMessage("Passwords do not match.")
 		isEqual = false
 		}
-		//regUser(isEqual, isCorrectlength, isFree)
+		regUser(isEqual, isCorrectlength, isFree)
 	}
 
 	const regUser = (isEqual: Boolean, isCorrectlength: Boolean, isFree: Boolean) => {
@@ -100,7 +84,7 @@ function Register() {
 				<input
 					type="text"
 					name="username"
-					className={ darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+					className={ darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle }
 					placeholder="Username"
 					onChange={(e) => setUsername(e.target.value)}
 				/>
@@ -109,7 +93,7 @@ function Register() {
 				<input
 					type="password"
 					name="password"
-					className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+					className={darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle}
 					placeholder="Password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>
@@ -118,7 +102,7 @@ function Register() {
 				<input
 					type="password"
 					name="password"
-					className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+					className={darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle}
 					placeholder="Repeat password"
 					onChange={(e) => setPassword2(e.target.value)}
 				/>
@@ -126,7 +110,7 @@ function Register() {
 				{/* error message, if anything is wrong */}
 				<p className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} {message2} {message3}</p>
 				{/* register button */}
-				<button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`} onClick={submit}>Register</button>
+				<button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + btnStyle : 'bg-properTeal hover:bg-darkTeal' + btnStyle} onClick={submit}>Register</button>
 				</div>
 			<div>
 				{/* link to log in page */}
