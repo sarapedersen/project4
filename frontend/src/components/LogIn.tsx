@@ -17,7 +17,7 @@ function LogIn() {
     const userCredentials = tempUserCredentials.state === 'hasValue' ? tempUserCredentials.contents : undefined
     const darkmode = useRecoilValue(darkMode)
     const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
-    const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
+    const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8 '
     
     function getUser() {
         const storedUser = sessionStorage.getItem('user')
@@ -101,7 +101,7 @@ function LogIn() {
                             value={users.password}/>
                         </div>
                         <p role="error" className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} </p>
-                        <button type="submit" className={darkmode ? 'bg-[#07111F] hover:bg-[#0e1216]' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`}>Sign in</button>
+                        <button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`}>Sign in</button>
                     </div>
                     <div>
                         <p className='text-center mt-8'>Not a member? <Link  to='/register' className={darkmode ? 'text-purple hover:underline' : 'text-darkTeal hover:underline'}><span tabIndex={0}>Register now</span></Link></p>

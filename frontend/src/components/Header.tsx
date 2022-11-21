@@ -17,7 +17,8 @@ function Header() {
     const [darkmode, setDarkmode] = useRecoilState(darkMode);
     const btnStyle = " flex-shrink-0 ml-2 mr-16 px-4 h-12 mt-20 md:mt-8 md:mb-6 md:px-8 rounded-lg text-white "
     const inputStyle = " block h-12 w-52 ml-16 px-6 md:w-96 py-1.5 text-lg font-normal mt-20 md:mt-8 md:mb-6 rounded-lg transition ease-in-out focus:outline-none"
-    const logoutStyle = "inline-block absolute top-3 right-2 md:mt-6 md:mb-6 px-6 py-2.5 bg-transparent md:text-white font-medium text-s leading-tight rounded hover:bg-gray-900 hover:bg-opacity-10 focus:outline-none focus:ring-0 active:bg-gray-900 active:bg-opacity-20 transition duration-150 ease-in-out"
+    const logoutStyleDark = "inline-block absolute top-3 right-2 md:mt-6 md:mb-6 px-6 py-2.5 md:text-white font-medium text-s leading-tight rounded focus:outline-none focus:ring-0 bg-[#4F4B81] bg-opacity-0 hover:bg-opacity-50 active:bg-[#4F4B81] active:bg-opacity-50 transition duration-150 ease-in-out"
+    const logoutStyleLight = "inline-block absolute top-3 right-2 md:mt-6 md:mb-6 px-6 py-2.5 md:text-white font-medium text-s leading-tight rounded bg-darkTeal bg-opacity-0 hover:bg-opacity-20 focus:outline-none focus:ring-0 active:bg-darkTeal active:bg-opacity-20 transition duration-150 ease-in-out"
 
     useEffect(() => {
         setQuery(searchCountries)
@@ -49,12 +50,12 @@ function Header() {
                         onChange={(event) => handleChange(event)}
                         />
                         {/* Search button */}
-                        <button onClick={() => setSearchCountries(query)} className={darkmode ?  "bg-[#2d2b49] bg-opacity-50 hover:bg-opacity-100" + `${btnStyle}` : "bg-darkTeal bg-opacity-50 hover:bg-opacity-100"+ `${btnStyle}`} type='button'>Search</button>
+                        <button onClick={() => setSearchCountries(query)} className={darkmode ?  "bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100" + `${btnStyle}` : "bg-darkTeal bg-opacity-50 hover:bg-opacity-100"+ `${btnStyle}`} type='button'>Search</button>
                     </div>
                 </form>
                 <div>      
                     {/* log out button */}
-                    <Link to="/" onClick={handleClick} ><button type="button" className={darkmode ? "text-white " + `${logoutStyle}`: "text-darkTeal md:text-white" + `${logoutStyle}`} >Log out</button></Link>
+                    <Link to="/" onClick={handleClick} ><button type="button" className={darkmode ? `${logoutStyleDark}` : `${logoutStyleLight}`} >Log out</button></Link>
                 </div> 
             </div>
         </div>
