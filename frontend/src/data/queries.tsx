@@ -1,11 +1,11 @@
 import { Country, defaultCountry, defaultUser, User, maxElementsOnPage } from "../types"
 
-//QUERY TO FETCH DATA
+/* QUERY TO FETCH DATA */
 
 
 const link = "localhost:4000"; 
 
-// query which gets the correct countries from "all countries" based on the inputs (search string, sorting and pagenumber (pagination)) 
+// Query which gets the correct countries from "all countries" based on the inputs (search string, sorting and pagenumber (pagination)) 
 export async function searchCountries(searchInput: string, sortInput: string, from: number) {
     let defCountries: Country[] = []
     console.log("SearchCountries Connect To Backend")
@@ -22,7 +22,7 @@ export async function searchCountries(searchInput: string, sortInput: string, fr
     return defCountries
   }
 
-  // gets only the number of countries that match the search input from "all countries"
+  // Gets only the number of countries that match the search input from "all countries"
   export async function numOfSearchCountries(searchInput: string) {
     let numberOfCountries = 0
     console.log("numOfSearchCountries Connect To Backend")
@@ -39,7 +39,7 @@ export async function searchCountries(searchInput: string, sortInput: string, fr
     return numberOfCountries
   }
 
-  // gets the total number of countries in the database
+  // Gets the total number of countries in the database
   export async function numCountries() {
     let numberOfCountries: number = 0
     console.log("numCountries Connect To Backend")
@@ -56,7 +56,7 @@ export async function searchCountries(searchInput: string, sortInput: string, fr
     return numberOfCountries
   }
 
-  // gets only the number of countries that match the search input from "my countries"
+  // Gets only the number of countries that match the search input from "my countries"
   export async function numOfMyCountriesBySearch(searchInput: string, list: string[]) {
     let numberOfCountries = 0
     console.log("numOfMyCountriesBySearch Connect To Backend")
@@ -74,7 +74,7 @@ export async function searchCountries(searchInput: string, sortInput: string, fr
   }
 
 
-  // gets the information that match the countries in "my countries" based on the inputs (search string, sorting and pagenumber (pagination))
+  // Gets the information that match the countries in "my countries" based on the inputs (search string, sorting and pagenumber (pagination))
   export async function myCountries(searchInput: string, list: string[], from: number, sorting: string) {
     let defCountries: Country[] = []
     console.log("myCountries Connect To Backend")
@@ -92,7 +92,7 @@ export async function searchCountries(searchInput: string, sortInput: string, fr
   }
 
  
-// finds all the information about a country where the id match
+// Finds all the information about a country where the id match
 export async function findCountryById(id: string) {
     let defCountries: Country = defaultCountry
     console.log("findCountryById Connect To Backend")

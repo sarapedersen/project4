@@ -30,7 +30,7 @@ function LogIn() {
         return JSON.parse(storedUser)
     }
 
-    // session storage off username and password
+    /* Session storage off username and password */
     useEffect(() => {
         sessionStorage.setItem('user', JSON.stringify(users))
         setUsername(users.username)
@@ -38,7 +38,7 @@ function LogIn() {
     }, [users])
 
 
-    // removes the error message when the user begins to write in the input fields
+    /* Removes the error message when the user begins to write in the input fields */
     function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         setUsername(event.target.value)
         setPassword(event.target.value)
@@ -51,7 +51,7 @@ function LogIn() {
 
    
     
-    // collects the login information, sends to backend for validation
+    /* Collects the login information, sends to backend for validation */
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         const inputCredentials: User = {
@@ -60,11 +60,10 @@ function LogIn() {
             id: "",
             beenTo: []
         }
-        setUserState(inputCredentials)
-        
+        setUserState(inputCredentials)     
     }
 
-    // Handles login based on query to backend
+    /* Handles login based on query to backend */
     useEffect(() => {
         if (userCredentials === undefined) {
             return
