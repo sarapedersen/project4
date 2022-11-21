@@ -74,7 +74,7 @@ function Register() {
 
   	return (
 		<div className={darkmode ? 'text-white grid grid-cols-1 grid-auto place-items-center' :  'grid grid-cols-1 grid-auto place-items-center'}>
-		<div className="pt-24">
+		<div className="pt-10">
 			<form>
 			<h1 className='text-center mb-10 md:mb-16 text-3xl md:text-4xl font-bold'>Register</h1>
 			<div className="form">
@@ -106,7 +106,7 @@ function Register() {
 				/>
 				</div>
 				<p className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} {message2} {message3}</p>
-				<button type="submit" className={darkmode ? 'bg-[#07111F] hover:bg-[#0e1216]' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`} onClick={submit}>Register</button>
+				<button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`} onClick={submit}>Register</button>
 				</div>
 			<div>
 				<p className='text-center mt-8'>Already a member? <Link to='/' className={darkmode ? 'text-purple hover:underline' : 'text-darkTeal hover:underline'}>Log in</Link></p>
