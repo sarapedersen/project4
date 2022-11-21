@@ -37,8 +37,9 @@ function CountryList({
     myCountri = [...current.beenTo]
   }
 
+
+  //put country in or out of my countries
   function handleClick(c: Country) {
-    
     const index = myCountri.indexOf(c.id);
     if (index === -1) {
       myCountri.push(c.id);
