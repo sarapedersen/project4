@@ -14,6 +14,21 @@ exports.RootQuery = new graphql_1.GraphQLObjectType({
                 return schema_1.sUser.findById(args.id);
             }
         },
+        usernameExist: {
+            type: graphql_1.GraphQLBoolean,
+            args: { username: { type: graphql_1.GraphQLString } },
+            resolve(parent, args) {
+                return schema_1.sUser.exists({ username: args.username }).then(exists => { if (exists) {
+                    return true;
+                }
+                else {
+                    return false;
+                } });
+                // console.log(test)
+                // if (test === null) {return false}
+                // else {return true}
+            }
+        },
         userLogIn: {
             type: types_1.UserType,
             args: { username: { type: graphql_1.GraphQLString }, password: { type: graphql_1.GraphQLString } },

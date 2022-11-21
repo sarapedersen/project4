@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import {  useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { allUsernames, currentUser, darkMode, userRegisterPage } from "../data/userData";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { checkUsername } from "../data/queries";
+import { currentUser, darkMode, userRegisterPage, } from "../data/userData";
 import { defaultUser, User } from "../types"
 
 
 
 function Register() {
 	const user = useSetRecoilState(userRegisterPage);
-	const usernames = useRecoilValue(allUsernames)
 	const userValue = useRecoilValue(currentUser)
-  	const navigate = useNavigate()
+	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [password2, setPassword2] = useState("")
@@ -20,13 +20,14 @@ function Register() {
 	const darkmode = useRecoilValue(darkMode)
 	const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8'
-   
 	
 
-	const submit = (e: React.FormEvent) => {
-		e.preventDefault()
 
+	const submit = async (e: React.FormEvent) => {
+		e.preventDefault()
+		
 		/* Validation of registration fields */
+		let checkName = await checkUsername(username)
 		let isEqual = false
 		let isCorrectlength = false
 		let isFree = false
@@ -37,7 +38,7 @@ function Register() {
 		setMessage2("")
 		isCorrectlength = true
 		}
-		if (usernames.includes(username)) {
+		if (checkName === true) {
 			setMessage3("Username is already taken. Select another name.")
 		} else {
 			setMessage3("")
@@ -83,7 +84,7 @@ function Register() {
 				<input
 					type="text"
 					name="username"
-					className={ darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+					className={ darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle }
 					placeholder="Username"
 					onChange={(e) => setUsername(e.target.value)}
 				/>
@@ -92,7 +93,7 @@ function Register() {
 				<input
 					type="password"
 					name="password"
-					className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+					className={darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle}
 					placeholder="Password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>
@@ -101,7 +102,7 @@ function Register() {
 				<input
 					type="password"
 					name="password"
-					className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+					className={darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle}
 					placeholder="Repeat password"
 					onChange={(e) => setPassword2(e.target.value)}
 				/>
@@ -109,7 +110,7 @@ function Register() {
 				{/* error message, if anything is wrong */}
 				<p className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} {message2} {message3}</p>
 				{/* register button */}
-				<button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`} onClick={submit}>Register</button>
+				<button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + btnStyle : 'bg-properTeal hover:bg-darkTeal' + btnStyle} onClick={submit}>Register</button>
 				</div>
 			<div>
 				{/* link to log in page */}

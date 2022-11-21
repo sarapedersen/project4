@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PaginatedCountryList from './PaginatedCountryList'
 import { myCountriesState, sortState} from '../data/countryData';
 import { currentUser} from '../data/userData';
-import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import { useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { useNavigate } from "react-router-dom"
 import { darkMode } from "../data/userData";
-import { defaultUser } from '../types';
-import { hkdfSync } from 'crypto';
 
 function MainPage() {
     const navigate = useNavigate()
@@ -16,8 +14,9 @@ function MainPage() {
     const darkmode = useRecoilValue(darkMode);
     const lineStyle = ' w-32 border-0 h-0.5'
 
-    const userValue = tempUserValue.state === 'hasValue' ? tempUserValue.contents : defaultUser
-    const myCountries = tempMyCountries.state === 'hasValue' ? tempMyCountries.contents : false
+    const userValue = tempUserValue.contents 
+    const myCountries = tempMyCountries.contents
+    
     
 
     // change sorting
@@ -26,11 +25,10 @@ function MainPage() {
     }
 
     useEffect(() => {
-        if (userValue === undefined) {
-            console.log(userValue)
+        if (userValue === undefined || userValue.id === "") {
             navigate("/")
         }
-    })
+    }, [navigate, userValue])
 
 
     return (
@@ -43,8 +41,8 @@ function MainPage() {
                     <p onClick={() => setMyCountries(true)} className={myCountries === true ? (darkmode ? 'text-white' : 'text-darkTeal font-bold') : (darkmode ? 'text-purple' : 'text-gray-400 font-bold')}>My countries</p>
                 </div>
                 <div className='flex flex-row'>
-                    <hr className={myCountries === false ? (darkmode ? 'bg-white'+`${lineStyle }` : 'bg-darkTeal'+`${lineStyle }`) : (darkmode ? 'bg-bgBlack'+`${lineStyle }` : 'bg-bgBlue'+`${lineStyle }`)} />
-                    <hr className={myCountries === true ? (darkmode ? 'bg-white'+`${lineStyle }` : 'bg-darkTeal'+`${lineStyle }`) : (darkmode ? 'bg-bgBlack'+`${lineStyle }` : 'bg-bgBlue'+`${lineStyle }`)}/>
+                    <hr className={myCountries === false ? (darkmode ? 'bg-white'+lineStyle : 'bg-darkTeal'+ lineStyle) : (darkmode ? 'bg-bgBlack'+lineStyle: 'bg-bgBlue'+lineStyle)} />
+                    <hr className={myCountries === true ? (darkmode ? 'bg-white'+lineStyle : 'bg-darkTeal'+lineStyle) : (darkmode ? 'bg-bgBlack'+lineStyle : 'bg-bgBlue'+lineStyle)}/>
                 </div>
             </div>
 

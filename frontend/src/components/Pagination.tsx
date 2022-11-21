@@ -2,7 +2,7 @@ import arrow_left from '../icons/arrow_left.svg'
 import arrow_right from '../icons/arrow_right.svg'
 import arrow_left_white from '../icons/arrow_left_white.svg'
 import arrow_right_white from '../icons/arrow_right_white.svg'
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { darkMode } from "../data/userData";
 
 interface props {
@@ -19,7 +19,7 @@ function Pagination({countriesPerPage, totalCountries, paginateForward, paginate
 
     const handleForwardClick = () => currentPage<=totalPages-1 ? paginateBack(currentPage + 1) : paginateBack(currentPage)
     const handleBackwardClick = () => currentPage>=2 ? paginateBack(currentPage - 1) : paginateBack(currentPage)
-    const [darkmode, setDarkmode] = useRecoilState(darkMode);
+    const darkmode = useRecoilValue(darkMode);
 
     return (
         <div>

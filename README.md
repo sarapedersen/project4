@@ -1,4 +1,4 @@
-# Project 3 dokumentasjon
+# Project 4 dokumentasjon
 
 ## Generelt om løsningen
 Løsningen vår er en nettside hvor man kan huke av land man har vært i, og filtrere slik at man får en oversikt over alle landene man har besøkt. På nettsiden kan man også registrere en bruker og logge inn for å ta vare på dataen, samt søke etter land og sortere enten stigende eller synkende. Databasen vår er lagd med MongoDB og all data kommer fra en csv-fil generert med APIet fra restcountries.com. Vi valgte dette APIet fordi det hadde en tilstrekkelig mengde data med både land og informasjon om hvert land. Dette gjør at vi får et stor datasett som vi kan hente ut mye informasjon fra, som var et av kravene i oppgaveteksten. I tillegg har vi bruk Express.js som backend med GraphQL.

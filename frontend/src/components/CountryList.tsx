@@ -8,7 +8,7 @@ import arrow_down from "../icons/arrow_down.svg";
 import arrow_up from "../icons/arrow_up.svg";
 import arrow_down_white from "../icons/arrow_down_white.svg";
 import arrow_up_white from "../icons/arrow_up_white.svg";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { currentUser, darkMode, updateUserState } from "../data/userData";
 
 interface props {
@@ -26,7 +26,7 @@ function CountryList({
 
   const tempCurrent = useRecoilValueLoadable(currentUser)
   const update = useSetRecoilState(updateUserState)
-  const [darkmode, setDarkmode] = useRecoilState(darkMode);
+  const darkmode = useRecoilValue(darkMode);
   
   const current = tempCurrent.state === 'hasValue' ? tempCurrent.contents : defaultUser
 

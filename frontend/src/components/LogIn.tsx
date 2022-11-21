@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil'
-import { currentUser, darkMode, userLoginPage } from '../data/userData'
-import { defaultUser, User } from '../types'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { findUser } from '../data/queries'
+import { darkMode, userLoginPage } from '../data/userData'
+import { User } from '../types'
 
 
 function LogIn() {
@@ -12,9 +13,7 @@ function LogIn() {
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const setUserState = useSetRecoilState(userLoginPage)
-    const tempUserCredentials = useRecoilValueLoadable(currentUser)
     const [users, setUser] = useState<User>(getUser)
-    const userCredentials = tempUserCredentials.state === 'hasValue' ? tempUserCredentials.contents : undefined
     const darkmode = useRecoilValue(darkMode)
     const inputStyle = ' form-control block h-12 w-72 px-6 md:w-96 py-1.5 text-lg font-normal mt-4 rounded-lg transition ease-in-out focus:outline-none'
     const btnStyle = ' text-white font-normal py-2 px-4 rounded-lg w-72 md:w-96 mt-8 '
@@ -49,32 +48,21 @@ function LogIn() {
 		}))
         setMessage("")
     }
-
-   
     
     /* Collects the login information, sends to backend for validation */
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
-        const inputCredentials: User = {
-            username: username, 
-            password: password, 
-            id: "",
-            beenTo: []
-        }
-        setUserState(inputCredentials)     
-    }
-
-    /* Handles login based on query to backend */
-    useEffect(() => {
-        if (userCredentials === undefined) {
+    
+        const userCredentials: User | null = await findUser(username, password)
+        if (userCredentials === null) {
+            setMessage("Wrong username or password. Check spelling and try again.") 
             return
         } else if (userCredentials.id !== "") {
+            setUserState(userCredentials)
             setMessage("")
             navigate("/countries")
-        } else {
-            setMessage("Wrong username or password. Check spelling and try again.") 
-        }
-    }, [navigate, userCredentials])
+        }   
+    }
 
     
     return (
@@ -88,7 +76,7 @@ function LogIn() {
                         <div className='field'>
                             <input type="text"
                             name='username' 
-                            className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+                            className={darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle}
                             placeholder='Username' 
                             onChange={handleChange}
                             value={users.username}/>
@@ -96,14 +84,14 @@ function LogIn() {
                         <div className='field'>
                             <input type="password" 
                             name='password' 
-                            className={darkmode ? 'bg-[#444444]' + `${inputStyle}` : 'bg-white' + `${inputStyle}`}
+                            className={darkmode ? 'bg-[#444444]' + inputStyle : 'bg-white' + inputStyle}
                             placeholder='Password' 
                             onChange={handleChange}
                             value={users.password}/>
                         </div>
                         <p role="error" className={darkmode ? 'text-yellow px-4 mt-2 w-72 md:w-96': 'text-red px-4 mt-2 w-72 md:w-96'}> {message} </p>
                         {/* Log in button */}
-                        <button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + `${btnStyle}` : 'bg-properTeal hover:bg-darkTeal' + `${btnStyle}`}>Sign in</button>
+                        <button type="submit" className={darkmode ? 'bg-[#4F4B81] bg-opacity-80 hover:bg-opacity-100' + btnStyle : 'bg-properTeal hover:bg-darkTeal' + btnStyle}>Sign in</button>
                     </div>
                     <div>
                         {/* Link to register page */}

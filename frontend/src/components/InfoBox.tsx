@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import { useRecoilState } from "recoil"
+import { useRecoilValue } from "recoil"
 import { darkMode } from '../data/userData'
 
 /* Info box on how to add country to My countries */
 function InfoBox() {
     const [hideInfo, setHideInfo] = useState(false)
-    const [darkmode, setDarkmode] = useRecoilState(darkMode);
+    const darkmode = useRecoilValue(darkMode);
 
     return (
         <div className={!hideInfo ? (darkmode ? "bg-[#4F4B81] shadow-xl p-10 rounded-xl max-w-xs text-white" : "bg-darkTeal shadow-xl p-10 rounded-xl max-w-xs text-white") : "hidden"}>
