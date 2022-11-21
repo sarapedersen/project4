@@ -39,7 +39,7 @@ function Header() {
             <div className={darkmode ? "md:bg-[#07111F] " : "md:bg-properTeal flex justify-center"}>
                 <img className="inline-block absolute left-4 top-2 md:mt-6 md:mb-6" alt="darkmode button" src={darkmode ? darkModeImg : lightModeImg} width="100px" onClick={() => setDarkmode(!darkmode)}/>
                 <form onSubmit={() => setSearchCountries(query)}>
-                    {/* search bar */}
+                    {/* Search bar */}
                     <div className="mb-3 md:max-w-none flex justify-center ">
                         <input type="text"
                         autoFocus
@@ -54,7 +54,7 @@ function Header() {
                     </div>
                 </form>
                 <div>      
-                    {/* log out button */}
+                    {/* Logout button */}
                     <Link to="/" onClick={handleClick} ><button type="button" className={darkmode ? `${logoutStyleDark}` : `${logoutStyleLight}`} >Log out</button></Link>
                 </div> 
             </div>

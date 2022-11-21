@@ -59,7 +59,7 @@ function CountryList({
   return (
     <div className="body">
       <div className="flex justify-center mt-10 mb-10">
-        {showInfo ? ( // If showInfo has a country then show info about the chosen country
+        {showInfo ? ( // If showInfo has a country then show info about the chosen country 
           <div className={darkmode ? "bg-grey rounded-lg  w-72 text-white md:w-2/4":"bg-white rounded-lg  w-72 text-gray-900 md:w-2/4"}>
             <div className={darkmode ? "px-6 py-3 grid grid-cols-5  w-full border-b border-[#27272F] place-items-center":"px-6 py-3 grid grid-cols-5  w-full border-b border-bgBlue place-items-center"} >
               <img

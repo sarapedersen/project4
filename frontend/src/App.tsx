@@ -7,11 +7,11 @@ import RegisterPage from './pages/RegisterPage'
 
 
 function App() {
-
   return (
       <div className='App bg-bgBlack h-full '>
         <div className='min-h-screen'>
             <React.Suspense fallback="">
+              {/* Routes the pages of the app to one another */}
               <Routes>
                 <Route path="/" element={<LogInPage/>}/>
                 <Route path="/countries" element={<CountryPage/>}/>

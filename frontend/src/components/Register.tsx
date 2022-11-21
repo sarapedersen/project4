@@ -26,7 +26,7 @@ function Register() {
 	const submit = (e: React.FormEvent) => {
 		e.preventDefault()
 
-		// Validation of registration fields
+		/* Validation of registration fields */
 		let isEqual = false
 		let isCorrectlength = false
 		let isFree = false

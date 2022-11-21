@@ -4,7 +4,7 @@ import { darkMode } from '../data/userData'
 import darkModeImg from '../icons/darkmode.svg'
 import lightModeImg from '../icons/lightmode.svg'
 
-
+/* Register page to register a new user */
 function RegisterPage() {
     const bgStyle = ' h-screen bg-no-repeat bg-cover bg-center bg-fixed'
     const [darkmode, setDarkmode] = useRecoilState(darkMode)
