@@ -4,7 +4,7 @@ import InfoBox from '../components/InfoBox'
 import MainPage from '../components/MainPage'
 import { darkMode } from '../data/userData'
 
-
+/* Main page of the app where a user is logged in */
 function CountryPage() {
     const bgStyle = ' min-h-screen bg-no-repeat bg-cover bg-center bg-fixed'
     const [darkmode, setDarkmode] = useRecoilState(darkMode)

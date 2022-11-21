@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useRecoilState } from "recoil"
 import { darkMode } from '../data/userData'
 
+/* Info box on how to add country to My countries */
 function InfoBox() {
     const [hideInfo, setHideInfo] = useState(false)
     const [darkmode, setDarkmode] = useRecoilState(darkMode);

@@ -42,7 +42,7 @@ function Register() {
 		setTest(username)
 		console.log("usernames: ", usernameExist, "exists: ", noe)
 
-		// Validation of registration fields
+		/* Validation of registration fields */
 		let isEqual = false
 		let isCorrectlength = false
 		let isFree = false

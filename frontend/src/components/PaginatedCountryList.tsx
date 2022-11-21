@@ -13,7 +13,6 @@ function PaginatedCountryList({filtration}: props) {
     const [currentPage, setCurrentPage] = useRecoilState(currentPageState)
     const tempMaxPage = useRecoilValueLoadable(maxPageState)
     const tempCountries = useRecoilValueLoadable(searchCountryState)
-    // const countries = useRecoilRefresher_UNSTABLE(searchCountryState)
     const tempUsersCountries = useRecoilValueLoadable(countriesBeenTo)
     const [searchCountries, setSearchCountries] = useRecoilStateLoadable(searchState)    
     const [showInfo, setshowInfo] = useState<Country | null>()
@@ -25,12 +24,12 @@ function PaginatedCountryList({filtration}: props) {
 
 
 
-    // removes country info on page change
+    /* Removes country info on page change */
     useEffect(() => {
         setshowInfo(null)
     }, [currentPage, filtration, searchCountries])
     
-    // resets to first page when switching between all countries and my countries
+    /* Resets to first page when switching between all countries and my countries */
     useEffect(() => {
         setCurrentPage(1)
         setSearchCountries("")
