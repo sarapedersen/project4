@@ -3,7 +3,7 @@ import { Country, defaultCountry, defaultUser, User, maxElementsOnPage } from ".
 /* QUERY TO FETCH DATA */
 
 
-const link = "localhost:4000"; 
+const link = "it2810-08.idi.ntnu.no:4000"; 
 
 // Query which gets the correct countries from "all countries" based on the inputs (search string, sorting and pagenumber (pagination)) 
 export async function searchCountries(searchInput: string, sortInput: string, from: number) {
